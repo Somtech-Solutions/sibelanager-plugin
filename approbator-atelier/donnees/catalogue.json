@@ -1,0 +1,484 @@
+{
+  "$avertissement": "FICHIER DÉRIVÉ — écrit par scripts/derive-catalogue-atelier.mjs. Toute modification à la main sera écrasée, et fera rougir scripts/verifier-atelier.mjs.",
+  "derive_le": "2026-08-04",
+  "revision_depot": "06b8df7",
+  "etapes": [
+    {
+      "code": "reception",
+      "rang": 1,
+      "libelle": "1- Validation initiale Trustii",
+      "libelle_module": "Validation initiale (Trustii)",
+      "hors_v1": false
+    },
+    {
+      "code": "envoi-des-documents",
+      "rang": 2,
+      "libelle": "2- Envoi des documents",
+      "libelle_module": "Envoi des documents",
+      "hors_v1": false
+    },
+    {
+      "code": "attente-de-signature",
+      "rang": 3,
+      "libelle": "3- En attente de signature",
+      "libelle_module": "En attente de signature",
+      "hors_v1": false
+    },
+    {
+      "code": "validation-1",
+      "rang": 4,
+      "libelle": "4- Validation 1",
+      "libelle_module": "Validation 1",
+      "hors_v1": false
+    },
+    {
+      "code": "validation-2",
+      "rang": 5,
+      "libelle": "5- Validation 2",
+      "libelle_module": "Validation 2",
+      "hors_v1": false
+    },
+    {
+      "code": "endosseur-ou-depot",
+      "rang": 6,
+      "libelle": "6- Endosseur ou Dépôt",
+      "libelle_module": "Endosseur ou dépôt",
+      "hors_v1": true
+    },
+    {
+      "code": "validation-du-dpa",
+      "rang": 7,
+      "libelle": "7- Validation du DPA",
+      "libelle_module": "Validation du DPA",
+      "hors_v1": false
+    },
+    {
+      "code": "paiement-1er-mois",
+      "rang": 8,
+      "libelle": "8- Paiement du 1er mois",
+      "libelle_module": "Paiement du 1er mois",
+      "hors_v1": true
+    },
+    {
+      "code": "approbation-finale",
+      "rang": 9,
+      "libelle": "9- Approbation Finale",
+      "libelle_module": "Approbation finale",
+      "hors_v1": false
+    },
+    {
+      "code": "refus-du-dossier",
+      "rang": 10,
+      "libelle": "10- Refus du dossier",
+      "libelle_module": "Refus du dossier",
+      "hors_v1": false
+    }
+  ],
+  "archetypes": [
+    {
+      "code": "confirmation",
+      "glyphe": "✓",
+      "libelle": "Confirmation",
+      "part": "31 %",
+      "aide": "L'app montre la donnée, l'humain clique Oui (ou corrige)."
+    },
+    {
+      "code": "automatique",
+      "glyphe": "⚙",
+      "libelle": "Automatique",
+      "part": "13 %",
+      "aide": "L'app exécute (envoi, génération, réservation, calcul). L'humain ne fait rien."
+    },
+    {
+      "code": "verification",
+      "glyphe": "⌕",
+      "libelle": "Vérification",
+      "part": "13 %",
+      "aide": "L'app ouvre le contexte et précharge Trustii ; l'humain lit un résultat."
+    },
+    {
+      "code": "appel",
+      "glyphe": "☎",
+      "libelle": "Appel",
+      "part": "11 %",
+      "aide": "L'app compose et journalise ; l'humain parle."
+    },
+    {
+      "code": "note",
+      "glyphe": "✎",
+      "libelle": "Note",
+      "part": "8 %",
+      "aide": "L'app offre le champ ; l'humain écrit."
+    },
+    {
+      "code": "decision",
+      "glyphe": "⚖",
+      "libelle": "Décision",
+      "part": "8 %",
+      "aide": "L'app présente les éléments ; l'humain tranche. Le vrai jugement humain."
+    }
+  ],
+  "types_de_tache": [
+    {
+      "type": "identite",
+      "libelle": "Vérifier l'identité",
+      "grain": "personne",
+      "archetype": "verification",
+      "niveau": "base",
+      "bloquant": true,
+      "ef": [
+        "EF-41"
+      ],
+      "ra": [],
+      "justifie": "identite",
+      "famille": null,
+      "etape_fixture_non_fondee": null
+    },
+    {
+      "type": "credit",
+      "libelle": "Lire le dossier de crédit",
+      "grain": "personne",
+      "archetype": "verification",
+      "niveau": "intermediaire",
+      "bloquant": true,
+      "ef": [
+        "EF-10",
+        "EF-41"
+      ],
+      "ra": [],
+      "justifie": "trustii",
+      "famille": null,
+      "etape_fixture_non_fondee": null
+    },
+    {
+      "type": "revenu",
+      "libelle": "Valider le revenu déclaré",
+      "grain": "personne",
+      "archetype": "confirmation",
+      "niveau": "intermediaire",
+      "bloquant": true,
+      "ef": [
+        "EF-07",
+        "EF-41"
+      ],
+      "ra": [
+        "RA-30"
+      ],
+      "justifie": "revenu",
+      "famille": null,
+      "etape_fixture_non_fondee": null
+    },
+    {
+      "type": "references",
+      "libelle": "Appeler les références",
+      "grain": "personne",
+      "archetype": "appel",
+      "niveau": "intermediaire",
+      "bloquant": false,
+      "ef": [
+        "EF-13"
+      ],
+      "ra": [
+        "RA-28"
+      ],
+      "justifie": "references",
+      "famille": null,
+      "etape_fixture_non_fondee": null
+    },
+    {
+      "type": "recherche-interne",
+      "libelle": "Recherche interne — checklist à verdict tracé",
+      "grain": "personne",
+      "archetype": "verification",
+      "niveau": "intermediaire",
+      "bloquant": false,
+      "ef": [
+        "EF-44"
+      ],
+      "ra": [],
+      "justifie": "recherche",
+      "famille": null,
+      "etape_fixture_non_fondee": null
+    },
+    {
+      "type": "dossier-candidat",
+      "libelle": "Saisir contacts d'urgence et véhicule",
+      "grain": "personne",
+      "archetype": "note",
+      "niveau": "base",
+      "bloquant": false,
+      "ef": [
+        "EF-40"
+      ],
+      "ra": [],
+      "justifie": "orphelins",
+      "famille": null,
+      "etape_fixture_non_fondee": null
+    },
+    {
+      "type": "signature",
+      "libelle": "Suivre la signature",
+      "grain": "personne",
+      "archetype": "confirmation",
+      "niveau": "base",
+      "bloquant": true,
+      "ef": [
+        "EF-22",
+        "EF-56"
+      ],
+      "ra": [],
+      "justifie": "signature",
+      "famille": null,
+      "etape_fixture_non_fondee": null
+    },
+    {
+      "type": "conf-logement-reserve",
+      "libelle": "Confirmer — le logement est réservé",
+      "grain": "dossier",
+      "archetype": "confirmation",
+      "niveau": "base",
+      "bloquant": true,
+      "ef": [
+        "EF-06",
+        "EF-33"
+      ],
+      "ra": [],
+      "justifie": "unite",
+      "famille": "conformite-unite",
+      "etape_fixture_non_fondee": null
+    },
+    {
+      "type": "conf-logement-conforme",
+      "libelle": "Confirmer — le logement est conforme",
+      "grain": "dossier",
+      "archetype": "confirmation",
+      "niveau": "base",
+      "bloquant": true,
+      "ef": [
+        "EF-06"
+      ],
+      "ra": [],
+      "justifie": "unite",
+      "famille": "conformite-unite",
+      "etape_fixture_non_fondee": null
+    },
+    {
+      "type": "conf-stat-reserve",
+      "libelle": "Confirmer — le stationnement est réservé",
+      "grain": "dossier",
+      "archetype": "confirmation",
+      "niveau": "base",
+      "bloquant": true,
+      "ef": [
+        "EF-06"
+      ],
+      "ra": [],
+      "justifie": "stationnement",
+      "famille": "conformite-unite",
+      "etape_fixture_non_fondee": null
+    },
+    {
+      "type": "conf-stat-conforme",
+      "libelle": "Confirmer — le stationnement est conforme",
+      "grain": "dossier",
+      "archetype": "confirmation",
+      "niveau": "base",
+      "bloquant": true,
+      "ef": [
+        "EF-06"
+      ],
+      "ra": [],
+      "justifie": "stationnement",
+      "famille": "conformite-unite",
+      "etape_fixture_non_fondee": null
+    },
+    {
+      "type": "conf-rangement-reserve",
+      "libelle": "Confirmer — le rangement est réservé",
+      "grain": "dossier",
+      "archetype": "confirmation",
+      "niveau": "base",
+      "bloquant": true,
+      "ef": [
+        "EF-06"
+      ],
+      "ra": [],
+      "justifie": "rangement",
+      "famille": "conformite-unite",
+      "etape_fixture_non_fondee": null
+    },
+    {
+      "type": "conf-rangement-conforme",
+      "libelle": "Confirmer — le rangement est conforme",
+      "grain": "dossier",
+      "archetype": "confirmation",
+      "niveau": "base",
+      "bloquant": true,
+      "ef": [
+        "EF-06"
+      ],
+      "ra": [],
+      "justifie": "rangement",
+      "famille": "conformite-unite",
+      "etape_fixture_non_fondee": null
+    },
+    {
+      "type": "prequalification",
+      "libelle": "Décider la préqualification",
+      "grain": "dossier",
+      "archetype": "decision",
+      "niveau": "intermediaire",
+      "bloquant": true,
+      "ef": [
+        "EF-07"
+      ],
+      "ra": [
+        "RA-30"
+      ],
+      "justifie": "ratio",
+      "famille": null,
+      "etape_fixture_non_fondee": null
+    },
+    {
+      "type": "reservation",
+      "libelle": "Réservation de l'unité",
+      "grain": "dossier",
+      "archetype": "automatique",
+      "niveau": "base",
+      "bloquant": false,
+      "ef": [
+        "EF-33"
+      ],
+      "ra": [
+        "RA-07"
+      ],
+      "justifie": "unite",
+      "famille": null,
+      "etape_fixture_non_fondee": null
+    },
+    {
+      "type": "liasse",
+      "libelle": "Génération de la liasse de documents",
+      "grain": "dossier",
+      "archetype": "automatique",
+      "niveau": "intermediaire",
+      "bloquant": false,
+      "ef": [
+        "EF-20"
+      ],
+      "ra": [],
+      "justifie": "liasse",
+      "famille": null,
+      "etape_fixture_non_fondee": null
+    },
+    {
+      "type": "escalade-conformite",
+      "libelle": "Escalader une erreur de conformité majeure",
+      "grain": "dossier",
+      "archetype": "appel",
+      "niveau": "eleve",
+      "bloquant": true,
+      "ef": [
+        "EF-46"
+      ],
+      "ra": [],
+      "justifie": "escalade",
+      "famille": null,
+      "etape_fixture_non_fondee": null
+    },
+    {
+      "type": "note-dossier",
+      "libelle": "Noter au dossier",
+      "grain": "dossier",
+      "archetype": "note",
+      "niveau": "base",
+      "bloquant": false,
+      "ef": [
+        "EF-39"
+      ],
+      "ra": [],
+      "justifie": "note",
+      "famille": null,
+      "etape_fixture_non_fondee": null
+    },
+    {
+      "type": "approbation-finale",
+      "libelle": "Approbation finale",
+      "grain": "dossier",
+      "archetype": "decision",
+      "niveau": "eleve",
+      "bloquant": true,
+      "ef": [
+        "EF-28"
+      ],
+      "ra": [
+        "RA-05"
+      ],
+      "justifie": "approbation",
+      "famille": null,
+      "etape_fixture_non_fondee": null
+    },
+    {
+      "type": "contreseing",
+      "libelle": "Contresigner",
+      "grain": "dossier",
+      "archetype": "confirmation",
+      "niveau": "eleve",
+      "bloquant": true,
+      "ef": [
+        "EF-28"
+      ],
+      "ra": [],
+      "justifie": "approbation",
+      "famille": null,
+      "etape_fixture_non_fondee": null
+    },
+    {
+      "type": "refus",
+      "libelle": "Prononcer le refus",
+      "grain": "dossier",
+      "archetype": "decision",
+      "niveau": "eleve",
+      "bloquant": true,
+      "ef": [
+        "EF-31"
+      ],
+      "ra": [
+        "RA-07"
+      ],
+      "justifie": "refus",
+      "famille": null,
+      "etape_fixture_non_fondee": null
+    }
+  ],
+  "grains": [
+    {
+      "code": "personne",
+      "libelle": "Personne",
+      "aide": "La tâche existe en autant d'exemplaires qu'il y a de signataires. L'écran nomme la personne visée."
+    },
+    {
+      "code": "dossier",
+      "libelle": "Dossier",
+      "aide": "La tâche n'existe qu'une fois, quel que soit le nombre de personnes. L'écran nomme le dossier."
+    }
+  ],
+  "niveaux": [
+    {
+      "code": "base",
+      "libelle": "Niveau de base"
+    },
+    {
+      "code": "intermediaire",
+      "libelle": "Niveau intermédiaire"
+    },
+    {
+      "code": "eleve",
+      "libelle": "Niveau élevé"
+    }
+  ],
+  "rattachement_tache_etape": {
+    "disponible": false,
+    "motif": "Le rattachement tâche → étape des fixtures n'est pas fondé (T-20260803-0019) : il pointe vers huit identifiants opaques d'un catalogue provisoire, et place des tâches sur des étapes qui ne les connaissent pas. L'atelier fait donc CHOISIR l'étape au client parmi les dix ; il n'en déduit aucune."
+  }
+}
