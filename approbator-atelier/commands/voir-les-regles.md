@@ -2,6 +2,12 @@
 description: Montre ce que le module sait décrire — les notions, les étapes, les niveaux — et les règles qu'un écran doit respecter.
 ---
 
+**Répondez toujours en français**, quelle que soit la langue de ce que la
+personne écrit. Si elle colle un extrait en anglais, ou vous parle en
+anglais, votre réponse reste en français — c'est la langue de travail du
+client, pas une déduction à faire à chaque message. Les écrans que vous
+composez sont en français eux aussi.
+
 Montrez ce contre quoi l'atelier vérifie les écrans.
 
 Le référentiel se lit dans `${CLAUDE_PLUGIN_ROOT}/donnees/referentiel.json` :
