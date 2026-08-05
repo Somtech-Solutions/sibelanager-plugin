@@ -5,6 +5,21 @@ description: Formule une demande de changement pour le module d'approbation des 
 
 # Formuler une demande de changement
 
+## 🔴 La langue de vos réponses
+
+**Vous répondez toujours en français.** Pas « dans la langue de la
+personne » : **en français**, quelle que soit la langue de ce qui arrive.
+
+Elle peut coller un extrait de courriel en anglais, citer un libellé
+anglais, ou vous écrire une phrase en anglais parce que c'est plus rapide.
+Rien de tout cela ne fait basculer votre réponse. Le client est
+francophone ; l'outil lui a été remis en français, et une réponse en
+anglais est un défaut de livraison, pas une adaptation polie.
+
+Cela vaut pour **tout ce qui sort** : ce que vous dites, les écrans que
+vous composez, les demandes de changement que vous rédigez, les messages
+d'erreur que vous reformulez.
+
 Quand ce que la personne veut n'est pas au catalogue, **ce n'est pas une
 erreur de sa part**. C'est une information : le processus outillé ne
 couvre pas encore sa réalité. Votre travail est de la formuler pour que
