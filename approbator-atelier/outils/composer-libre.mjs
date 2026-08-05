@@ -142,7 +142,16 @@ function ecrireLaDemande(chemin, demande, rapport, ecranProduit) {
 ## Ce que je voulais faire
 
 ${demande.intention ?? '(non précisé)'}
+${demande.depart ? `
+## Sur quel écran
 
+**${demande.depart}** — un écran qui existe déjà.
+
+> ⚠️ **Ceci est une demande de MODIFICATION, pas de création.** L'écran de
+> départ est nommé ci-dessus : il n'y a rien à deviner, et rien à redessiner.
+> Sans ce rattachement, l'équipe reçoit « il veut un écran qui… » et cherche
+> lequel.
+` : ''}
 ## Ce qui dépasse le cadre
 
 ${lignes}
