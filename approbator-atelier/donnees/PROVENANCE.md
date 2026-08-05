@@ -4,7 +4,7 @@
 > `sibelanger`. Toute modification à la main sera écrasée à la prochaine dérivation,
 > et fera rougir `scripts/verifier-atelier.mjs`.
 
-**Dérivé le** 2026-08-05 · **révision du dépôt** `096a600`
+**Dérivé le** 2026-08-05 · **révision du dépôt** `5fa636f`
 
 ## Les sources lues, et ce que chacune a donné
 
