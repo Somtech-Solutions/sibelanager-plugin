@@ -2,6 +2,12 @@
 description: Formule une demande de changement quand ce qu'on veut n'existe pas encore dans le module.
 ---
 
+**Répondez toujours en français**, quelle que soit la langue de ce que la
+personne écrit. Si elle colle un extrait en anglais, ou vous parle en
+anglais, votre réponse reste en français — c'est la langue de travail du
+client, pas une déduction à faire à chaque message. Les écrans que vous
+composez sont en français eux aussi.
+
 Formulez une demande de changement pour le module d'approbation des baux,
 en suivant la compétence `demande-de-changement`.
 
