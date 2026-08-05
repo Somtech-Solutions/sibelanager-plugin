@@ -56,12 +56,32 @@ const COQUILLE = readFileSync(
    grain dossier : c'est ce qui rend visible que la file montre les deux
    sans les confondre (EF-03). Données inventées, aucune donnée réelle —
    EF-38 interdit les renseignements personnels hors production. */
+/* ⚠️ DEUX DOSSIERS, PAS UN — et leurs dates d'emménagement diffèrent.
+   Avec un seul, la file ne peut RIEN montrer de son tri : toutes les
+   lignes portent la même urgence, l'ordre est indiscernable de l'ordre
+   d'insertion, et un contrôle qui vérifierait le tri serait vrai par
+   construction. Le second dossier est ce qui rend le tri observable.
+
+   ⚠️ Le type de logement et le loyer sont là pour la DENSITÉ : une ligne
+   qui ne porte qu'un titre oblige à ouvrir chaque tâche pour savoir de
+   quoi elle parle. C'est ce qui sépare une boîte de réception d'une
+   liste. Données inventées — EF-38 interdit les renseignements
+   personnels hors production. */
 const EXEMPLES_PAR_DEFAUT = {
   dossiers: {
     'BAIL-2026-0148': {
       unite: '4212, rue Sainte-Catherine Est — app. 302',
+      logement: '4½',
+      loyer: 1450,
       emmenagement: '2026-09-01',
       personnes: ['Amélie Fournier', 'Karim Belhadj'],
+    },
+    'BAIL-2026-0151': {
+      unite: '870, avenue Mont-Royal Est — app. 5',
+      logement: '3½',
+      loyer: 1195,
+      emmenagement: '2026-08-10',
+      personnes: ['Sophie Tremblay'],
     },
   },
   personnes: ['Amélie Fournier', 'Karim Belhadj'],
@@ -188,24 +208,30 @@ function composer(o) {
     console.error('\n⛔ Le fichier d\'exemples ne porte aucun dossier.\n');
     process.exit(1);
   }
-  const dossierParDefaut = codesDossier[0];
-  const personnes = exemples.personnes
-    ?? exemples.dossiers[dossierParDefaut].personnes ?? ['(personne à nommer)'];
-
-  /* Une tâche de grain PERSONNE existe en autant d'exemplaires qu'il y a
-     de signataires ; une tâche de grain DOSSIER n'existe qu'une fois.
-     C'est le catalogue qui le dit, pas cet outil. */
+  /* ⚠️ LA FILE PORTE LES TÂCHES DE TOUS LES DOSSIERS, pas d'un seul.
+     Une file d'un seul dossier ne peut rien montrer d'un tri par urgence :
+     toutes ses lignes ont la même échéance. C'est aussi la réalité du
+     travail — un agent traite ce qui presse, quel que soit le dossier. */
   const taches = [];
-  for (const code of types) {
-    const def = CATALOGUE.types_de_tache.find((t) => t.type === code);
-    if (def.grain === 'personne') {
-      for (const p of personnes) {
-        taches.push({ type: code, dossier: dossierParDefaut, personne: p,
+  for (const codeDossier of codesDossier) {
+    const dossier = exemples.dossiers[codeDossier];
+    const personnes = dossier.personnes
+      ?? exemples.personnes ?? ['(personne à nommer)'];
+
+    /* Une tâche de grain PERSONNE existe en autant d'exemplaires qu'il y a
+       de signataires ; une tâche de grain DOSSIER n'existe qu'une fois.
+       C'est le catalogue qui le dit, pas cet outil. */
+    for (const code of types) {
+      const def = CATALOGUE.types_de_tache.find((t) => t.type === code);
+      if (def.grain === 'personne') {
+        for (const p of personnes) {
+          taches.push({ type: code, dossier: codeDossier, personne: p,
+            justification: def.justifie });
+        }
+      } else {
+        taches.push({ type: code, dossier: codeDossier, personne: null,
           justification: def.justifie });
       }
-    } else {
-      taches.push({ type: code, dossier: dossierParDefaut, personne: null,
-        justification: def.justifie });
     }
   }
 
@@ -213,9 +239,15 @@ function composer(o) {
     ? o.titre
     : `File de travail — ${etape.libelle}`;
 
+  /* ⚠️ LA DATE DE COMPOSITION EST ÉCRITE DANS L'ÉCRAN, pas lue à
+     l'ouverture. Le fichier est autonome et voyage : un « J-5 » recalculé
+     à chaque ouverture dirait autre chose le mois suivant, et le client
+     croirait que ses données ont bougé. Ce qu'il voit est figé au moment
+     où l'écran est fait — comme une capture, pas comme un tableau vivant. */
   const ecran = {
     etape: etape.code, niveau: niveau.code, taches,
     dossiers: exemples.dossiers,
+    compose_le: new Date().toISOString().slice(0, 10),
   };
 
   /* Substitution EN UNE PASSE : une valeur injectée ne peut pas contenir
