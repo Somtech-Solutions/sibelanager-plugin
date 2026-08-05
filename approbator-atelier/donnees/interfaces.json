@@ -1,7 +1,7 @@
 {
   "$avertissement": "FICHIER DÉRIVÉ — écrit par scripts/derive-interfaces-atelier.mjs. Toute modification à la main sera écrasée, et fera rougir scripts/verifier-atelier.mjs.",
   "derive_le": "2026-08-05",
-  "revision_depot": "096a600",
+  "revision_depot": "5fa636f",
   "livrees": [
     {
       "adresse": "/admin/utilisateurs",
@@ -40,8 +40,9 @@
     "nom": "Boîte de réception",
     "quoi": "Une file de travail à gauche, l'élément courant ouvert à droite. On traite du haut vers le bas.",
     "verdict": "C'est la direction que le produit suit. Les écrans livrés en partent.",
-    "fichier": "maquettes/03-inbox-zero.html",
-    "ouvrable_par_le_client": true
+    "ouvrable_par_le_client": true,
+    "ou": "maquettes/les-cinq-directions.html",
+    "comment": "Ouvrez ce document : les cinq directions y sont, dans la section « Voir les maquettes »."
   },
   "explorees_et_ecartees": [
     {
@@ -49,32 +50,36 @@
       "nom": "Liste de tâches priorisée",
       "quoi": "Une liste verticale de cartes, la plus urgente en tête.",
       "verdict": "Écartée comme direction propre : sans panneau de détail, chaque tâche demande d'ouvrir puis de revenir.",
-      "fichier": "maquettes/01-todo-priorisee.html",
-      "ouvrable_par_le_client": true
+      "ouvrable_par_le_client": true,
+      "ou": "maquettes/les-cinq-directions.html",
+      "comment": "Ouvrez ce document : les cinq directions y sont, dans la section « Voir les maquettes »."
     },
     {
       "statut": "ecartee",
       "nom": "Tableau par étape",
       "quoi": "Une colonne par étape du processus, les dossiers glissent de l'une à l'autre.",
       "verdict": "Écartée. Elle montre où sont les dossiers, pas ce qu'il y a à faire — et le travail du client est une suite de gestes, pas un déplacement de cartes.",
-      "fichier": "maquettes/02-kanban-par-etape.html",
-      "ouvrable_par_le_client": true
+      "ouvrable_par_le_client": true,
+      "ou": "maquettes/les-cinq-directions.html",
+      "comment": "Ouvrez ce document : les cinq directions y sont, dans la section « Voir les maquettes »."
     },
     {
       "statut": "absorbee",
       "nom": "Assistant plein écran",
       "quoi": "Une seule tâche à l'écran, un seul geste attendu.",
       "verdict": "Absorbée dans la direction retenue comme mode de concentration. L'idée n'est pas perdue : elle y vit.",
-      "fichier": "maquettes/04-assistant-plein-ecran.html",
-      "ouvrable_par_le_client": true
+      "ouvrable_par_le_client": true,
+      "ou": "maquettes/les-cinq-directions.html",
+      "comment": "Ouvrez ce document : les cinq directions y sont, dans la section « Voir les maquettes »."
     },
     {
       "statut": "absorbee",
       "nom": "Poste dense",
       "quoi": "La file, la tâche et le contexte du dossier, tout à l'écran en même temps.",
       "verdict": "Absorbée dans la direction retenue comme variante pour les niveaux élevés, qui arbitrent et ont besoin de tout voir.",
-      "fichier": "maquettes/05-cockpit-dense.html",
-      "ouvrable_par_le_client": true
+      "ouvrable_par_le_client": true,
+      "ou": "maquettes/les-cinq-directions.html",
+      "comment": "Ouvrez ce document : les cinq directions y sont, dans la section « Voir les maquettes »."
     }
   ],
   "decision": {
@@ -82,6 +87,19 @@
     "ou": "Décision de projet P-20260728-0002, statut accepté",
     "confirmee_le": "2026-08-05",
     "par": "Maxime, après relecture de la maquette"
+  },
+  "ou_vivent_les_sources": {
+    "depot": "sibelanger",
+    "acces": "PRIVÉ — inatteignable, ni par le client ni par cet outil.",
+    "ne_pas_faire": "Ne proposez jamais de cloner un dépôt, d'en chercher l'adresse, ni de connecter un dossier local : rien de tout cela ne peut aboutir chez le client. Tout ce qui est nécessaire est DANS cette extension.",
+    "pourquoi_la_reference_existe": "Elle dit de quel état du code cette copie a été tirée, pour que nous puissions le retrouver de notre côté. Elle n'est pas une adresse."
+  },
+  "fraicheur": {
+    "nature": "instantané",
+    "fige_le": "2026-08-05",
+    "revision": "5fa636f",
+    "l_outil_sait_il_s_il_est_perime": false,
+    "quoi_dire_au_client": "Ce que vous voyez a été figé à la date ci-dessus. Cette extension ne peut pas savoir si une version plus récente existe — demandez-le à l'équipe, elle vous remettra une copie à jour."
   },
   "regles_d_usage": {
     "point_de_depart_autorise": "Une interface LIVRÉE, ou la direction RETENUE. Le client dit « celle-là, mais avec X » et la demande porte l'écran de départ.",
