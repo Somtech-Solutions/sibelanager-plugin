@@ -4,7 +4,7 @@
 > Toute modification à la main sera écrasée à la prochaine dérivation, et fera
 > rougir `scripts/verifier-atelier.mjs`.
 
-**Dérivé le** 2026-08-05 · **révision du dépôt** `5fa636f`
+**Dérivé le** 2026-08-05 · **révision du dépôt** `76ce5f0`
 
 ## Ce que l'atelier confronte à quoi
 
