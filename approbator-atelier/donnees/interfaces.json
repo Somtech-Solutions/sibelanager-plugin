@@ -1,0 +1,96 @@
+{
+  "$avertissement": "FICHIER DÉRIVÉ — écrit par scripts/derive-interfaces-atelier.mjs. Toute modification à la main sera écrasée, et fera rougir scripts/verifier-atelier.mjs.",
+  "derive_le": "2026-08-05",
+  "revision_depot": "096a600",
+  "livrees": [
+    {
+      "adresse": "/admin/utilisateurs",
+      "nom": "Utilisateurs",
+      "ouvrable_par_le_client": false
+    },
+    {
+      "adresse": "/connexion",
+      "nom": "Connexion",
+      "ouvrable_par_le_client": false
+    },
+    {
+      "adresse": "/dossiers/[id]",
+      "nom": "Dossier",
+      "ouvrable_par_le_client": false
+    },
+    {
+      "adresse": "/file",
+      "nom": "Ma file",
+      "ouvrable_par_le_client": false
+    },
+    {
+      "adresse": "/tableau-de-bord",
+      "nom": "Tableau de bord",
+      "ouvrable_par_le_client": false
+    }
+  ],
+  "aiguillages": [
+    {
+      "adresse": "/",
+      "quoi": "redirige vers un autre écran"
+    }
+  ],
+  "direction_retenue": {
+    "statut": "retenue",
+    "nom": "Boîte de réception",
+    "quoi": "Une file de travail à gauche, l'élément courant ouvert à droite. On traite du haut vers le bas.",
+    "verdict": "C'est la direction que le produit suit. Les écrans livrés en partent.",
+    "fichier": "maquettes/03-inbox-zero.html",
+    "ouvrable_par_le_client": true
+  },
+  "explorees_et_ecartees": [
+    {
+      "statut": "ecartee",
+      "nom": "Liste de tâches priorisée",
+      "quoi": "Une liste verticale de cartes, la plus urgente en tête.",
+      "verdict": "Écartée comme direction propre : sans panneau de détail, chaque tâche demande d'ouvrir puis de revenir.",
+      "fichier": "maquettes/01-todo-priorisee.html",
+      "ouvrable_par_le_client": true
+    },
+    {
+      "statut": "ecartee",
+      "nom": "Tableau par étape",
+      "quoi": "Une colonne par étape du processus, les dossiers glissent de l'une à l'autre.",
+      "verdict": "Écartée. Elle montre où sont les dossiers, pas ce qu'il y a à faire — et le travail du client est une suite de gestes, pas un déplacement de cartes.",
+      "fichier": "maquettes/02-kanban-par-etape.html",
+      "ouvrable_par_le_client": true
+    },
+    {
+      "statut": "absorbee",
+      "nom": "Assistant plein écran",
+      "quoi": "Une seule tâche à l'écran, un seul geste attendu.",
+      "verdict": "Absorbée dans la direction retenue comme mode de concentration. L'idée n'est pas perdue : elle y vit.",
+      "fichier": "maquettes/04-assistant-plein-ecran.html",
+      "ouvrable_par_le_client": true
+    },
+    {
+      "statut": "absorbee",
+      "nom": "Poste dense",
+      "quoi": "La file, la tâche et le contexte du dossier, tout à l'écran en même temps.",
+      "verdict": "Absorbée dans la direction retenue comme variante pour les niveaux élevés, qui arbitrent et ont besoin de tout voir.",
+      "fichier": "maquettes/05-cockpit-dense.html",
+      "ouvrable_par_le_client": true
+    }
+  ],
+  "decision": {
+    "quoi": "La direction d'interface retenue pour Approbator est la boîte de réception. Tous les écrans du produit, ainsi que les gabarits de l'atelier confié au client, partent de cette direction.",
+    "ou": "Décision de projet P-20260728-0002, statut accepté",
+    "confirmee_le": "2026-08-05",
+    "par": "Maxime, après relecture de la maquette"
+  },
+  "regles_d_usage": {
+    "point_de_depart_autorise": "Une interface LIVRÉE, ou la direction RETENUE. Le client dit « celle-là, mais avec X » et la demande porte l'écran de départ.",
+    "point_de_depart_interdit": "Une direction ÉCARTÉE ou ABSORBÉE. Composer à partir d'elle produirait un écran que personne ne construira. Elles s'affichent avec leur verdict, elles ne se proposent pas.",
+    "rendu_des_pages_livrees": "Non disponible. Ce sont des pages qui exigent un serveur et une session ; l'atelier ne peut que les nommer et les décrire. Ne pas promettre de vignette."
+  },
+  "couverture": {
+    "livrees": 5,
+    "aiguillages": 1,
+    "ecartees": 4
+  }
+}
