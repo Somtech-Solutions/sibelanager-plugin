@@ -1,7 +1,7 @@
 {
   "$avertissement": "FICHIER DÉRIVÉ — écrit par scripts/derive-referentiel-atelier.mjs. Toute modification à la main sera écrasée, et fera rougir scripts/verifier-atelier.mjs.",
   "derive_le": "2026-08-05",
-  "revision_depot": "096a600",
+  "revision_depot": "5fa636f",
   "ontologie": {
     "version": "0.2.0",
     "date": "2026-07-31",
