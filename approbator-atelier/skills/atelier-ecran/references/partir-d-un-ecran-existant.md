@@ -23,6 +23,30 @@ bonne nouvelle, pas une fin de non-recevoir :
 > direz ce qui vous manque dessus, et l'équipe saura exactement quoi
 > modifier. »*
 
+## Montrez-lui l'écran, ne vous contentez pas de le nommer
+
+Chaque interface livrée porte, dans `donnees/interfaces.json`, le champ
+`ou` : le chemin d'une **copie consultable** de cet écran. Donnez-le.
+
+Le nommer suffisait à éviter qu'elle le redessine ; le lui **montrer**
+est ce qui rend sa demande précise. Devant l'écran, elle ne dit plus
+*« je voudrais un tableau des dossiers »*, elle dit *« cette colonne-là,
+je la veux avant celle-ci »* — et c'est une demande qu'on peut exécuter.
+
+⛔ **Et dites les trois réserves, toujours les trois.** Une copie montrée
+sans elles se fait prendre pour une capture de SON application, avec SES
+dossiers — et elle validerait une image qui n'est pas la sienne. Ce
+serait le défaut d'origine sous une forme plus crédible qu'avant :
+
+1. **ce ne sont pas ses données** — un jeu d'essai, aucune de ces
+   personnes n'existe ;
+2. **rien n'est cliquable**, sauf le passage d'un écran à l'autre ;
+3. **c'est un instantané** — l'atelier ne peut pas savoir si
+   l'application a changé depuis.
+
+Ces trois réserves sont déjà écrites en tête de chaque copie : vous les
+répétez, vous ne les remplacez pas.
+
 ## Ce qui peut servir de point de départ
 
 | | Point de départ ? |
