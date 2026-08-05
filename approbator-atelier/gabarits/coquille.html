@@ -1,0 +1,1078 @@
+<!doctype html>
+<html lang="fr-CA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>__TITRE__</title>
+<!-- ═══════════════════════════════════════════════════════════════════
+     COQUILLE DÉRIVÉE — plugin approbator-atelier.
+     Écrite par scripts/derive-catalogue-atelier.mjs. Ne pas modifier ici.
+     Fichier AUTONOME : styles et images en ligne, aucune requête réseau,
+     aucun fichier voisin nécessaire.
+     ═══════════════════════════════════════════════════════════════════ -->
+<style>
+/* =====================================================================
+   SIB — Configuration de thème · tokens de marque
+   Story A1 · T-20260730-0024 · EF-55 (identité visuelle) · EF-04 (WCAG 2.1 AA)
+   Projet P-20260728-0002 · module Approbation des baux (Approbator)
+
+   ---------------------------------------------------------------------
+   ⛔ RÈGLE OPPOSABLE, INSCRITE ICI ET PAS SEULEMENT DANS LA DOCUMENTATION
+   ---------------------------------------------------------------------
+   Les deux GRIS DE LA MARQUE sont INTERDITS POUR DU TEXTE :
+
+       --sib-gris-500     #878786   3,60:1 sur blanc  → ÉCHOUE AA (il faut 4,5:1)
+       --sib-gris-ui-500  #8a8a8d   3,44:1 sur blanc  → ÉCHOUE AA
+
+   Ils restent utilisables pour : BORDURES, ICÔNES DÉCORATIVES et FONDS.
+   Pour du texte gris, utiliser --sib-gris-texte-700 (#57575a · 7,20:1 sur blanc,
+   6,55:1 sur #f4f4f4), qui est le gris de marque assombri jusqu'à passer AA.
+
+   Motif : sur un site vitrine, ces gris servent des libellés de 16 px et ça
+   passe. Dans une file de tâches travaillée 7 j/7, en 13-14 px, avec des dates
+   d'échéance et des scores de crédit à lire vite, ça ne passe pas.
+
+   ---------------------------------------------------------------------
+   PROVENANCE — palette RELEVÉE, jamais devinée
+   ---------------------------------------------------------------------
+   Source 1 : le bundle CSS du thème WordPress « beet » de sibelanger.com,
+              servi sous /app/litespeed/css/<hash>.css. Les valeurs sont
+              comptées et contextualisées par sélecteur, pas échantillonnées
+              au hasard. ⚠ L'URL contient un hash de contenu : elle change au
+              prochain déploiement du site. Re-résoudre le chemin
+              /app/litespeed/css/ depuis la balise <link> de la page, jamais
+              l'URL en dur.
+   Source 2 : les pixels des trois logos officiels, échantillonnés exactement
+              (sans quantification). Vérification refaite indépendamment le
+              2026-07-30 : logo.jpg = #000000 36,3 % · #02305d 32,1 % ·
+              #878786 31,6 %. Le #02305d du logo et le #03305d du CSS sont la
+              même couleur à un point près (compression JPEG d'origine) —
+              c'est la valeur CSS qui fait foi pour l'écran.
+
+   La marque SIB est BICHROME : un bleu marine et un gris. Le nom du fichier
+   « 2-colors-vertical-logo.png » le confirme.
+
+   ---------------------------------------------------------------------
+   ⛔ CE QUI N'EST PAS DE LA MARQUE ET NE DOIT JAMAIS ENTRER ICI
+   ---------------------------------------------------------------------
+   #c02b0a · #e20231 · #607382 · #2f4054 · toute la famille .gf_alert_*
+   (#cbeca0, #faf2f5, #fffbcc, #d1e4f3) apparaissent dans le bundle mais
+   viennent TOUTES du plugin Gravity Forms, jamais d'un sélecteur du thème
+   « beet ». Les prendre pour la palette SIB, ce serait importer la charte
+   d'un plugin WordPress dans une application métier.
+
+   ---------------------------------------------------------------------
+   ⚠️ DEUX ALERTES À PORTER AU CLIENT
+   ---------------------------------------------------------------------
+   1. Les deux gris de la marque échouent AA pour du texte (voir la règle
+      ci-dessus). C'est une contrainte d'accessibilité, pas une préférence.
+   2. AUCUN LOGO N'EST VECTORIEL. Le PNG de 502 px de large sera flou sur un
+      écran haute densité à taille d'en-tête. DEMANDER LE SVG À SIB — deux
+      minutes de demande qui évitent une dette permanente.
+
+   ---------------------------------------------------------------------
+   TYPOGRAPHIE — décision en attente de Maxime
+   ---------------------------------------------------------------------
+   Le thème public utilise Arial : police système par défaut, pas un choix de
+   marque, et elle tient mal la densité d'un back-office. L'analyse recommande
+   Inter (déjà chargée par le site public, neutre, excellente en petites
+   tailles et en chiffres tabulaires — ce qui compte ici : scores, ratios,
+   échéances). Décision VISIBLE PAR LE CLIENT, donc à trancher par Maxime.
+   En attendant, la pile ci-dessous prend Inter si le poste l'a, et retombe
+   proprement sinon — sans aucune dépendance réseau.
+   ===================================================================== */
+
+:root {
+  /* ---- MARQUE — relevé ✅ (9 tokens) ------------------------------- */
+  --sib-marine-700:     #03305d; /* CSS .button{background}, 106× · 13,25:1 /blanc → AAA   */
+  --sib-gris-500:       #878786; /* logo, pixels exacts   ·  3,60:1 → BORDURES ET FONDS SEULEMENT */
+  --sib-gris-ui-500:    #8a8a8d; /* CSS .link{color}, 33× ·  3,44:1 → BORDURES ET FONDS SEULEMENT */
+  --sib-encre-900:      #1c1c1c; /* CSS body{color}       · 17,04:1 /blanc → AAA           */
+  --sib-nuit-900:       #181d24; /* CSS .footer__top{background}                           */
+  --sib-noir:           #000000; /* logo                                                   */
+  --sib-surface-100:    #f4f4f4; /* CSS .filter{background}                                */
+  --sib-bordure-300:    #b3b3b3; /* CSS var(--Border,#b3b3b3) — seul token nommé du thème  */
+  --sib-blanc:          #ffffff; /* CSS body{background}                                   */
+
+  /* ---- DÉRIVÉS — calculés, à faire valider 🧩 (4 tokens) ----------- */
+  --sib-marine-900:     #00203d; /* marine assombri (survol)      · 16,48:1 /blanc → AAA   */
+  --sib-marine-500:     #0a4a86; /* marine éclairci (liens, focus)·  8,99:1 /blanc → AAA   */
+  --sib-marine-050:     #e6ecf3; /* teinte (ligne sélectionnée)   · marine dessus 11,14:1  */
+  --sib-gris-texte-700: #57575a; /* gris de marque assombri JUSQU'À PASSER AA · 7,20:1     */
+
+  /* ---- ÉTATS SÉMANTIQUES — inventés, AUCUNE SOURCE DANS LA MARQUE 🧩
+     SIB n'a pas de couleur sémantique : pas de vert « conforme », pas de
+     rouge « bloquant », pas de jaune « en attente ». Ceux-ci sont dérivés,
+     désaturés pour cohabiter avec un marine dominant, et tous vérifiés AA
+     au minimum. EF-55 exige qu'ils soient documentés avec leur ratio —
+     d'où la page tokens.html, qui les CALCULE au lieu de les recopier.
+
+     ⚠️ CONTRAINTE MÉTIER SUR LE JAUNE, à trancher avant le build : le mot
+     « jaune » a un sens précis et durable chez SIB — c'est la réservation
+     dans le Tableau des Locations, citée telle quelle dans 12 tâches de
+     conformité du classeur MASTER (« Le logement est réservé en jaune »).
+     Si l'ambre porte « échéance », il ne peut pas porter aussi
+     « réservation ». Les maquettes utilisent l'ambre pour l'ÉCHÉANCE et
+     rendent la réservation par un libellé explicite, jamais par la couleur.
+  ------------------------------------------------------------------- */
+  --sib-succes:         #0f6b3f;  --sib-succes-fond:   #e7f4ec; /* 5,81:1 → AA   */
+  --sib-alerte:         #8a3b00;  --sib-alerte-fond:   #fdf2e3; /* 7,02:1 → AAA  */
+  --sib-critique:       #b3261e;  --sib-critique-fond: #fdecea; /* 5,72:1 → AA   */
+  --sib-info:           #03305d;  --sib-info-fond:     #e6ecf3; /* 11,14:1 → AAA */
+
+  /* ---- TÉMOIN DE CONTRÔLE — volontairement dégradé -----------------
+     Ce token N'EST PAS un token de la palette. Il est introduit exprès,
+     déclaré « utilisable pour du texte » alors qu'il échoue le seuil de
+     4,5:1, pour vérifier que le contrôle de contraste de tokens.html MORD
+     réellement au lieu de recopier une table figée. S'il n'apparaît pas en
+     rouge sur la page, c'est la page qui est cassée, pas le token.
+     ⛔ Ne jamais l'utiliser dans une maquette ni dans le build.
+  ------------------------------------------------------------------- */
+  --sib-controle-degrade: #9aa7b4;
+
+  /* ---- Typographie ------------------------------------------------- */
+  --sib-police: "Inter", "Inter var", "Helvetica Neue", Arial, sans-serif;
+  --sib-police-chiffres: "Inter", "SF Mono", "Menlo", Consolas, monospace;
+
+  /* ---- Rythme ------------------------------------------------------ */
+  --sib-r1: 4px;  --sib-r2: 8px;  --sib-r3: 12px;
+  --sib-r4: 16px; --sib-r5: 24px; --sib-r6: 32px;
+  --sib-arrondi: 6px;
+  --sib-ombre: 0 1px 2px rgba(3, 48, 93, .08), 0 2px 8px rgba(3, 48, 93, .06);
+}
+
+/* =====================================================================
+   LOGOS — intégrés en data: URI pour que les maquettes soient
+   AUTOPORTANTES (aucune requête réseau, EF-54 / contrainte de l'epic).
+   Les fichiers originaux sont versionnés à côté : logo-sib.png,
+   logo-sib-blanc.png, logo-sib-vertical.png.
+   ===================================================================== */
+.sib-logo {
+  display: block;
+  width: 148px; height: 41px;
+  background: var(--logo-sib-clair) no-repeat center / contain;
+}
+.sib-logo--blanc {
+  width: 148px; height: 41px;
+  background: var(--logo-sib-blanc) no-repeat center / contain;
+}
+
+/* =====================================================================
+   SIB — logos officiels intégrés en data: URI (aucune requête réseau)
+   Story A1 · T-20260730-0024 · EF-55
+   Source : https://sibelanger.com/app/themes/beet/assets/images/
+   Fichiers originaux versionnés à côté : logo-sib.png (1046x290),
+   logo-sib-blanc.png (502x140), logo-sib-vertical.png (666x770).
+   Ici : redimensionnés à 300 px de large (taille d'en-tête @2x) pour ne
+   pas alourdir chaque maquette de 60 ko inutiles.
+   ⚠️ AUCUN N'EST VECTORIEL — demander le SVG à SIB.
+   ===================================================================== */
+
+:root {
+  /* logo trichrome (marine + gris + noir) — en-tête sur fond clair */
+  --logo-sib-clair: url("data:image/png;base64,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");
+  /* logo monochrome blanc — en-tête sur fond sib-nuit-900 / sib-marine-700 */
+  --logo-sib-blanc: url("data:image/png;base64,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");
+}
+
+/* =====================================================================
+   SIB — socle commun des 5 maquettes d'exploration UX
+   Epic E-20260730-0001 · Projet P-20260728-0002
+
+   Ce fichier porte CE QUI DOIT ÊTRE IDENTIQUE d'une maquette à l'autre :
+   l'en-tête SIB, le bandeau Loi 25, la signalétique des archétypes, celle
+   du grain de tâche, celle de bloquant/délai, les boutons et le banc
+   d'essai (largeur d'écran, niveaux de gris).
+
+   Motif : on compare des COQUILLES, pas des styles. Si chaque maquette
+   dessinait ses propres badges, la comparaison porterait sur le graphisme
+   au lieu de porter sur la structure d'interaction — et l'exercice entier
+   ne servirait à rien.
+
+   Ce que chaque maquette ajoute par-dessus : SA MISE EN PAGE. Rien d'autre.
+   ===================================================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--sib-police);
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--sib-encre-900);
+  background: #dfe3e8;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* =====================================================================
+   1 · BANC D'ESSAI — la barre noire du haut
+   Elle N'EST PAS l'application. C'est l'instrument de mesure : il sert à
+   noter les critères ⑥ (lisibilité en niveaux de gris) et ⑧ (tenue sur
+   l'écran réel) de la grille gelée, sur un fait plutôt que sur une
+   intuition. Elle disparaît en impression.
+   ===================================================================== */
+/* ⚠️ HAUTEUR ÉGALISÉE — correctif D3 de la revue indépendante.
+   La première version laissait le banc passer à la ligne. Résultat mesuré à
+   1366×768 : 92 px de banc sur #3 (deux boutons de mode en plus) contre
+   51 px sur les autres, et 105 px d'instrument contre 72 — soit **74 px de
+   handicap** sur la seule direction que l'instrument était censé mesurer
+   équitablement. Un instrument non étalonné mesure fidèlement un monde qui
+   n'existe pas : c'est exactement le défaut que ce chantier traque.
+
+   Le banc et l'encart d'instrument sont donc désormais sur UNE SEULE LIGNE,
+   à hauteur fixe et identique pour les cinq maquettes ; le débordement part
+   en défilement horizontal plutôt qu'en hauteur volée à la coquille.
+   Et le bouton « Masquer les instruments » retire les deux du flux, pour
+   qu'on puisse mesurer la coquille SANS la règle qui la mesure. */
+.banc {
+  position: sticky; top: 0; z-index: 50;
+  display: flex; flex-wrap: nowrap; align-items: center; gap: var(--sib-r4);
+  padding: var(--sib-r2) var(--sib-r4);
+  height: 51px; box-sizing: border-box;
+  overflow-x: auto; overflow-y: hidden;
+  scrollbar-width: thin;
+  background: var(--sib-nuit-900);
+  color: var(--sib-blanc);
+  font-size: 12px;
+  border-bottom: 3px solid var(--sib-marine-700);
+}
+.banc > * { flex: 0 0 auto; }
+
+/* Retire banc et instrument DU FLUX — pas seulement de la vue. C'est ce qui
+   permet de noter le critère ⑧ sur la coquille seule. */
+body.sans-instruments .banc,
+body.sans-instruments .instrument,
+body.sans-instruments .pli { display: none; }
+.banc a { color: var(--sib-blanc); }
+.banc__titre { font-weight: 700; letter-spacing: .01em; }
+.banc__titre small { display: block; font-weight: 400; opacity: .82; letter-spacing: 0; }
+.banc__groupe { display: flex; align-items: center; gap: var(--sib-r1); }
+.banc__etiquette { opacity: .82; margin-right: var(--sib-r1); }
+.banc__spacer { flex: 1 1 auto; }
+
+.banc button, .banc a.banc__lien {
+  font: inherit; font-size: 12px;
+  padding: 3px 9px;
+  border: 1px solid rgba(255,255,255,.42);
+  border-radius: var(--sib-arrondi);
+  background: transparent; color: var(--sib-blanc);
+  cursor: pointer; text-decoration: none;
+}
+.banc button:hover, .banc a.banc__lien:hover { background: rgba(255,255,255,.14); }
+.banc button[aria-pressed="true"] {
+  background: var(--sib-blanc); color: var(--sib-nuit-900);
+  border-color: var(--sib-blanc); font-weight: 700;
+}
+.banc button:focus-visible, .banc a:focus-visible {
+  outline: 3px solid #ffd479; outline-offset: 2px;
+}
+
+/* Le cadre qui simule la largeur d'écran (critère ⑧) ------------------ */
+.cadre {
+  position: relative;
+  margin: 0 auto;
+  background: var(--sib-blanc);
+  min-height: calc(100vh - 46px);
+  box-shadow: 0 0 0 1px rgba(3,48,93,.18);
+  transition: max-width .18s ease;
+  container-type: inline-size;
+}
+
+/* ---------------------------------------------------------------------
+   LA LIGNE DE PLI — correctif D3.
+   La revue a montré que le phénomène du critère ⑧ n'est PAS un seuil de
+   largeur mais une conjonction LARGEUR × HAUTEUR : à 1366×1080 rien ne
+   souffre, à 1920×768 rien ne souffre non plus, et c'est à 1366×768 que
+   l'action passe sous le pli. Le commutateur de largeur seul ne pouvait
+   pas le montrer — d'où cette règle, qui trace le bord bas d'un écran de
+   la hauteur choisie. Ce qui tombe sous la ligne est hors de vue au
+   chargement, sans défiler.
+   ------------------------------------------------------------------- */
+.pli {
+  position: absolute; left: 0; right: 0; z-index: 40;
+  border-top: 2px dashed var(--sib-critique);
+  pointer-events: none;
+  display: none;
+}
+.pli[data-actif="oui"] { display: block; }
+.pli::after {
+  content: attr(data-libelle);
+  position: absolute; right: 8px; top: 2px;
+  background: var(--sib-critique); color: var(--sib-blanc);
+  font-size: 10px; font-weight: 700; padding: 1px 7px; border-radius: 0 0 3px 3px;
+}
+.cadre[data-largeur="1920"] { max-width: 1920px; }
+.cadre[data-largeur="1440"] { max-width: 1440px; }
+.cadre[data-largeur="1366"] { max-width: 1366px; }
+.cadre[data-largeur="1280"] { max-width: 1280px; }
+/* 1072 px : seuil MESURÉ chez #3 — c'est là, et pas à 1380, que son volet
+   de détail passe sous 700 px (correctif D1). */
+.cadre[data-largeur="1072"] { max-width: 1072px; }
+
+/* Rendu en niveaux de gris (critère ⑥) --------------------------------
+   Si une information disparaît quand ce commutateur est actif, c'est
+   qu'elle était portée par la couleur seule — ce qu'EF-04 interdit. */
+body.gris .cadre { filter: grayscale(1); }
+body.gris .banc__gris-actif { display: inline; }
+.banc__gris-actif { display: none; color: #ffd479; font-weight: 700; }
+
+/* =====================================================================
+   2 · EN-TÊTE DE L'APPLICATION — identique aux 5 maquettes (EF-55)
+   ===================================================================== */
+.entete {
+  display: flex; align-items: center; gap: var(--sib-r4);
+  padding: var(--sib-r3) var(--sib-r5);
+  background: var(--sib-blanc);
+  border-bottom: 1px solid var(--sib-bordure-300);
+}
+.entete--sombre { background: var(--sib-nuit-900); color: var(--sib-blanc); }
+.entete--sombre .entete__niveau { border-color: rgba(255,255,255,.5); color: var(--sib-blanc); }
+.entete__spacer { flex: 1 1 auto; }
+.entete__niveau {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 3px 10px; border-radius: 999px;
+  border: 1px solid var(--sib-marine-700);
+  color: var(--sib-marine-700);
+  font-size: 12px; font-weight: 700;
+}
+.entete__agent { font-size: 12px; color: var(--sib-gris-texte-700); }
+.entete--sombre .entete__agent { color: #dfe3e8; }
+
+/* Bandeau Loi 25 — présent sur TOUTE maquette, jamais masquable -------- */
+.bandeau-factice {
+  display: flex; align-items: center; gap: var(--sib-r2);
+  padding: 6px var(--sib-r5);
+  background: var(--sib-alerte-fond);
+  color: var(--sib-alerte);
+  border-bottom: 1px solid var(--sib-alerte);
+  font-size: 12px; font-weight: 600;
+}
+
+/* =====================================================================
+   3 · SIGNALÉTIQUE DES SIX ARCHÉTYPES (BRD §2.2 · critère ④)
+   Chaque archétype porte UN GLYPHE et UN STYLE DE BORDURE distincts.
+   Le glyphe et la bordure survivent aux niveaux de gris ; la couleur ne
+   fait qu'accélérer la lecture. C'est l'application directe d'EF-04 :
+   « aucune information n'est portée par la couleur seule ».
+   ===================================================================== */
+.arch {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 1px 8px 1px 6px;
+  border-radius: 3px;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: .02em; white-space: nowrap;
+  background: var(--sib-blanc);
+}
+.arch__g { font-size: 13px; line-height: 1; }
+
+/* confirmation pré-remplie — glyphe ✓, bordure pleine */
+.arch--confirmation { border: 1px solid var(--sib-succes); color: var(--sib-succes); background: var(--sib-succes-fond); }
+/* automatique — glyphe ⚙, chip plein (l'app a déjà agi, rien à faire) */
+.arch--automatique  { border: 1px solid var(--sib-marine-700); background: var(--sib-marine-700); color: var(--sib-blanc); }
+/* vérification externe — glyphe ⌕, bordure double */
+.arch--verification { border: 3px double var(--sib-marine-700); color: var(--sib-marine-700); background: var(--sib-marine-050); }
+/* décision — glyphe ⚖, bordure épaisse (le vrai jugement humain) */
+.arch--decision     { border: 2px solid var(--sib-encre-900); color: var(--sib-encre-900); background: var(--sib-blanc); }
+/* appel — glyphe ☎, bordure pointillée */
+.arch--appel        { border: 2px dotted var(--sib-marine-700); color: var(--sib-marine-700); background: var(--sib-blanc); }
+/* note — glyphe ✎, bordure tiretée légère */
+.arch--note         { border: 1px dashed var(--sib-gris-texte-700); color: var(--sib-gris-texte-700); background: var(--sib-surface-100); }
+
+/* =====================================================================
+   4 · GRAIN DE LA TÂCHE (EF-02 · arbitrage du 2026-07-30)
+   « La file ne doit JAMAIS confondre une carte de personne et une carte
+   de dossier — et ça doit se voir sans ouvrir la carte. »
+
+   Trois marqueurs redondants, exprès :
+     a) le GLYPHE          ( ◉ personne  /  ▤ dossier )
+     b) le LIBELLÉ         ( le nom de la personne / le n° de bail )
+     c) le FILET DE GAUCHE ( plein pour personne, hachuré pour dossier )
+   Redondance assumée : à trois marqueurs dont deux non colorés, la
+   distinction survit aux niveaux de gris ET à la densité du cockpit.
+   ===================================================================== */
+.grain {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 11px; font-weight: 700; letter-spacing: .02em;
+  padding: 1px 7px; border-radius: 999px; white-space: nowrap;
+}
+.grain--personne { background: var(--sib-marine-050); color: var(--sib-marine-900); border: 1px solid var(--sib-marine-500); }
+.grain--dossier  { background: var(--sib-surface-100); color: var(--sib-encre-900); border: 1px dashed var(--sib-gris-texte-700); }
+.grain__g { font-size: 12px; line-height: 1; }
+
+/* Le filet de gauche, porté par la carte ou la ligne elle-même */
+.f-personne { border-left: 5px solid var(--sib-marine-700); }
+.f-dossier  {
+  border-left: 5px solid transparent;
+  border-image: repeating-linear-gradient(
+    45deg, var(--sib-gris-texte-700) 0 3px, transparent 3px 6px) 5;
+}
+
+/* =====================================================================
+   5 · BLOQUANT / NON BLOQUANT / DÉLAI (EF-47 · critère ⑥)
+   Chaque état porte un GLYPHE et un MOT, jamais une couleur seule.
+   ===================================================================== */
+.etat {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 1px 8px; border-radius: 3px;
+  font-size: 11px; font-weight: 700; white-space: nowrap;
+}
+.etat--bloquant     { background: var(--sib-critique-fond); color: var(--sib-critique); border: 2px solid var(--sib-critique); }
+.etat--non-bloquant { background: var(--sib-blanc);         color: var(--sib-gris-texte-700); border: 1px solid var(--sib-bordure-300); }
+.etat--delai        { background: var(--sib-alerte-fond);   color: var(--sib-alerte);   border: 1px solid var(--sib-alerte); }
+.etat--fait         { background: var(--sib-succes-fond);   color: var(--sib-succes);   border: 1px solid var(--sib-succes); }
+
+/* Urgence d'emménagement — le tri d'EF-03 rendu lisible sans clic ------ */
+.urgence {
+  display: inline-flex; align-items: baseline; gap: 4px;
+  font-size: 11px; font-weight: 700; white-space: nowrap;
+  padding: 1px 7px; border-radius: 3px;
+  border: 1px solid currentColor;
+}
+.urgence--imminente { color: var(--sib-critique); background: var(--sib-critique-fond); }
+.urgence--proche    { color: var(--sib-alerte);   background: var(--sib-alerte-fond); }
+.urgence--normale   { color: var(--sib-gris-texte-700); background: var(--sib-blanc); border-color: var(--sib-bordure-300); }
+
+/* =====================================================================
+   6 · BOUTONS ET CLAVIER (EF-04 — « en 1 clic » = UN SEUL GESTE, et le
+   geste équivalent au clavier existe sur toute confirmation et décision)
+   ===================================================================== */
+.btn {
+  font: inherit; font-weight: 700;
+  display: inline-flex; align-items: center; gap: var(--sib-r2);
+  padding: 8px 16px;
+  border-radius: var(--sib-arrondi);
+  border: 1px solid var(--sib-marine-700);
+  background: var(--sib-blanc); color: var(--sib-marine-700);
+  cursor: pointer;
+}
+.btn--primaire { background: var(--sib-marine-700); color: var(--sib-blanc); }
+.btn--primaire:hover { background: var(--sib-marine-900); border-color: var(--sib-marine-900); }
+.btn--fantome  { border-color: var(--sib-bordure-300); color: var(--sib-gris-texte-700); }
+.btn--danger   { border-color: var(--sib-critique); color: var(--sib-critique); }
+.btn--danger:hover { background: var(--sib-critique); color: var(--sib-blanc); }
+.btn--grand    { padding: 14px 26px; font-size: 17px; }
+.btn:hover     { background: var(--sib-marine-050); }
+.btn--primaire:hover { background: var(--sib-marine-900); }
+
+/* Anneau de focus visible partout — condition de « se parcourt sans souris » */
+:where(a, button, [tabindex]):focus-visible,
+.ligne:focus-visible, .carte:focus-visible {
+  outline: 3px solid var(--sib-marine-500);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+kbd {
+  font-family: var(--sib-police-chiffres); font-size: 11px; font-weight: 700;
+  padding: 1px 6px; border-radius: 4px;
+  border: 1px solid var(--sib-gris-texte-700);
+  border-bottom-width: 2px;
+  background: var(--sib-surface-100); color: var(--sib-encre-900);
+}
+.barre-clavier {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--sib-r4);
+  padding: 6px var(--sib-r5);
+  background: var(--sib-surface-100);
+  border-top: 1px solid var(--sib-bordure-300);
+  font-size: 11px; color: var(--sib-gris-texte-700);
+}
+
+/* =====================================================================
+   7 · DONNÉE QUI JUSTIFIE LA TÂCHE (EF-04 · critère ②)
+   Le « bloc de justification » : la donnée que l'agent doit lire AVANT de
+   confirmer. Il est identique d'une maquette à l'autre — ce qui change
+   d'une coquille à l'autre, c'est OÙ il tient et COMMENT il se comprime.
+   ===================================================================== */
+.justif {
+  background: var(--sib-surface-100);
+  border: 1px solid var(--sib-bordure-300);
+  border-radius: var(--sib-arrondi);
+  padding: var(--sib-r3);
+}
+.justif__titre {
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .05em; color: var(--sib-gris-texte-700);
+  margin: 0 0 var(--sib-r2);
+}
+.champs { display: grid; grid-template-columns: auto 1fr; gap: 3px var(--sib-r3); margin: 0; }
+.champs dt { color: var(--sib-gris-texte-700); font-size: 12px; }
+.champs dd { margin: 0; font-weight: 600; font-variant-numeric: tabular-nums; }
+
+.chiffre { font-family: var(--sib-police-chiffres); font-variant-numeric: tabular-nums; }
+.muted   { color: var(--sib-gris-texte-700); }   /* JAMAIS --sib-gris-500 : il échoue AA */
+.petit   { font-size: 12px; }
+.tres-petit { font-size: 11px; }
+
+/* Score de crédit — présenté avec sa bande, jamais la couleur seule ---- */
+.score { display: flex; align-items: baseline; gap: var(--sib-r2); }
+.score__val { font-family: var(--sib-police-chiffres); font-size: 26px; font-weight: 700; line-height: 1; }
+.score__bande { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; border: 1px solid currentColor; }
+.score__bande--bon    { color: var(--sib-succes);   background: var(--sib-succes-fond); }
+.score__bande--moyen  { color: var(--sib-alerte);   background: var(--sib-alerte-fond); }
+.score__bande--faible { color: var(--sib-critique); background: var(--sib-critique-fond); }
+
+/* Tableau judiciaire — le code couleur du rapport d'origine est conservé
+   (EF-10), MAIS doublé d'un mot : rouge=coupable, jaune=en cours,
+   gris=acquitté ne survivraient pas aux niveaux de gris tout seuls. */
+.tbl { width: 100%; border-collapse: collapse; font-size: 12px; }
+.tbl th, .tbl td { text-align: left; padding: 5px 8px; border-bottom: 1px solid var(--sib-bordure-300); vertical-align: top; }
+.tbl th { font-size: 11px; text-transform: uppercase; letter-spacing: .04em; color: var(--sib-gris-texte-700); }
+.tbl tr.j-rouge td:first-child { border-left: 4px solid var(--sib-critique); }
+.tbl tr.j-jaune td:first-child { border-left: 4px solid var(--sib-alerte); }
+.tbl tr.j-gris  td:first-child { border-left: 4px solid var(--sib-gris-texte-700); }
+
+/* Ruban « dossier sale » — le jeu d'essai en porte deux, exprès -------- */
+.sale {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 3px;
+  background: repeating-linear-gradient(45deg, var(--sib-alerte-fond) 0 6px, #f7e6c8 6px 12px);
+  color: var(--sib-alerte); border: 1px solid var(--sib-alerte);
+}
+
+/* Regroupement des instances de grain personne (EF-03 · hypothèse à
+   éprouver : « le dossier à 4 personnes ne remplit pas l'écran ») ------ */
+.groupe {
+  border: 1px solid var(--sib-marine-500);
+  border-left-width: 5px;
+  border-radius: var(--sib-arrondi);
+  background: var(--sib-blanc);
+  margin-bottom: var(--sib-r3);
+  overflow: hidden;
+}
+.groupe__entete {
+  display: flex; align-items: center; gap: var(--sib-r2); flex-wrap: wrap;
+  padding: var(--sib-r2) var(--sib-r3);
+  background: var(--sib-marine-050);
+  border-bottom: 1px solid var(--sib-marine-500);
+  font-size: 12px;
+}
+.groupe__compte { font-weight: 700; color: var(--sib-marine-900); }
+
+/* Note d'observation — ce que la maquette AVOUE d'elle-même ------------
+   Chaque maquette porte au moins une de ces notes. C'est la matière de
+   l'arbitrage : une maquette qui ne dit pas où elle plie ne se compare pas. */
+.observation {
+  margin: var(--sib-r4) var(--sib-r5);
+  padding: var(--sib-r3) var(--sib-r4);
+  border-left: 5px solid var(--sib-marine-700);
+  background: var(--sib-marine-050);
+  font-size: 12.5px;
+}
+.observation__t {
+  display: block; font-weight: 700; margin-bottom: 4px;
+  text-transform: uppercase; font-size: 11px; letter-spacing: .05em;
+  color: var(--sib-marine-900);
+}
+.observation--rouge { border-left-color: var(--sib-critique); background: var(--sib-critique-fond); }
+.observation--rouge .observation__t { color: var(--sib-critique); }
+
+@media print { .banc, .observation { display: none; } .cadre { box-shadow: none; max-width: none; } }
+
+/* Compteur de gestes — critère ③ (« compter », pas estimer) --------- */
+.compteur {
+  font-size: 12px;
+  padding: var(--sib-r2) var(--sib-r3);
+  border: 1px dashed var(--sib-marine-500);
+  border-radius: var(--sib-arrondi);
+  background: var(--sib-marine-050);
+  color: var(--sib-marine-900);
+}
+
+/* =====================================================================
+   INSTRUMENTS DE LA MAQUETTE — jamais des éléments de l'application
+   Tout ce qui sert à DÉMONTRER (sauter d'un archétype à l'autre, compter
+   les gestes, forcer une largeur) porte une bordure tiretée et le mot
+   « instrument ». Sans cette distinction visuelle, un lecteur pressé
+   prendrait un outil de démonstration pour une fonction du produit — et
+   l'arbitrage porterait sur une interface qui n'existe pas.
+   ===================================================================== */
+/* Hauteur FIXE et identique aux cinq maquettes — correctif D3. */
+.instrument {
+  display: flex; flex-wrap: nowrap; align-items: center; gap: var(--sib-r2);
+  padding: var(--sib-r2) var(--sib-r5);
+  height: 72px; box-sizing: border-box;
+  overflow-x: auto; overflow-y: hidden;
+  scrollbar-width: thin;
+  background: repeating-linear-gradient(45deg, #eef1f5 0 8px, #e7ebf1 8px 16px);
+  border-bottom: 2px dashed var(--sib-marine-500);
+  font-size: 12px;
+}
+.instrument > * { flex: 0 0 auto; }
+.instrument .compteur { white-space: nowrap; }
+.instrument__t {
+  font-weight: 700; text-transform: uppercase; letter-spacing: .05em;
+  font-size: 10px; color: var(--sib-marine-900);
+  border: 1px dashed var(--sib-marine-500); border-radius: 3px; padding: 1px 6px;
+}
+.instrument button {
+  font: inherit; font-size: 12px; cursor: pointer;
+  padding: 3px 9px; border-radius: var(--sib-arrondi);
+  border: 1px solid var(--sib-marine-500); background: var(--sib-blanc);
+  color: var(--sib-marine-900);
+}
+.instrument button:hover { background: var(--sib-marine-050); }
+
+/* ---------------------------------------------------------------------
+   AVERTISSEMENT DE LARGEUR — correctif D1.
+   ⛔ AUCUN SEUIL GLOBAL ICI, et c'est délibéré. La première version portait
+   un `@container (max-width: 1380px)` commun aux cinq maquettes. Ce seuil
+   est EXACT pour #5 — à 1380 px son troisième panneau se replie réellement —
+   et il avait été TRANSPOSÉ à #3, où il est faux d'environ 300 px : mesuré
+   en fenêtre réelle, le volet de détail de #3 ne passe sous 700 px qu'à
+   **1072 px**, et rien n'y déborde horizontalement jusqu'à 1024 px inclus.
+
+   Une alerte fausse est pire qu'une alerte absente : elle sera lue comme
+   une mesure. Chaque maquette déclare donc désormais SON seuil, mesuré chez
+   elle, dans sa propre feuille de style.
+   ------------------------------------------------------------------- */
+.alerte-largeur { display: none; }
+.alerte-largeur {
+  align-items: center; gap: var(--sib-r2);
+  padding: 6px var(--sib-r5);
+  background: var(--sib-critique-fond); color: var(--sib-critique);
+  border-bottom: 2px solid var(--sib-critique);
+  font-size: 12px; font-weight: 600;
+}
+
+
+/* ── Boîte de réception — la file à gauche, l'élément courant à droite ── */
+*, *::before, *::after { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--sib-fond, #f4f4f4);
+  color: var(--sib-encre, #1b1b1d);
+  font-family: var(--sib-police, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif);
+  font-size: 14px; line-height: 1.45;
+}
+.at-entete {
+  display: flex; align-items: center; gap: 16px;
+  padding: 14px 20px; background: var(--sib-marine, #03305d); color: #fff;
+}
+/* Le logo vient de la variable de marque --logo-sib-blanc : la version pour
+   fond foncé, l'en-tête étant marine. On la NOMME plutôt que de prendre
+   « le premier data: URI trouvé » : les jetons en portent deux, et le
+   premier est celui des fonds clairs — noir sur marine, illisible.
+   ⚠️ Aucun accent grave dans ce bloc : il vit dans un gabarit JS, et un
+   accent grave y fermerait le gabarit. */
+.at-entete .at-logo {
+  height: 30px; width: 132px; flex: none; display: block;
+  background-image: var(--logo-sib-blanc);
+  background-repeat: no-repeat; background-position: left center;
+  background-size: contain;
+}
+.at-entete h1 { font-size: 16px; margin: 0; font-weight: 600; letter-spacing: .01em; }
+/* Le ruban des dix étapes — le client voit SON processus, et où il est
+   dedans. C'est ce qui permet de SITUER l'écran : sans lui, une maquette
+   est jolie et inutilisable.
+
+   ⚠️ IL SE REPLIE, IL NE DEFILE PAS. Mesuré : sur une seule ligne le ruban
+   réclame 1588 px, donc un portable de 13 pouces n'en montre que 7 sur 10,
+   derrière une barre de défilement d'un pixel invisible au repos sur macOS.
+   Le client compte alors sept etapes et conclut que le catalogue est cassé
+   — alors que les données sont justes. Un repli n'a pas ce défaut : les dix
+   sont toujours là, quelle que soit la largeur. */
+.at-ruban {
+  background: #fff;
+  border-bottom: 1px solid var(--sib-bordure, #d8d8da);
+}
+.at-ruban li { list-style: none; }
+.at-ruban ol {
+  display: flex; flex-wrap: wrap; margin: 0; padding: 0; list-style: none;
+}
+.at-etape-jeton {
+  display: block; padding: 9px 14px; font-size: 12.5px; white-space: nowrap;
+  color: var(--sib-gris-texte-700, #57575a);
+  border-right: 1px solid var(--sib-bordure, #d8d8da);
+  border-bottom: 1px solid var(--sib-bordure, #d8d8da);
+}
+.at-etape-jeton[aria-current="step"] {
+  background: var(--sib-marine, #03305d); color: #fff; font-weight: 600;
+}
+.at-etape-jeton[data-hors-v1="true"]::after {
+  content: " · hors V1"; font-size: 10.5px; opacity: .8;
+}
+.at-app { display: grid; grid-template-columns: minmax(300px, 400px) 1fr; min-height: calc(100vh - 116px); }
+.at-file { border-right: 1px solid var(--sib-bordure, #d8d8da); background: #fff; overflow-y: auto; }
+.at-file-entete {
+  padding: 12px 16px; border-bottom: 1px solid var(--sib-bordure, #d8d8da);
+  font-size: 12px; text-transform: uppercase; letter-spacing: .06em;
+  color: var(--sib-gris-texte-700, #57575a);
+}
+.at-file ol { list-style: none; margin: 0; padding: 0; }
+.at-tache {
+  display: block; width: 100%; text-align: left; border: 0; background: transparent;
+  border-bottom: 1px solid var(--sib-bordure, #d8d8da); padding: 12px 16px;
+  cursor: pointer; font: inherit; color: inherit;
+}
+.at-tache:hover { background: #f7f9fc; }
+.at-tache[aria-current="true"] { background: #eef4fb; box-shadow: inset 3px 0 0 var(--sib-marine, #03305d); }
+.at-tache:focus-visible { outline: 2px solid var(--sib-marine, #03305d); outline-offset: -2px; }
+.at-ligne1 { display: flex; align-items: baseline; gap: 8px; }
+.at-glyphe { font-size: 15px; width: 1.2em; text-align: center; flex: none; }
+.at-titre { font-weight: 600; }
+.at-ligne2 {
+  margin: 4px 0 0 calc(1.2em + 8px); font-size: 12.5px;
+  color: var(--sib-gris-texte-700, #57575a);
+}
+.at-jeton {
+  display: inline-block; font-size: 11px; padding: 1px 7px; border-radius: 999px;
+  border: 1px solid var(--sib-bordure, #d8d8da); margin-right: 5px;
+  color: var(--sib-gris-texte-700, #57575a); background: #fbfbfc;
+}
+.at-jeton--bloquant { border-color: #a4242c; color: #a4242c; font-weight: 600; }
+.at-detail { padding: 22px 26px; overflow-y: auto; }
+.at-detail h2 { margin: 0 0 4px; font-size: 19px; }
+.at-detail .at-sous { color: var(--sib-gris-texte-700, #57575a); margin: 0 0 18px; }
+.at-carte {
+  background: #fff; border: 1px solid var(--sib-bordure, #d8d8da);
+  border-radius: 6px; padding: 16px 18px; margin-bottom: 14px; max-width: 720px;
+}
+.at-carte h3 { margin: 0 0 10px; font-size: 13px; text-transform: uppercase;
+  letter-spacing: .06em; color: var(--sib-gris-texte-700, #57575a); }
+.at-carte dl { display: grid; grid-template-columns: max-content 1fr; gap: 6px 18px; margin: 0; }
+.at-carte dt { color: var(--sib-gris-texte-700, #57575a); }
+.at-carte dd { margin: 0; }
+.at-geste { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
+.at-bouton {
+  font: inherit; padding: 8px 16px; border-radius: 5px; cursor: pointer;
+  border: 1px solid var(--sib-marine, #03305d);
+  background: var(--sib-marine, #03305d); color: #fff;
+}
+.at-bouton--second { background: #fff; color: var(--sib-marine, #03305d); }
+.at-bouton:focus-visible { outline: 2px solid #1b1b1d; outline-offset: 2px; }
+.at-vide { color: var(--sib-gris-texte-700, #57575a); }
+/* ── La marque hors cadre ────────────────────────────────────────────
+   Elle doit être VUE par quelqu'un qui ouvre l'écran sans savoir d'où il
+   vient. Donc : un bandeau en tête, une bordure sur tout le document, et
+   un filigrane. Les trois survivent à l'impression (@media print), et le
+   fichier étant autonome, à l'enregistrement comme à l'envoi. */
+.at-bandeau-horscadre {
+  background: #7a1a20; color: #fff; padding: 11px 20px; font-size: 13.5px;
+  border-bottom: 3px solid #4a0f13;
+  /* Le texte REVIENT A LA LIGNE. Mesure a l'impression : sur plusieurs
+     depassements, une seule ligne sortait de la page et le message etait
+     coupe au bord droit. */
+  overflow-wrap: anywhere; word-break: break-word; line-height: 1.45;
+}
+.at-bandeau-horscadre strong { letter-spacing: .01em; }
+.at-bandeau-horscadre span { opacity: .95; }
+body.at-est-horscadre { box-shadow: inset 0 0 0 4px #7a1a20; }
+body.at-est-horscadre::after {
+  content: "HORS CADRE"; position: fixed; right: -46px; top: 116px;
+  transform: rotate(45deg); background: #7a1a20; color: #fff;
+  padding: 6px 60px; font-size: 12px; letter-spacing: .18em;
+  pointer-events: none; z-index: 40;
+}
+@media print {
+  .at-bandeau-horscadre { background: #7a1a20 !important; color: #fff !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body.at-est-horscadre::after { position: absolute; }
+}
+
+/* ── Le tableau, la fiche, le tableau de bord ────────────────────────
+   L'atelier ne compose plus une seule forme. Ces trois-là partagent la
+   coquille : même en-tête, même ruban, même marque. */
+.at-plein { padding: 20px 26px; overflow: auto; grid-column: 1 / -1; }
+.at-tableau { border-collapse: collapse; width: 100%; background: #fff; font-size: 13.5px; }
+.at-tableau caption { text-align: left; padding: 0 0 10px; color: var(--sib-gris-texte-700, #57575a); }
+.at-tableau th, .at-tableau td {
+  border: 1px solid var(--sib-bordure, #d8d8da); padding: 8px 11px; text-align: left;
+}
+.at-tableau th { background: #f4f6f9; font-weight: 600; }
+.at-tableau tbody tr:nth-child(even) { background: #fbfcfd; }
+.at-compteurs { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 20px; }
+.at-compteur {
+  background: #fff; border: 1px solid var(--sib-bordure, #d8d8da);
+  border-radius: 6px; padding: 14px 20px; min-width: 150px;
+}
+.at-compteur .at-nombre { font-size: 27px; font-weight: 600; color: var(--sib-marine, #03305d); }
+.at-compteur .at-quoi { font-size: 12.5px; color: var(--sib-gris-texte-700, #57575a); }
+.at-pied {
+  padding: 10px 20px; border-top: 1px solid var(--sib-bordure, #d8d8da);
+  font-size: 11.5px; color: var(--sib-gris-texte-700, #57575a); background: #fff;
+}
+@media (max-width: 860px) { .at-app { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<header class="at-entete">
+  <span class="at-logo" role="img" aria-label="Société Immobilière Bélanger"></span>
+  <h1>__TITRE__</h1>
+</header>
+
+<nav class="at-ruban" aria-label="Les étapes du processus">
+  <ol id="at-ruban"></ol>
+</nav>
+
+<!-- ⚠️ LA MARQUE HORS CADRE. Écrite dans le document lui-même, pas
+     ajoutée après coup : le fichier étant autonome, elle survit à
+     l'enregistrement et à l'envoi. La règle @media print la garde à
+     l'impression. (Aucun accent grave ici : bloc dans un gabarit JS.) -->
+<div class="at-bandeau-horscadre" id="at-horscadre" hidden>
+  <strong>Cet écran sort du cadre défini.</strong>
+  <span id="at-horscadre-quoi"></span>
+</div>
+
+<div class="at-app">
+  <aside class="at-file" aria-label="File de tâches">
+    <div class="at-file-entete" id="at-compte"></div>
+    <ol id="at-liste"></ol>
+  </aside>
+  <main class="at-detail" aria-live="polite" id="at-detail"></main>
+</div>
+
+<footer class="at-pied" id="at-pied"></footer>
+
+<script type="application/json" id="at-catalogue">__CATALOGUE__</script>
+<script type="application/json" id="at-ecran">__ECRAN__</script>
+<script>
+/* Rendu de la boîte de réception. L'ENTRÉE EST LA FILE — la fiche du
+   dossier ne s'ouvre que depuis une tâche (règle du client : « les gens
+   veulent voir des tâches, pas une fiche », BRD §2.3). */
+(function () {
+  var CAT = JSON.parse(document.getElementById('at-catalogue').textContent);
+  var ECR = JSON.parse(document.getElementById('at-ecran').textContent);
+
+  function parCode(liste, code) {
+    for (var i = 0; i < liste.length; i++) if (liste[i].code === code) return liste[i];
+    return null;
+  }
+  function dossierDe(t) { return (ECR.dossiers || {})[t.dossier] || {}; }
+  function parType(code) {
+    for (var i = 0; i < CAT.types_de_tache.length; i++)
+      if (CAT.types_de_tache[i].type === code) return CAT.types_de_tache[i];
+    return null;
+  }
+  function esc(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  var etape = parCode(CAT.etapes, ECR.etape);
+  var niveau = parCode(CAT.niveaux, ECR.niveau);
+
+  /* Le ruban des étapes — TOUTES, dans l'ordre du client, avec ses
+     libellés. Il vient du catalogue : aucun libellé n'est écrit ici. */
+  var ruban = document.getElementById('at-ruban');
+  CAT.etapes.forEach(function (e) {
+    var li = document.createElement('li');
+    var s = document.createElement('span');
+    s.className = 'at-etape-jeton';
+    s.textContent = e.libelle;
+    s.setAttribute('data-etape', e.code);
+    s.setAttribute('data-hors-v1', String(Boolean(e.hors_v1)));
+    if (e.code === ECR.etape) s.setAttribute('aria-current', 'step');
+    li.appendChild(s);
+    ruban.appendChild(li);
+  });
+
+  document.getElementById('at-compte').textContent =
+    ECR.taches.length + ' tâche(s) à traiter · ' + (niveau ? niveau.libelle : '');
+
+  var liste = document.getElementById('at-liste');
+  ECR.taches.forEach(function (t, i) {
+    var def = parType(t.type) || {};
+    var arch = parCode(CAT.archetypes, def.archetype) || { glyphe: '·', libelle: '' };
+    var grain = parCode(CAT.grains, def.grain) || { libelle: '' };
+
+    // Le GRAIN commande ce que la ligne nomme : une tâche de grain
+    // personne nomme la personne visée, une tâche de grain dossier
+    // nomme le dossier. Les deux ne sont jamais confondues.
+    var vise = def.grain === 'personne' ? t.personne : t.dossier;
+
+    var li = document.createElement('li');
+    var b = document.createElement('button');
+    b.className = 'at-tache';
+    b.type = 'button';
+    b.setAttribute('data-etape', ECR.etape);
+    b.setAttribute('data-archetype', def.archetype || '');
+    b.setAttribute('data-grain', def.grain || '');
+    b.setAttribute('data-type', t.type);
+    b.setAttribute('data-ef', (def.ef || []).join(' '));
+    b.innerHTML =
+      '<span class="at-ligne1">' +
+        '<span class="at-glyphe" aria-hidden="true">' + esc(arch.glyphe) + '</span>' +
+        '<span class="at-titre">' + esc(def.libelle || t.type) + '</span>' +
+      '</span>' +
+      '<span class="at-ligne2">' +
+        '<span class="at-jeton">' + esc(arch.libelle) + '</span>' +
+        '<span class="at-jeton">' + esc(grain.libelle) + '</span>' +
+        (def.bloquant ? '<span class="at-jeton at-jeton--bloquant">bloquant</span>' : '') +
+        '<br>' + esc(vise || '') +
+      '</span>';
+    b.addEventListener('click', function () { ouvrir(i); });
+    li.appendChild(b);
+    liste.appendChild(li);
+  });
+
+  function ouvrir(i) {
+    var boutons = liste.querySelectorAll('.at-tache');
+    for (var k = 0; k < boutons.length; k++)
+      boutons[k].setAttribute('aria-current', k === i ? 'true' : 'false');
+
+    var t = ECR.taches[i];
+    var def = parType(t.type) || {};
+    var arch = parCode(CAT.archetypes, def.archetype) || {};
+    var grain = parCode(CAT.grains, def.grain) || {};
+    var vise = def.grain === 'personne' ? t.personne : t.dossier;
+
+    document.getElementById('at-detail').innerHTML =
+      '<h2>' + esc(def.libelle || t.type) + '</h2>' +
+      '<p class="at-sous">' + esc(arch.glyphe || '') + ' ' + esc(arch.libelle || '') +
+        ' · ' + esc(vise || '') + '</p>' +
+      /* ⚠️ CE PANNEAU EST LU PAR LE CLIENT. Aucun mot de notre métier n'y
+         entre : ni code d'exigence, ni révision de dépôt, ni « grain », ni
+         code machine. Tout ça vit dans les attributs data-* de la ligne,
+         qui portent la traçabilité SANS l'afficher — c'est le principe :
+         l'annotation est inévitable, elle n'est pas visible.
+         ⚠️ Aucun accent grave dans ce bloc : il vit dans un gabarit JS. */
+      '<section class="at-carte">' +
+        '<h3>Ce qu\'il faut regarder</h3>' +
+        '<dl>' +
+          '<dt>' + (def.grain === 'personne' ? 'Personne visée' : 'Dossier visé') + '</dt>' +
+            '<dd>' + esc(vise || '—') + '</dd>' +
+          '<dt>Dossier</dt><dd>' + esc(t.dossier || '—') + '</dd>' +
+          '<dt>Logement</dt><dd>' + esc(dossierDe(t).unite || '—') + '</dd>' +
+          '<dt>Emménagement</dt><dd>' + esc(dossierDe(t).emmenagement || '—') + '</dd>' +
+        '</dl>' +
+      '</section>' +
+      '<section class="at-carte">' +
+        '<h3>Le geste attendu</h3>' +
+        '<p>' + esc(arch.aide || '') + '</p>' +
+        '<div class="at-geste">' +
+          '<button class="at-bouton" type="button">' + esc(gesteLibelle(def.archetype)) + '</button>' +
+          '<button class="at-bouton at-bouton--second" type="button" id="at-voir-fiche">' +
+            'Voir la fiche du dossier</button>' +
+        '</div>' +
+      '</section>';
+
+    var voir = document.getElementById('at-voir-fiche');
+    if (voir) voir.addEventListener('click', function () { fiche(t); });
+  }
+
+  function gesteLibelle(a) {
+    return ({ confirmation: 'Confirmer', automatique: "Voir ce que l'app a fait",
+      verification: 'Ouvrir le résultat', appel: "Journaliser l'appel",
+      note: 'Écrire la note', decision: 'Trancher' })[a] || 'Traiter';
+  }
+
+  /* La fiche du dossier — CONSULTABLE, jamais l'entrée. */
+  function fiche(t) {
+    var d = (ECR.dossiers || {})[t.dossier] || {};
+    document.getElementById('at-detail').innerHTML =
+      '<h2>Dossier ' + esc(t.dossier) + '</h2>' +
+      '<p class="at-sous">Fiche ouverte depuis une tâche de la file.</p>' +
+      '<section class="at-carte"><h3>Dossier</h3><dl>' +
+        '<dt>Unité</dt><dd>' + esc(d.unite || '—') + '</dd>' +
+        '<dt>Emménagement</dt><dd>' + esc(d.emmenagement || '—') + '</dd>' +
+        '<dt>Personnes</dt><dd>' + esc((d.personnes || []).join(', ') || '—') + '</dd>' +
+      '</dl></section>' +
+      '<div class="at-geste"><button class="at-bouton" type="button" id="at-retour">' +
+        '← Revenir à la file</button></div>';
+    document.getElementById('at-retour')
+      .addEventListener('click', function () { ouvrir(indexCourant()); });
+  }
+  function indexCourant() {
+    var boutons = liste.querySelectorAll('.at-tache');
+    for (var k = 0; k < boutons.length; k++)
+      if (boutons[k].getAttribute('aria-current') === 'true') return k;
+    return 0;
+  }
+
+  /* ⚠️ Pas de révision de dépôt ici, pas de « catalogue dérivé ». Un SHA de
+     commit ne dit rien au client et lui donne l'impression de lire un
+     document qui ne lui est pas destiné. Ce qui compte pour lui : c'est une
+     maquette, rien n'est enregistré, et ce sont ses dix étapes. */
+  /* Tableau · fiche · tableau de bord. Chaque cellule porte ses attributs
+     de situation, comme les lignes de la file : l'écran reste reprenable
+     quelle que soit sa forme. */
+  function rendreAutreForme(forme) {
+    var app = document.querySelector('.at-app');
+    var file = document.querySelector('.at-file');
+    if (file) file.parentNode.removeChild(file);
+    var zone = document.getElementById('at-detail');
+    zone.className = 'at-plein';
+
+    var lignes = ECR.lignes || [];
+    var colonnes = ECR.colonnes || [];
+
+    if (forme === 'tableau') {
+      var thead = '<tr>' + colonnes.map(function (c) {
+        return '<th scope="col">' + esc(c.titre || c.clef) + '</th>';
+      }).join('') + '</tr>';
+      var tbody = lignes.map(function (l) {
+        return '<tr data-concept="' + esc(l.concept || '') + '">' + colonnes.map(function (c) {
+          return '<td data-attribut="' + esc(c.clef) + '">' + esc(l[c.clef] == null ? '—' : l[c.clef]) + '</td>';
+        }).join('') + '</tr>';
+      }).join('');
+      zone.innerHTML = '<h2>' + esc(ECR.titre_zone || 'Tableau') + '</h2>' +
+        '<table class="at-tableau"><caption>' + lignes.length + ' élément(s)</caption>' +
+        '<thead>' + thead + '</thead><tbody>' + tbody + '</tbody></table>';
+      return;
+    }
+
+    if (forme === 'fiche') {
+      var f = lignes[0] || {};
+      zone.innerHTML = '<h2>' + esc(ECR.titre_zone || 'Fiche') + '</h2>' +
+        '<section class="at-carte" data-concept="' + esc(f.concept || '') + '"><dl>' +
+        colonnes.map(function (c) {
+          return '<dt>' + esc(c.titre || c.clef) + '</dt>' +
+                 '<dd data-attribut="' + esc(c.clef) + '">' +
+                 esc(f[c.clef] == null ? '—' : f[c.clef]) + '</dd>';
+        }).join('') + '</dl></section>';
+      return;
+    }
+
+    if (forme === 'tableau-de-bord') {
+      zone.innerHTML = '<h2>' + esc(ECR.titre_zone || 'Tableau de bord') + '</h2>' +
+        '<div class="at-compteurs">' + (ECR.compteurs || []).map(function (c) {
+          return '<div class="at-compteur" data-compteur="' + esc(c.clef || '') + '">' +
+            '<div class="at-nombre">' + esc(c.valeur) + '</div>' +
+            '<div class="at-quoi">' + esc(c.quoi) + '</div></div>';
+        }).join('') + '</div>' +
+        '<table class="at-tableau"><thead><tr>' + colonnes.map(function (c) {
+          return '<th scope="col">' + esc(c.titre || c.clef) + '</th>';
+        }).join('') + '</tr></thead><tbody>' + lignes.map(function (l) {
+          return '<tr>' + colonnes.map(function (c) {
+            return '<td data-attribut="' + esc(c.clef) + '">' + esc(l[c.clef] == null ? '—' : l[c.clef]) + '</td>';
+          }).join('') + '</tr>';
+        }).join('') + '</tbody></table>';
+      return;
+    }
+
+    zone.innerHTML = '<p class="at-vide">Forme « ' + esc(forme) + ' » non rendue.</p>';
+  }
+
+  document.getElementById('at-pied').textContent =
+    'Maquette d\'exploration — Société Immobilière Bélanger · ' +
+    'les ' + CAT.etapes.length + ' étapes de votre processus · ' +
+    'aucune donnée réelle, et rien n\'est enregistré.';
+
+  /* ── La marque hors cadre ──────────────────────────────────────────
+     Posée par le script, depuis la donnée de l'écran : personne ne peut
+     l'oublier en composant, et elle ne dépend d'aucun geste manuel. */
+  if (ECR.hors_cadre && ECR.hors_cadre.length > 0) {
+    document.body.className += ' at-est-horscadre';
+    var bandeau = document.getElementById('at-horscadre');
+    bandeau.removeAttribute('hidden');
+    document.getElementById('at-horscadre-quoi').textContent =
+      ECR.hors_cadre.map(function (d) {
+        return d.pourquoi ? d.quoi + ' ' + d.pourquoi : d.quoi;
+      }).join(' ');
+    document.title = 'HORS CADRE — ' + document.title;
+  }
+
+  /* ── Les formes autres que la file ─────────────────────────────────
+     Le tableau, la fiche et le tableau de bord se rendent dans la même
+     coquille. La file reste le défaut : c'est la règle du client, « les
+     gens veulent voir des tâches, pas une fiche ». */
+  if (ECR.forme && ECR.forme !== 'file') {
+    rendreAutreForme(ECR.forme);
+  } else if (ECR.taches.length > 0) ouvrir(0);
+  else document.getElementById('at-detail').innerHTML =
+    '<p class="at-vide">Aucune tâche dans cette file.</p>';
+})();
+</script>
+</body>
+</html>
