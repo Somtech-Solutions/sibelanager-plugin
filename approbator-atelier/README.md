@@ -21,6 +21,10 @@ Vous obtenez **un fichier HTML**. Double-cliquez : il s'ouvre dans votre
 navigateur, fonctionne sans réseau, sans compte, sans serveur. Vous
 pouvez le déplacer, l'envoyer par courriel, l'ouvrir sur un autre poste.
 
+**Avant tout : `/voir-les-interfaces`** — ce qui existe déjà dans votre
+application. Si l'écran que vous cherchez est là, partez de lui plutôt
+que de le redessiner : l'équipe saura quoi modifier au lieu de deviner.
+
 Pour voir le vocabulaire disponible : `/voir-le-catalogue`.
 Pour composer : `/nouvel-ecran`.
 Pour savoir ce qu'un écran doit respecter : `/voir-les-regles`.
@@ -53,7 +57,8 @@ approbator-atelier/
 │   ├── atelier-ecran/            la méthode de composition
 │   └── demande-de-changement/    l'aiguillage
 ├── commands/                     nouvel-ecran · voir-le-catalogue ·
-│                                 voir-les-regles · demander-un-changement
+│                                 voir-les-regles · voir-les-interfaces ·
+│                                 demander-un-changement
 ├── gabarits/coquille.html        la boîte de réception, vide
 ├── donnees/                      le catalogue, le référentiel de
 │                                 validation, et leur PROVENANCE —
@@ -81,6 +86,22 @@ dirait dix, et ne rougirait jamais.** Un contrôle du dépôt
 est rouge.
 
 Voir `donnees/PROVENANCE.md` pour les sources exactes et la date.
+
+## Ce qui existe déjà, et pourquoi ça compte
+
+Sans savoir ce qui est déjà construit, vous risquez de **décrire un écran
+qui existe depuis des semaines**. Votre travail serait perdu, et le nôtre
+aussi : nous recevrions une demande de création là où il fallait lire une
+demande de modification.
+
+`/voir-les-interfaces` montre trois choses, **séparées** : les écrans
+livrés, la forme que suit le produit — ni livrée ni écartée —, et les
+formes essayées puis écartées, **avec leur raison**. Cette dernière liste
+existe pour que vous ne redemandiez pas une forme déjà arbitrée.
+
+⚠️ Les écrans livrés ne s'ouvrent pas ici : ils ont besoin de
+l'application et de votre session. Ils sont **nommés et décrits**, pas
+affichés.
 
 ## Ce qui n'y est pas encore
 
