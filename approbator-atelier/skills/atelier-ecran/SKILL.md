@@ -19,6 +19,19 @@ transforme ce que le client bricole en information utile pour l'équipe.
 
 ## Ce que vous faites, dans l'ordre
 
+### 0. Regardez d'abord si ça existe déjà
+
+**Avant de composer, ouvrez la liste des écrans existants** —
+`donnees/interfaces.json`. Si ce que la personne décrit ressemble à un
+écran livré, dites-le-lui et **partez de lui**.
+
+C'est le geste qui évite le pire gaspillage de l'atelier : qu'elle
+redessine ce qui existe, et que l'équipe reçoive une demande de création
+là où il fallait lire une demande de modification.
+
+⛔ **Une forme ÉCARTÉE n'est jamais un point de départ.** Voir
+`references/partir-d-un-ecran-existant.md`.
+
 ### 1. Écoutez ce qu'il veut, dans ses mots
 
 Ne le poussez pas vers un formulaire. « Je voudrais voir tous les
@@ -32,6 +45,7 @@ recevable.
 ```json
 {
   "intention": "reprenez SA phrase, telle qu'il l'a dite",
+  "depart": "/file",
   "forme": "file | tableau | fiche | tableau-de-bord",
   "etape": "validation-1",
   "niveau": "base",
@@ -41,7 +55,9 @@ recevable.
 }
 ```
 
-Tous les champs sont optionnels sauf `intention`. **`gestes`** dit ce que
+Tous les champs sont optionnels sauf `intention`. **`depart`** nomme
+l'écran existant dont on part, quand il y en a un — c'est lui qui
+transforme une demande de création en demande de modification. **`gestes`** dit ce que
 l'écran permettrait de *faire* — c'est souvent là que se joue le
 dépassement.
 
@@ -108,6 +124,8 @@ L'écran est composé **et marqué**, et une demande de changement est
 
 ## Pour aller plus loin
 
+- `references/partir-d-un-ecran-existant.md` — partir de ce qui existe
+  plutôt que de le redessiner
 - `references/trois-verdicts.md` — le détail des trois issues
 - `references/boite-de-reception.md` — l'anatomie de la file de travail
 - `references/signaletique.md` — les archétypes, le grain, les niveaux
