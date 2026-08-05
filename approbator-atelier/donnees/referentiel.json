@@ -1,0 +1,1880 @@
+{
+  "$avertissement": "FICHIER DÉRIVÉ — écrit par scripts/derive-referentiel-atelier.mjs. Toute modification à la main sera écrasée, et fera rougir scripts/verifier-atelier.mjs.",
+  "derive_le": "2026-08-05",
+  "revision_depot": "226c060",
+  "ontologie": {
+    "version": "0.2.0",
+    "date": "2026-07-31",
+    "statut": "draft",
+    "brd_relu_contre": "v1.4.0",
+    "portee": "Périmètre V1 du BRD : le chemin « demande de location ». Les concepts qui n'apparaissent qu'en V1.1 ou V2 (cession, modification de bail, endosseur, dépôt, paiement) ne sont PAS modélisés ici — les inventer maintenant reviendrait à décrire un produit qui n'a pas été spécifié."
+  },
+  "domaines": [
+    {
+      "code": "SOC",
+      "nom": "Socle — identité, autorisation, traçabilité",
+      "concepts": [
+        "Utilisateur",
+        "AdministrateurDesigne",
+        "DomaineAutorise",
+        "JournalAudit"
+      ]
+    },
+    {
+      "code": "DOS",
+      "nom": "Dossier et personnes",
+      "concepts": [
+        "Dossier",
+        "Personne",
+        "TypeDeDemande"
+      ]
+    },
+    {
+      "code": "PAR",
+      "nom": "Parc et inventaire",
+      "concepts": [
+        "Immeuble",
+        "EspaceLouable",
+        "Reservation"
+      ]
+    },
+    {
+      "code": "TAC",
+      "nom": "Moteur de tâches",
+      "concepts": [
+        "Etape",
+        "TypeDeTache",
+        "Tache"
+      ]
+    },
+    {
+      "code": "INT",
+      "nom": "Intrants et rapprochement",
+      "concepts": [
+        "Intrant",
+        "RapportTrustii",
+        "SoumissionLoc4",
+        "ReferenceExterne",
+        "EntreeJournalIntrants"
+      ]
+    },
+    {
+      "code": "DOC",
+      "nom": "Documents et signature",
+      "concepts": [
+        "LiasseDocumentaire",
+        "Document",
+        "GabaritDocument",
+        "DemandeDeSignature",
+        "Signature"
+      ]
+    },
+    {
+      "code": "COM",
+      "nom": "Communications",
+      "concepts": [
+        "Communication",
+        "Relance",
+        "Appel",
+        "ConsentementCommunication"
+      ]
+    },
+    {
+      "code": "DEC",
+      "nom": "Décisions humaines",
+      "concepts": [
+        "DecisionDePrequalification",
+        "VerdictRechercheInterne",
+        "ReferenceLocative",
+        "Refus"
+      ]
+    },
+    {
+      "code": "LOI",
+      "nom": "Conformité Loi 25",
+      "concepts": [
+        "RegimeDeConservation",
+        "DemandeDroitPersonne"
+      ]
+    }
+  ],
+  "concepts": [
+    {
+      "id": "Utilisateur",
+      "nom": "Utilisateur",
+      "resume": "",
+      "attributs": [
+        "courriel",
+        "nom",
+        "niveau",
+        "actif",
+        "est_administrateur"
+      ],
+      "relations": [
+        {
+          "vers": "JournalAudit",
+          "nature": "has_many",
+          "cardinalite": "0..N"
+        },
+        {
+          "vers": "Tache",
+          "nature": "has_many",
+          "cardinalite": "0..N"
+        }
+      ],
+      "materialise": true
+    },
+    {
+      "id": "AdministrateurDesigne",
+      "nom": "Administrateur désigné",
+      "resume": "",
+      "attributs": [
+        "courriel",
+        "note",
+        "designe_le"
+      ],
+      "relations": [
+        {
+          "vers": "Utilisateur",
+          "nature": "references",
+          "cardinalite": "0..1"
+        }
+      ],
+      "materialise": true
+    },
+    {
+      "id": "DomaineAutorise",
+      "nom": "Domaine autorisé",
+      "resume": "",
+      "attributs": [
+        "domaine",
+        "note"
+      ],
+      "relations": [],
+      "materialise": true
+    },
+    {
+      "id": "JournalAudit",
+      "nom": "Journal d'audit",
+      "resume": "MATÉRIALISÉ (noyau).",
+      "attributs": [
+        "survenu_le",
+        "acteur_id",
+        "acteur_courriel",
+        "evenement",
+        "cible_type",
+        "cible_id",
+        "details"
+      ],
+      "relations": [],
+      "materialise": true
+    },
+    {
+      "id": "Dossier",
+      "nom": "Dossier (demande de location)",
+      "resume": "MATÉRIALISÉ (E-20260728-0003 lot 2).",
+      "attributs": [
+        "numero_bail",
+        "type_de_demande",
+        "etape_courante",
+        "statut",
+        "ratio_effort",
+        "date_emmenagement",
+        "cree_le"
+      ],
+      "relations": [
+        {
+          "vers": "Personne",
+          "nature": "has_many",
+          "cardinalite": "1..N"
+        },
+        {
+          "vers": "TypeDeDemande",
+          "nature": "belongs_to",
+          "cardinalite": 1
+        },
+        {
+          "vers": "Etape",
+          "nature": "references",
+          "cardinalite": 1
+        },
+        {
+          "vers": "Tache",
+          "nature": "has_many",
+          "cardinalite": "0..N"
+        },
+        {
+          "vers": "Reservation",
+          "nature": "has_many",
+          "cardinalite": "0..N"
+        },
+        {
+          "vers": "Intrant",
+          "nature": "has_many",
+          "cardinalite": "0..N"
+        },
+        {
+          "vers": "Communication",
+          "nature": "has_many",
+          "cardinalite": "0..N"
+        },
+        {
+          "vers": "LiasseDocumentaire",
+          "nature": "has_many",
+          "cardinalite": "0..N"
+        }
+      ],
+      "materialise": true
+    },
+    {
+      "id": "Personne",
+      "nom": "Personne (candidat, puis locataire)",
+      "resume": "MATÉRIALISÉ, EN DEUX TABLES — `public.personne` (identité non sensible) et `sensible.personne_sensible` (volet sensible, schéma CLOISONNÉ physiquement, EF-38).",
+      "attributs": [
+        "nom",
+        "coordonnees",
+        "revenu_declare",
+        "periodicite_revenu",
+        "contacts_urgence",
+        "vehicule"
+      ],
+      "relations": [
+        {
+          "vers": "Dossier",
+          "nature": "belongs_to",
+          "cardinalite": 1
+        },
+        {
+          "vers": "RapportTrustii",
+          "nature": "has_many",
+          "cardinalite": "0..N"
+        },
+        {
+          "vers": "ReferenceLocative",
+          "nature": "has_many",
+          "cardinalite": "0..N"
+        },
+        {
+          "vers": "DemandeDeSignature",
+          "nature": "has_many",
+          "cardinalite": "0..N"
+        }
+      ],
+      "materialise": true
+    },
+    {
+      "id": "TypeDeDemande",
+      "nom": "Type de demande",
+      "resume": "NON MATÉRIALISÉ.",
+      "attributs": [],
+      "relations": [
+        {
+          "vers": "LiasseDocumentaire",
+          "nature": "has_many",
+          "cardinalite": "1..N"
+        }
+      ],
+      "materialise": false
+    },
+    {
+      "id": "Immeuble",
+      "nom": "Immeuble",
+      "resume": "MATÉRIALISÉ (E-20260730-0004).",
+      "attributs": [
+        "nom",
+        "adresse",
+        "municipalite",
+        "code_postal",
+        "secteur",
+        "type_chauffage",
+        "internet_disponible"
+      ],
+      "relations": [
+        {
+          "vers": "EspaceLouable",
+          "nature": "has_many",
+          "cardinalite": "1..N"
+        }
+      ],
+      "materialise": true
+    },
+    {
+      "id": "EspaceLouable",
+      "nom": "Espace louable",
+      "resume": "MATÉRIALISÉ (E-20260730-0004), avec sa machine à états (`transition_disponibilite`, inatteignable par l'API).",
+      "attributs": [
+        "numero_unique",
+        "type",
+        "numero_affiche",
+        "adresse_service",
+        "disponibilite",
+        "grandeur",
+        "nombre_pieces",
+        "ameublement",
+        "responsabilite_chauffage",
+        "responsabilite_eau_chaude",
+        "responsabilite_eclairage",
+        "prix_affiche",
+        "mode_ouverture",
+        "depot_requis"
+      ],
+      "relations": [
+        {
+          "vers": "Immeuble",
+          "nature": "belongs_to",
+          "cardinalite": 1
+        },
+        {
+          "vers": "Reservation",
+          "nature": "has_many",
+          "cardinalite": "0..N"
+        }
+      ],
+      "materialise": true
+    },
+    {
+      "id": "Reservation",
+      "nom": "Réservation ( le jaune )",
+      "resume": "MATÉRIALISÉ (2026-07-31) — `reservation_espace` remplace enfin le « jaune » du tableur.",
+      "attributs": [
+        "numero_unique",
+        "dossier_id",
+        "reserve_le",
+        "reserve_par",
+        "liberee_le",
+        "liberee_par",
+        "motif_liberation"
+      ],
+      "relations": [
+        {
+          "vers": "EspaceLouable",
+          "nature": "belongs_to",
+          "cardinalite": 1
+        },
+        {
+          "vers": "Dossier",
+          "nature": "belongs_to",
+          "cardinalite": 1
+        }
+      ],
+      "materialise": true
+    },
+    {
+      "id": "Etape",
+      "nom": "Étape",
+      "resume": "Une position du dossier dans le processus.",
+      "attributs": [
+        "rang",
+        "libelle",
+        "niveau_cible",
+        "version_catalogue"
+      ],
+      "relations": [
+        {
+          "vers": "TypeDeTache",
+          "nature": "has_many",
+          "cardinalite": "1..N"
+        }
+      ],
+      "materialise": true
+    },
+    {
+      "id": "TypeDeTache",
+      "nom": "Type de tâche",
+      "resume": "MATÉRIALISÉ (2026-07-31), en deux tables — le catalogue versionné et ses définitions.",
+      "attributs": [
+        "code",
+        "grain",
+        "bloquant",
+        "niveau_cible",
+        "archetype"
+      ],
+      "relations": [],
+      "materialise": true
+    },
+    {
+      "id": "Tache",
+      "nom": "Tâche",
+      "resume": "MATÉRIALISÉ (2026-07-31).",
+      "attributs": [
+        "type_de_tache",
+        "dossier_id",
+        "personne_id",
+        "statut",
+        "echeance",
+        "complete_par",
+        "complete_le"
+      ],
+      "relations": [
+        {
+          "vers": "TypeDeTache",
+          "nature": "belongs_to",
+          "cardinalite": 1
+        },
+        {
+          "vers": "Dossier",
+          "nature": "belongs_to",
+          "cardinalite": 1
+        },
+        {
+          "vers": "Personne",
+          "nature": "references",
+          "cardinalite": "0..1"
+        }
+      ],
+      "materialise": true
+    },
+    {
+      "id": "Intrant",
+      "nom": "Intrant",
+      "resume": "PARTIELLEMENT MATÉRIALISÉ — `provenance_champ` porte l'origine de chaque champ (parsé / interface / saisi) et ne porte AUCUNE valeur, par conception.",
+      "attributs": [],
+      "relations": [
+        {
+          "vers": "EntreeJournalIntrants",
+          "nature": "has_many",
+          "cardinalite": "1..N"
+        },
+        {
+          "vers": "Dossier",
+          "nature": "references",
+          "cardinalite": "0..1"
+        }
+      ],
+      "materialise": true
+    },
+    {
+      "id": "RapportTrustii",
+      "nom": "Rapport Trustii",
+      "resume": "NON MATÉRIALISÉ (contrat de port seulement, version `0.1.0-provisoire`).",
+      "attributs": [
+        "identifiant_rapport",
+        "statut",
+        "demande_le",
+        "reference_externe",
+        "consentement_donne_le"
+      ],
+      "relations": [
+        {
+          "vers": "Intrant",
+          "nature": "inherits",
+          "cardinalite": 1
+        },
+        {
+          "vers": "Personne",
+          "nature": "references",
+          "cardinalite": "1..N"
+        }
+      ],
+      "materialise": false
+    },
+    {
+      "id": "SoumissionLoc4",
+      "nom": "Soumission LOC 4",
+      "resume": "MATÉRIALISÉ (E-20260728-0006 : conditions au modèle T-20260804-0084, entrée par le journal des intrants T-20260804-0089).",
+      "attributs": [
+        "dossier_id",
+        "version",
+        "numero_unite",
+        "soumis_le",
+        "recu_le"
+      ],
+      "relations": [
+        {
+          "vers": "Intrant",
+          "nature": "inherits",
+          "cardinalite": 1
+        }
+      ],
+      "materialise": true
+    },
+    {
+      "id": "ReferenceExterne",
+      "nom": "Référence externe (clé de rapprochement)",
+      "resume": "MATÉRIALISÉ EN CODE (contrat de port, sans table).",
+      "attributs": [],
+      "relations": [],
+      "materialise": false
+    },
+    {
+      "id": "EntreeJournalIntrants",
+      "nom": "Entrée du journal des intrants",
+      "resume": "MATÉRIALISÉ (E-20260728-0003 lot 2).",
+      "attributs": [
+        "source",
+        "recu_le",
+        "empreinte",
+        "empreinte_contenu",
+        "reference_recue",
+        "dossier_id",
+        "issue",
+        "motif"
+      ],
+      "relations": [
+        {
+          "vers": "Intrant",
+          "nature": "belongs_to",
+          "cardinalite": 1
+        }
+      ],
+      "materialise": true
+    },
+    {
+      "id": "LiasseDocumentaire",
+      "nom": "Liasse",
+      "resume": "MATÉRIALISÉ (E-20260728-0006, T-20260804-0085) — côté COMPOSITION ATTENDUE.",
+      "attributs": [],
+      "relations": [
+        {
+          "vers": "Document",
+          "nature": "has_many",
+          "cardinalite": "1..N"
+        },
+        {
+          "vers": "Dossier",
+          "nature": "belongs_to",
+          "cardinalite": 1
+        }
+      ],
+      "materialise": true
+    },
+    {
+      "id": "Document",
+      "nom": "Document",
+      "resume": "PARTIELLEMENT MATÉRIALISÉ (E-20260728-0006, T-20260804-0087).",
+      "attributs": [
+        "dossier_id",
+        "code",
+        "version_source",
+        "genere_le",
+        "envoye_le"
+      ],
+      "relations": [],
+      "materialise": true
+    },
+    {
+      "id": "GabaritDocument",
+      "nom": "Gabarit de document",
+      "resume": "NON MATÉRIALISÉ.",
+      "attributs": [],
+      "relations": [],
+      "materialise": false
+    },
+    {
+      "id": "DemandeDeSignature",
+      "nom": "Demande de signature",
+      "resume": "NON MATÉRIALISÉ.",
+      "attributs": [
+        "statut",
+        "signataire",
+        "envoyee_le",
+        "expire_le"
+      ],
+      "relations": [
+        {
+          "vers": "Personne",
+          "nature": "belongs_to",
+          "cardinalite": 1
+        },
+        {
+          "vers": "Signature",
+          "nature": "has_many",
+          "cardinalite": "0..N"
+        }
+      ],
+      "materialise": false
+    },
+    {
+      "id": "Signature",
+      "nom": "Signature",
+      "resume": "NON MATÉRIALISÉ.",
+      "attributs": [],
+      "relations": [
+        {
+          "vers": "DemandeDeSignature",
+          "nature": "belongs_to",
+          "cardinalite": 1
+        }
+      ],
+      "materialise": false
+    },
+    {
+      "id": "Communication",
+      "nom": "Communication",
+      "resume": "NON MATÉRIALISÉ.",
+      "attributs": [
+        "canal",
+        "sens",
+        "corps",
+        "envoye_le",
+        "expediteur",
+        "destinataire"
+      ],
+      "relations": [],
+      "materialise": false
+    },
+    {
+      "id": "ConsentementCommunication",
+      "nom": "Consentement aux communications",
+      "resume": "NON MATÉRIALISÉ.",
+      "attributs": [],
+      "relations": [],
+      "materialise": false
+    },
+    {
+      "id": "Relance",
+      "nom": "Relance",
+      "resume": "NON MATÉRIALISÉ.",
+      "attributs": [],
+      "relations": [
+        {
+          "vers": "Communication",
+          "nature": "has_many",
+          "cardinalite": "1..N"
+        }
+      ],
+      "materialise": false
+    },
+    {
+      "id": "Appel",
+      "nom": "Appel",
+      "resume": "NON MATÉRIALISÉ.",
+      "attributs": [
+        "numero_appele",
+        "appele_le",
+        "duree",
+        "resultat",
+        "note"
+      ],
+      "relations": [],
+      "materialise": false
+    },
+    {
+      "id": "DecisionDePrequalification",
+      "nom": "Décision de préqualification",
+      "resume": "NON MATÉRIALISÉ.",
+      "attributs": [],
+      "relations": [
+        {
+          "vers": "Dossier",
+          "nature": "belongs_to",
+          "cardinalite": 1
+        }
+      ],
+      "materialise": false
+    },
+    {
+      "id": "VerdictRechercheInterne",
+      "nom": "Verdict de recherche interne",
+      "resume": "NON MATÉRIALISÉ.",
+      "attributs": [],
+      "relations": [],
+      "materialise": false
+    },
+    {
+      "id": "ReferenceLocative",
+      "nom": "Référence locative",
+      "resume": "NON MATÉRIALISÉ.",
+      "attributs": [],
+      "relations": [
+        {
+          "vers": "Personne",
+          "nature": "belongs_to",
+          "cardinalite": 1
+        }
+      ],
+      "materialise": false
+    },
+    {
+      "id": "Refus",
+      "nom": "Refus / désistement",
+      "resume": "NON MATÉRIALISÉ.",
+      "attributs": [
+        "motif",
+        "propose_par",
+        "propose_le",
+        "prononce_par",
+        "prononce_le"
+      ],
+      "relations": [
+        {
+          "vers": "Dossier",
+          "nature": "belongs_to",
+          "cardinalite": 1
+        }
+      ],
+      "materialise": false
+    },
+    {
+      "id": "RegimeDeConservation",
+      "nom": "Régime de conservation",
+      "resume": "NON MATÉRIALISÉ.",
+      "attributs": [],
+      "relations": [],
+      "materialise": false
+    },
+    {
+      "id": "DemandeDroitPersonne",
+      "nom": "Demande d'accès ou d'effacement",
+      "resume": "NON MATÉRIALISÉ.",
+      "attributs": [],
+      "relations": [
+        {
+          "vers": "Personne",
+          "nature": "references",
+          "cardinalite": 1
+        }
+      ],
+      "materialise": false
+    }
+  ],
+  "regles": [
+    {
+      "id": "INV-SOC-001",
+      "concept": "Utilisateur",
+      "concept_nom": "Utilisateur",
+      "enonce": "Le niveau de responsabilité d'un utilisateur vaut exactement l'une des trois valeurs base · intermediaire · eleve.",
+      "exigences": [
+        "EF-52"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-SOC-002",
+      "concept": "Utilisateur",
+      "concept_nom": "Utilisateur",
+      "enonce": "Un utilisateur se révoque en le DÉSACTIVANT, jamais en le supprimant.",
+      "exigences": [],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-SOC-003",
+      "concept": "Utilisateur",
+      "concept_nom": "Utilisateur",
+      "enonce": "Un compte d'authentification seul ne donne accès à rien : sans ligne utilisateur ACTIVE, aucune policy ne s'ouvre.",
+      "exigences": [],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-SOC-004",
+      "concept": "Utilisateur",
+      "concept_nom": "Utilisateur",
+      "enonce": "L'application ne peut jamais se retrouver sans administrateur actif.",
+      "exigences": [],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-SOC-005",
+      "concept": "Utilisateur",
+      "concept_nom": "Utilisateur",
+      "enonce": "La ligne applicative naît d'une session PROUVÉE, jamais de la création d'un compte.",
+      "exigences": [],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-SOC-006",
+      "concept": "AdministrateurDesigne",
+      "concept_nom": "Administrateur désigné",
+      "enonce": "La désignation est NOMINATIVE, jamais positionnelle : le rang d'arrivée n'entre pas en compte, et une désignation reste valable même s'il existe déjà des administrateurs.",
+      "exigences": [],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-SOC-007",
+      "concept": "AdministrateurDesigne",
+      "concept_nom": "Administrateur désigné",
+      "enonce": "La table est invisible et inaccessible par l'API, y compris pour un utilisateur authentifié.",
+      "exigences": [],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-SOC-008",
+      "concept": "DomaineAutorise",
+      "concept_nom": "Domaine autorisé",
+      "enonce": "La barrière de domaine s'applique à la création du compte d'authentification ET au provisionnement de la ligne applicative.",
+      "exigences": [],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-SOC-009",
+      "concept": "DomaineAutorise",
+      "concept_nom": "Domaine autorisé",
+      "enonce": "Vider cette table FERME le module à tout le monde.",
+      "exigences": [],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-SOC-010",
+      "concept": "JournalAudit",
+      "concept_nom": "Journal d'audit",
+      "enonce": "Une entrée ne peut être ni modifiée, ni supprimée, ni tronquée — y compris par un rôle à privilèges.",
+      "exigences": [
+        "EF-39"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-SOC-011",
+      "concept": "JournalAudit",
+      "concept_nom": "Journal d'audit",
+      "enonce": "Le journal ne porte AUCUNE clé étrangère, par conception, afin de SURVIVRE à la purge des données qu'il référence.",
+      "exigences": [
+        "EF-39",
+        "EF-42"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-SOC-012",
+      "concept": "JournalAudit",
+      "concept_nom": "Journal d'audit",
+      "enonce": "L'acteur d'une entrée vient de la session, jamais d'un argument.",
+      "exigences": [],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-SOC-013",
+      "concept": "JournalAudit",
+      "concept_nom": "Journal d'audit",
+      "enonce": "Le journal ne contient jamais de renseignement personnel SENSIBLE.",
+      "exigences": [
+        "EF-39"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-DOS-001",
+      "concept": "Dossier",
+      "concept_nom": "Dossier (demande de location)",
+      "enonce": "C'est l'APPLICATION qui génère le numéro de bail, à la création du dossier. La numérotation du LOC4 est une RÉFÉRENCE ÉTRANGÈRE que le module conserve et rapproche — jamais la clé.",
+      "exigences": [
+        "EF-02"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-DOS-011",
+      "concept": "Dossier",
+      "concept_nom": "Dossier (demande de location)",
+      "enonce": "Le dossier porte une DATE D'EMMÉNAGEMENT PRÉVUE, et c'est elle qui ordonne la file de travail.",
+      "exigences": [
+        "EF-03",
+        "EF-21"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-DOS-002",
+      "concept": "Dossier",
+      "concept_nom": "Dossier (demande de location)",
+      "enonce": "Un dossier regroupe de 1 à 4 personnes.",
+      "exigences": [
+        "EF-02"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-DOS-003",
+      "concept": "Dossier",
+      "concept_nom": "Dossier (demande de location)",
+      "enonce": "Le dossier n'avance d'une étape que lorsque TOUTES les tâches de grain personne de l'étape courante sont complétées pour TOUTES les personnes.",
+      "exigences": [
+        "EF-02"
+      ],
+      "regles_affaires": [
+        "RA-05"
+      ]
+    },
+    {
+      "id": "INV-DOS-004",
+      "concept": "Dossier",
+      "concept_nom": "Dossier (demande de location)",
+      "enonce": "Un dossier peut REVENIR à une étape antérieure.",
+      "exigences": [
+        "EF-05"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-DOS-005",
+      "concept": "Dossier",
+      "concept_nom": "Dossier (demande de location)",
+      "enonce": "Le ratio d'effort est une donnée au grain DOSSIER, calculée sur la SOMME des revenus déclarés de tous les signataires — jamais par personne.",
+      "exigences": [],
+      "regles_affaires": [
+        "RA-30"
+      ]
+    },
+    {
+      "id": "INV-DOS-006",
+      "concept": "Personne",
+      "concept_nom": "Personne (candidat, puis locataire)",
+      "enonce": "Le dossier candidat — contacts d'urgence, véhicule, stationnement — est saisi par l'APPROBATEUR dans le module, jamais par le candidat. Aucun formulaire tourné vers le candidat n'est construit en V1.",
+      "exigences": [
+        "EF-40"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-DOS-007",
+      "concept": "Personne",
+      "concept_nom": "Personne (candidat, puis locataire)",
+      "enonce": "L'absence de ces champs ne bloque JAMAIS l'avancement du dossier.",
+      "exigences": [
+        "EF-40"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-DOS-008",
+      "concept": "Personne",
+      "concept_nom": "Personne (candidat, puis locataire)",
+      "enonce": "Ces renseignements ne sont collectés qu'après la DÉCISION DE FIN D'ÉTAPE 1 — traverser à l'envoi des documents ou fermer le dossier — jamais à la réception.",
+      "exigences": [
+        "EF-40"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-DOS-009",
+      "concept": "TypeDeDemande",
+      "concept_nom": "Type de demande",
+      "enonce": "Le type de demande peut CHANGER en cours de route.",
+      "exigences": [],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-DOS-010",
+      "concept": "TypeDeDemande",
+      "concept_nom": "Type de demande",
+      "enonce": "La liasse de chacun des quatre types V1 doit être énumérée nommément.",
+      "exigences": [
+        "EF-43"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-PAR-001",
+      "concept": "EspaceLouable",
+      "concept_nom": "Espace louable",
+      "enonce": "Le numéro unique est la CLÉ MÉTIER CENTRALE du parc — environ 4 240 espaces.",
+      "exigences": [
+        "EF-51"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-PAR-002",
+      "concept": "EspaceLouable",
+      "concept_nom": "Espace louable",
+      "enonce": "La disponibilité d'un espace vaut exactement l'une de CINQ valeurs : en_location · reserve · approbation_en_attente · loue · hors_marche.",
+      "exigences": [
+        "EF-45"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-PAR-003",
+      "concept": "EspaceLouable",
+      "concept_nom": "Espace louable",
+      "enonce": "L'état `approbation_en_attente` est DISTINCT de `reserve` et de `loue` : dossier approuvé, formalités pendantes, ligne NON remise en marché et NON masquée.",
+      "exigences": [
+        "EF-45"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-PAR-004",
+      "concept": "EspaceLouable",
+      "concept_nom": "Espace louable",
+      "enonce": "Le module POSSÈDE l'état d'inventaire de l'espace ; le Google Sheet \"Tableau des Locations\" cesse d'en être la source de vérité.",
+      "exigences": [
+        "EF-51",
+        "EF-33",
+        "EF-31"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-PAR-005",
+      "concept": "EspaceLouable",
+      "concept_nom": "Espace louable",
+      "enonce": "Le format du numéro unique est CONSTATÉ pour les unités et les stationnements extérieurs, DÉDUIT pour les stationnements intérieurs et les rangements.",
+      "exigences": [],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-PAR-006",
+      "concept": "Reservation",
+      "concept_nom": "Réservation ( le jaune )",
+      "enonce": "La réservation est un ACTE DU SYSTÈME ; la libération est automatique à la fermeture du dossier.",
+      "exigences": [
+        "EF-33"
+      ],
+      "regles_affaires": [
+        "RA-07"
+      ]
+    },
+    {
+      "id": "INV-PAR-007",
+      "concept": "Reservation",
+      "concept_nom": "Réservation ( le jaune )",
+      "enonce": "Chaque motif de libération détermine explicitement l'état de sortie de l'espace : refus → en_location, désistement → en_location, finalisation → loue.",
+      "exigences": [],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-PAR-008",
+      "concept": "Reservation",
+      "concept_nom": "Réservation ( le jaune )",
+      "enonce": "Un espace ne porte au plus qu'UNE réservation active.",
+      "exigences": [],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-PAR-009",
+      "concept": "Reservation",
+      "concept_nom": "Réservation ( le jaune )",
+      "enonce": "On ne libère pas à l'aveugle : libérer exige de nommer le dossier, et une réservation qui vise un autre dossier est refusée.",
+      "exigences": [],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-TAC-011",
+      "concept": "Etape",
+      "concept_nom": "Étape",
+      "enonce": "Une étape RELÉGUÉE hors du parcours du client n'est atteignable par rien : aucune transition ne la touche, aucun dossier ne s'y pose, aucune personne ne la franchit.",
+      "exigences": [],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-TAC-001",
+      "concept": "Etape",
+      "concept_nom": "Étape",
+      "enonce": "Le moteur lit un catalogue d'étapes et de types de tâches VERSIONNÉ en base ; les transitions autorisées y sont lues, pas codées.",
+      "exigences": [
+        "EF-03",
+        "EF-05"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-TAC-002",
+      "concept": "TypeDeTache",
+      "concept_nom": "Type de tâche",
+      "enonce": "Le GRAIN est un attribut du TYPE de tâche, jamais un choix global du dossier.",
+      "exigences": [
+        "EF-02"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-TAC-003",
+      "concept": "TypeDeTache",
+      "concept_nom": "Type de tâche",
+      "enonce": "Chaque type de tâche porte un attribut bloquant / non bloquant.",
+      "exigences": [
+        "EF-47"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-TAC-004",
+      "concept": "TypeDeTache",
+      "concept_nom": "Type de tâche",
+      "enonce": "Un type de tâche relève de l'un des six archétypes : confirmation pré-remplie · automatique · vérification externe · décision · appel · note.",
+      "exigences": [],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-TAC-005",
+      "concept": "Tache",
+      "concept_nom": "Tâche",
+      "enonce": "La file est triée par urgence : emménagement imminent d'abord.",
+      "exigences": [
+        "EF-03"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-TAC-006",
+      "concept": "Tache",
+      "concept_nom": "Tâche",
+      "enonce": "Chaque tâche affiche LA DONNÉE QUI LA JUSTIFIE, et se confirme en un seul geste — clavier compris, la file se parcourt sans souris.",
+      "exigences": [
+        "EF-04"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-TAC-007",
+      "concept": "Tache",
+      "concept_nom": "Tâche",
+      "enonce": "Une tâche de grain personne affiche LA PERSONNE VISÉE ; une tâche de grain dossier affiche LE DOSSIER. La file montre les deux sans les confondre.",
+      "exigences": [
+        "EF-03"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-TAC-008",
+      "concept": "Tache",
+      "concept_nom": "Tâche",
+      "enonce": "À l'échéance d'un délai, la tâche remonte en tête de file — et RIEN D'AUTRE. Pas de déblocage automatique, pas de transition.",
+      "exigences": [
+        "EF-47"
+      ],
+      "regles_affaires": [
+        "RA-17"
+      ]
+    },
+    {
+      "id": "INV-TAC-009",
+      "concept": "Tache",
+      "concept_nom": "Tâche",
+      "enonce": "Compléter une tâche AVANCE le dossier, par une transition contrôlée lue au catalogue.",
+      "exigences": [
+        "EF-05"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-INT-001",
+      "concept": "Intrant",
+      "concept_nom": "Intrant",
+      "enonce": "Toute entrée est journalisée avec sa source, son horodatage, son empreinte et le dossier alimenté ; un rejeu du même intrant ne produit AUCUN effet supplémentaire.",
+      "exigences": [
+        "EF-58"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-INT-002",
+      "concept": "Intrant",
+      "concept_nom": "Intrant",
+      "enonce": "L'origine de chaque champ est conservée : parsé, reçu par API, ou saisi — avec l'auteur et l'horodatage.",
+      "exigences": [
+        "EF-01"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-INT-003",
+      "concept": "RapportTrustii",
+      "concept_nom": "Rapport Trustii",
+      "enonce": "Le statut d'un rapport vaut en-cours · complete · echoue.",
+      "exigences": [],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-INT-004",
+      "concept": "RapportTrustii",
+      "concept_nom": "Rapport Trustii",
+      "enonce": "Le revenu porté par le rapport est AUTODÉCLARÉ et NON VALIDÉ par Trustii.",
+      "exigences": [
+        "EF-41"
+      ],
+      "regles_affaires": [
+        "RA-30"
+      ]
+    },
+    {
+      "id": "INV-INT-005",
+      "concept": "RapportTrustii",
+      "concept_nom": "Rapport Trustii",
+      "enonce": "Ce qui reste manuel est nommé : les appels aux références et la validation du revenu.",
+      "exigences": [
+        "EF-41"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-INT-006",
+      "concept": "RapportTrustii",
+      "concept_nom": "Rapport Trustii",
+      "enonce": "Aucune API Trustii réelle n'existe : tout ce qui en dépend se développe contre un SIMULATEUR, avec des données FACTICES.",
+      "exigences": [
+        "EF-54",
+        "EF-38"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-INT-007",
+      "concept": "SoumissionLoc4",
+      "concept_nom": "Soumission LOC 4",
+      "enonce": "Le LOC4 est VERSIONNÉ : une soumission corrigée remplace la précédente sans l'effacer.",
+      "exigences": [
+        "EF-53"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-INT-008",
+      "concept": "SoumissionLoc4",
+      "concept_nom": "Soumission LOC 4",
+      "enonce": "Les documents générés depuis une version périmée sont MARQUÉS périmés et ne peuvent pas être envoyés sans régénération.",
+      "exigences": [
+        "EF-53"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-INT-020",
+      "concept": "SoumissionLoc4",
+      "concept_nom": "Soumission LOC 4",
+      "enonce": "La PÉREMPTION est dérivée de max(version), jamais un drapeau stocké.",
+      "exigences": [],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-INT-021",
+      "concept": "SoumissionLoc4",
+      "concept_nom": "Soumission LOC 4",
+      "enonce": "L'envoi d'un document périmé est REFUSÉ par la base, et sa version source doit EXISTER.",
+      "exigences": [],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-INT-022",
+      "concept": "SoumissionLoc4",
+      "concept_nom": "Soumission LOC 4",
+      "enonce": "Une soumission REÇUE et un CHANGEMENT de version courante sont deux faits distincts.",
+      "exigences": [
+        "EF-39"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-INT-025",
+      "concept": "SoumissionLoc4",
+      "concept_nom": "Soumission LOC 4",
+      "enonce": "Le drapeau « endosseur ou dépôt pressenti",
+      "exigences": [
+        "EF-25"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-INT-009",
+      "concept": "SoumissionLoc4",
+      "concept_nom": "Soumission LOC 4",
+      "enonce": "La numérotation du LOC4 est une RÉFÉRENCE ÉTRANGÈRE, jamais la clé du dossier.",
+      "exigences": [
+        "EF-02"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-INT-010",
+      "concept": "ReferenceExterne",
+      "concept_nom": "Référence externe (clé de rapprochement)",
+      "enonce": "La référence est DÉTERMINISTE : le même dossier donne toujours la même référence, sans horloge ni aléa.",
+      "exigences": [],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-INT-011",
+      "concept": "ReferenceExterne",
+      "concept_nom": "Référence externe (clé de rapprochement)",
+      "enonce": "La lecture distingue TROIS formes, parce qu'elles appellent trois gestes différents : `notre` (intacte) · `abimee` (notre forme, somme fausse — le dossier existe, quelqu'un a mal recopié) · `etrangere` (le fournisseur ne nous a pas retourné notre jeton — problème d'intégration, pas de dossier).",
+      "exigences": [],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-INT-012",
+      "concept": "ReferenceExterne",
+      "concept_nom": "Référence externe (clé de rapprochement)",
+      "enonce": "Le module N'APPARIE JAMAIS PAR DÉFAUT : sans clé, ou en cas d'ambiguïté, l'intrant entre dans une file d'appariement avec TÂCHE HUMAINE.",
+      "exigences": [
+        "EF-01"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-INT-013",
+      "concept": "ReferenceExterne",
+      "concept_nom": "Référence externe (clé de rapprochement)",
+      "enonce": "Le mécanisme existe en code, mais la QUESTION CLIENT reste ouverte : comment lie-t-on aujourd'hui un rapport reçu à une demande, et Trustii accepte-t-il une référence externe injectable à l'envoi du Lock Trustii ?",
+      "exigences": [
+        "EF-01"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-INT-014",
+      "concept": "EntreeJournalIntrants",
+      "concept_nom": "Entrée du journal des intrants",
+      "enonce": "L'issue d'une entrée vaut accepte · rejeu · refuse · a-apparier.",
+      "exigences": [],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-INT-015",
+      "concept": "EntreeJournalIntrants",
+      "concept_nom": "Entrée du journal des intrants",
+      "enonce": "L'empreinte intégrale détecte le rejeu ; l'empreinte du CONTENU seul ne déduplique pas — elle rend visible qu'un contenu identique était déjà passé.",
+      "exigences": [],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-INT-016",
+      "concept": "EntreeJournalIntrants",
+      "concept_nom": "Entrée du journal des intrants",
+      "enonce": "Aucune colonne du journal ne peut porter la charge utile d'un formulaire, ET C'EST LA STRUCTURE QUI LE TIENT.",
+      "exigences": [
+        "EF-42",
+        "EF-39"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-INT-017",
+      "concept": "EntreeJournalIntrants",
+      "concept_nom": "Entrée du journal des intrants",
+      "enonce": "L'arrivée ACCEPTÉE d'une soumission écrit le journal ET la version dans la même transaction, ou aucun des deux.",
+      "exigences": [],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-DOC-010",
+      "concept": "LiasseDocumentaire",
+      "concept_nom": "Liasse",
+      "enonce": "La composition de la liasse est une DONNÉE DE CONFIGURATION, et deux des quatre types V1 n'en ont AUCUNE.",
+      "exigences": [
+        "EF-43"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-DOC-011",
+      "concept": "LiasseDocumentaire",
+      "concept_nom": "Liasse",
+      "enonce": "Les SEPT types d'EF-43 sont au catalogue, V2 comprises, et les trois types V2 sont REFUSÉS à l'écriture.",
+      "exigences": [
+        "EF-43"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-DOC-001",
+      "concept": "LiasseDocumentaire",
+      "concept_nom": "Liasse",
+      "enonce": "Prévisualisation OBLIGATOIRE avant envoi, et avant le contreseing.",
+      "exigences": [
+        "EF-20",
+        "EF-28"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-DOC-002",
+      "concept": "LiasseDocumentaire",
+      "concept_nom": "Liasse",
+      "enonce": "Les 17 clauses de consentement sont PORTÉES PAR LA LIASSE et COUVERTES PAR LA SIGNATURE.",
+      "exigences": [
+        "EF-20",
+        "EF-22"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-DOC-003",
+      "concept": "LiasseDocumentaire",
+      "concept_nom": "Liasse",
+      "enonce": "Les six confirmations de conformité de l'unité — logement, stationnement, rangement : réservé + conforme — sont une PRÉCONDITION BLOQUANTE de tout envoi de documents.",
+      "exigences": [
+        "EF-06"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-DOC-004",
+      "concept": "Document",
+      "concept_nom": "Document",
+      "enonce": "Le bail RECOPIE AUTOMATIQUEMENT le Lock 4 — c'est le gain n°1 du projet et la fin de la double saisie.",
+      "exigences": [
+        "EF-21"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-DOC-005",
+      "concept": "Document",
+      "concept_nom": "Document",
+      "enonce": "🚨 EF-21 est spécifiée dans son INTENTION, pas dans son EXÉCUTION : le gabarit du BAIL (la CIBLE) n'a jamais été fourni, donc il n'existe AUCUN mapping champ par champ du LOC4 vers le bail.",
+      "exigences": [
+        "EF-21"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-DOC-006",
+      "concept": "GabaritDocument",
+      "concept_nom": "Gabarit de document",
+      "enonce": "L'outillage actuel annonce six documents types mais n'en énumère que cinq.",
+      "exigences": [
+        "EF-20"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-DOC-007",
+      "concept": "DemandeDeSignature",
+      "concept_nom": "Demande de signature",
+      "enonce": "Cycle de vie : créée → envoyée → partiellement_signée → complétée ; ou annulation_demandée → annulée ; ou expirée.",
+      "exigences": [
+        "EF-56"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-DOC-008",
+      "concept": "DemandeDeSignature",
+      "concept_nom": "Demande de signature",
+      "enonce": "L'annulation est RÉCONCILIÉE avec le fournisseur de signature, et les signatures déjà apposées sont CONSERVÉES avec leur preuve.",
+      "exigences": [
+        "EF-56"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-DOC-009",
+      "concept": "DemandeDeSignature",
+      "concept_nom": "Demande de signature",
+      "enonce": "Grain PERSONNE : une demande par signataire.",
+      "exigences": [
+        "EF-56"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-COM-001",
+      "concept": "Communication",
+      "concept_nom": "Communication",
+      "enonce": "Un message entrant est rattaché PAR NUMÉRO au dossier actif le plus récent ; une ambiguïté de personne est SIGNALÉE, jamais devinée — un couple partage fréquemment un numéro. Un message non rattaché entre dans un BAC DE TRI, il n'est jamais perdu ni classé au hasard.",
+      "exigences": [],
+      "regles_affaires": [
+        "RA-31"
+      ]
+    },
+    {
+      "id": "INV-COM-002",
+      "concept": "Communication",
+      "concept_nom": "Communication",
+      "enonce": "Un seul numéro d'entreprise ; l'identité de l'agent est portée dans le TEXTE du message.",
+      "exigences": [
+        "EF-15"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-COM-003",
+      "concept": "ConsentementCommunication",
+      "concept_nom": "Consentement aux communications",
+      "enonce": "Un destinataire exclu ne reçoit PLUS RIEN, relances comprises.",
+      "exigences": [
+        "EF-15",
+        "EF-17"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-COM-004",
+      "concept": "ConsentementCommunication",
+      "concept_nom": "Consentement aux communications",
+      "enonce": "Chaque message identifie son expéditeur.",
+      "exigences": [
+        "EF-15"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-COM-005",
+      "concept": "ConsentementCommunication",
+      "concept_nom": "Consentement aux communications",
+      "enonce": "⚠️ Il n'est PAS établi que le formulaire candidat amont recueille un consentement aux TEXTOS. S'il ne le recueille pas, il n'existe aucun consentement à importer et EF-15 n'est pas exécutable telle quelle sur ce canal.",
+      "exigences": [
+        "EF-15"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-COM-006",
+      "concept": "Relance",
+      "concept_nom": "Relance",
+      "enonce": "Deux cycles (jour 1, jour 2), remontée au superviseur après 48 h, pause possible.",
+      "exigences": [],
+      "regles_affaires": [
+        "RA-17"
+      ]
+    },
+    {
+      "id": "INV-COM-007",
+      "concept": "Relance",
+      "concept_nom": "Relance",
+      "enonce": "Une relance ne part qu'entre 8 h et 21 h, heure locale du destinataire ; hors fenêtre, l'envoi est reporté.",
+      "exigences": [
+        "EF-17"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-COM-008",
+      "concept": "Appel",
+      "concept_nom": "Appel",
+      "enonce": "🔒 AUCUN enregistrement audio des appels. Le module conserve les MÉTADONNÉES et rien d'autre.",
+      "exigences": [
+        "EF-16"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-DEC-011",
+      "concept": "DecisionDePrequalification",
+      "concept_nom": "Décision de préqualification",
+      "enonce": "La préqualification ne se modélise pas comme un cran du processus.",
+      "exigences": [
+        "EF-07"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-DEC-001",
+      "concept": "DecisionDePrequalification",
+      "concept_nom": "Décision de préqualification",
+      "enonce": "La décision porte sur le DOSSIER, pas sur une personne.",
+      "exigences": [
+        "EF-07"
+      ],
+      "regles_affaires": [
+        "RA-30"
+      ]
+    },
+    {
+      "id": "INV-DEC-002",
+      "concept": "DecisionDePrequalification",
+      "concept_nom": "Décision de préqualification",
+      "enonce": "Une préqualification NÉGATIVE déclenche un refus avec le motif \"candidat refusé\" : double validation, avis au candidat, archive, LIBÉRATION DE L'UNITÉ. Il n'existe PAS d'état intermédiaire \"non préqualifié\" qui laisserait l'unité immobilisée.",
+      "exigences": [
+        "EF-07",
+        "EF-31"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-DEC-003",
+      "concept": "DecisionDePrequalification",
+      "concept_nom": "Décision de préqualification",
+      "enonce": "L'IA pré-score et RECOMMANDE (V1.1) ; l'humain confirme. Jamais d'auto-refus, à aucune version.",
+      "exigences": [
+        "EF-08",
+        "EF-09",
+        "EF-32"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-DEC-004",
+      "concept": "VerdictRechercheInterne",
+      "concept_nom": "Verdict de recherche interne",
+      "enonce": "Le verdict PORTE SES SOURCES : pour chaque source, OÙ l'agent a cherché, CE QU'IL A TROUVÉ, et l'horodatage — y compris lorsque la source est un système extérieur consulté à la main. Une case cochée sans trace ne vaut pas verdict.",
+      "exigences": [
+        "EF-44"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-DEC-005",
+      "concept": "ReferenceLocative",
+      "concept_nom": "Référence locative",
+      "enonce": "Grille à 9 points.",
+      "exigences": [
+        "EF-13"
+      ],
+      "regles_affaires": [
+        "RA-28"
+      ]
+    },
+    {
+      "id": "INV-DEC-006",
+      "concept": "ReferenceLocative",
+      "concept_nom": "Référence locative",
+      "enonce": "Grain PERSONNE — une par candidat.",
+      "exigences": [
+        "EF-13"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-DEC-007",
+      "concept": "Refus",
+      "concept_nom": "Refus / désistement",
+      "enonce": "Un refus exige DEUX PERSONNES DISTINCTES : proposé par le niveau de base ou intermédiaire, PRONONCÉ par le niveau élevé ; le proposant ne peut pas être le validant.",
+      "exigences": [
+        "EF-31"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-DEC-008",
+      "concept": "Refus",
+      "concept_nom": "Refus / désistement",
+      "enonce": "AUCUN effet aval avant la prononciation : ni avis au candidat, ni libération de l'unité, ni annulation de signature. Un rejet de la proposition ramène le dossier à son étape d'origine. Les deux identités et leurs horodatages sont journalisés.",
+      "exigences": [
+        "EF-31"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-DEC-009",
+      "concept": "Refus",
+      "concept_nom": "Refus / désistement",
+      "enonce": "Le refus d'un endosseur n'est PAS un motif de refus du dossier : il fait RECULER le dossier à Validation 2 pour qu'une autre sûreté soit proposée.",
+      "exigences": [
+        "EF-05"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-DEC-010",
+      "concept": "Refus",
+      "concept_nom": "Refus / désistement",
+      "enonce": "Un refus libère l'unité et annule les demandes de signature en cours.",
+      "exigences": [
+        "EF-31",
+        "EF-56"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-LOI-001",
+      "concept": "RegimeDeConservation",
+      "concept_nom": "Régime de conservation",
+      "enonce": "La purge est conditionnée à l'ÉTAT DU DOSSIER, jamais à une date seule : une donnée n'est purgeable que lorsque le dossier qui la porte a atteint un état terminal, et l'échéance court À PARTIR DE CET ÉTAT, jamais de la création.",
+      "exigences": [
+        "EF-42"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-LOI-002",
+      "concept": "RegimeDeConservation",
+      "concept_nom": "Régime de conservation",
+      "enonce": "Minimisation : les pièces confidentielles restent chez Trustii, téléchargées au module en FIN DE DOSSIER seulement, dans une zone confidentielle cloisonnée.",
+      "exigences": [
+        "EF-42"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-LOI-003",
+      "concept": "RegimeDeConservation",
+      "concept_nom": "Régime de conservation",
+      "enonce": "Aucun renseignement personnel RÉEL hors production : ni en développement, ni en test, ni en démonstration, ni dans le dépôt de code, ni dans un jeu de données, ni dans une maquette.",
+      "exigences": [
+        "EF-38"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-LOI-004",
+      "concept": "RegimeDeConservation",
+      "concept_nom": "Régime de conservation",
+      "enonce": "Les qualifications COMPORTEMENTALES d'une personne ne sortent pas du module : ce qui est propagé à l'aval est FACTUEL (unité, dates, coordonnées).",
+      "exigences": [
+        "EF-38"
+      ],
+      "regles_affaires": []
+    },
+    {
+      "id": "INV-LOI-005",
+      "concept": "DemandeDroitPersonne",
+      "concept_nom": "Demande d'accès ou d'effacement",
+      "enonce": "Le module produit, pour une personne donnée, l'INVENTAIRE des renseignements la concernant, et exécute une demande d'effacement dans les limites des obligations légales de conservation. La demande et son traitement sont journalisés.",
+      "exigences": [
+        "EF-57"
+      ],
+      "regles_affaires": []
+    }
+  ],
+  "glossaire": [
+    {
+      "terme": "Trustii",
+      "definition": "Le service tiers d'enquête qui a REMPLACÉ les anciens questionnaires candidat Q1–Q3. C'est désormais l'intrant amont : identité, coordonnées, crédit, antécédents. Source : BRD §4, encadré vocabulaire."
+    },
+    {
+      "terme": "Lock Trustii",
+      "definition": "Le formulaire d'ENTRÉE de Trustii, rempli en amont par le candidat."
+    },
+    {
+      "terme": "Rapport Trustii",
+      "definition": "Le RÉSULTAT que Trustii nous renvoie. À ne pas confondre avec le Lock."
+    },
+    {
+      "terme": "Lock 4 · LOC 4 · LOC4",
+      "definition": "Trois écritures du même objet : « Questionnaire 4 : Nouveau bail », le Jotform que l'AGENT remplit après préqualification et qui peuple les documents. En V1 le module le LIT, il ne le génère pas."
+    },
+    {
+      "terme": "« le jaune »",
+      "definition": "La couleur posée à la main dans le Google Sheet pour immobiliser une unité. C'est ce que le concept Reservation remplace."
+    },
+    {
+      "terme": "Espace louable",
+      "definition": "Terme de MODÉLISATION, absent du BRD. Regroupe unité, stationnement extérieur, stationnement intérieur et rangement dans un seul type. Voir l'écart É-05."
+    },
+    {
+      "terme": "Niveau (de responsabilité)",
+      "definition": "base · intermédiaire · élevé. Rôles de CE module, stockés dans SA base — pas des groupes Google Workspace. À ne pas confondre avec le rôle d'ADMINISTRATION, qui est une exploitation et non un niveau métier."
+    },
+    {
+      "terme": "Grain",
+      "definition": "Attribut d'un TYPE de tâche : dossier ou personne. Détermine en combien d'exemplaires la tâche existe. Jamais un choix global du dossier."
+    },
+    {
+      "terme": "Archétype",
+      "definition": "L'une des six natures de tâche : confirmation pré-remplie · automatique · vérification externe · décision · appel · note."
+    },
+    {
+      "terme": "Ratio d'effort",
+      "definition": "Loyer ÷ salaire BRUT mensuel × 100, au grain DOSSIER, sur la somme des revenus déclarés des signataires (RA-30). ⚠️ Bug connu à corriger : horaire traité comme hebdomadaire. Seuil à confirmer."
+    },
+    {
+      "terme": "DPA",
+      "definition": "Débit préautorisé — mandat + spécimen de chèque (EF-24)."
+    },
+    {
+      "terme": "EDL",
+      "definition": "État des lieux — tâche déclenchée par un changement d'unité (RC-13)."
+    },
+    {
+      "terme": "SOQUIJ · TAL",
+      "definition": "Sources judiciaires québécoises portées par le rapport Trustii, avec code couleur rouge / jaune / gris."
+    },
+    {
+      "terme": "Mode tâche",
+      "definition": "Le parti pris du produit : l'écran principal est la FILE DE TÂCHES ; la fiche est consultable, jamais l'entrée. « Les gens veulent voir des tâches, pas une fiche. »"
+    }
+  ],
+  "grains_du_catalogue": {
+    "etapes": [
+      {
+        "code": "reception",
+        "libelle": "1- Validation initiale Trustii",
+        "hors_v1": false
+      },
+      {
+        "code": "envoi-des-documents",
+        "libelle": "2- Envoi des documents",
+        "hors_v1": false
+      },
+      {
+        "code": "attente-de-signature",
+        "libelle": "3- En attente de signature",
+        "hors_v1": false
+      },
+      {
+        "code": "validation-1",
+        "libelle": "4- Validation 1",
+        "hors_v1": false
+      },
+      {
+        "code": "validation-2",
+        "libelle": "5- Validation 2",
+        "hors_v1": false
+      },
+      {
+        "code": "endosseur-ou-depot",
+        "libelle": "6- Endosseur ou Dépôt",
+        "hors_v1": true
+      },
+      {
+        "code": "validation-du-dpa",
+        "libelle": "7- Validation du DPA",
+        "hors_v1": false
+      },
+      {
+        "code": "paiement-1er-mois",
+        "libelle": "8- Paiement du 1er mois",
+        "hors_v1": true
+      },
+      {
+        "code": "approbation-finale",
+        "libelle": "9- Approbation Finale",
+        "hors_v1": false
+      },
+      {
+        "code": "refus-du-dossier",
+        "libelle": "10- Refus du dossier",
+        "hors_v1": false
+      }
+    ],
+    "niveaux": [
+      "base",
+      "intermediaire",
+      "eleve"
+    ],
+    "grains": [
+      "personne",
+      "dossier"
+    ],
+    "archetypes": [
+      "confirmation",
+      "automatique",
+      "verification",
+      "appel",
+      "note",
+      "decision"
+    ],
+    "types_de_tache": [
+      "identite",
+      "credit",
+      "revenu",
+      "references",
+      "recherche-interne",
+      "dossier-candidat",
+      "signature",
+      "conf-logement-reserve",
+      "conf-logement-conforme",
+      "conf-stat-reserve",
+      "conf-stat-conforme",
+      "conf-rangement-reserve",
+      "conf-rangement-conforme",
+      "prequalification",
+      "reservation",
+      "liasse",
+      "escalade-conformite",
+      "note-dossier",
+      "approbation-finale",
+      "contreseing",
+      "refus"
+    ]
+  },
+  "formes_outillees": [
+    {
+      "code": "file",
+      "nom": "File de travail",
+      "aide": "Les tâches à traiter, une par ligne, avec le geste attendu."
+    },
+    {
+      "code": "tableau",
+      "nom": "Tableau",
+      "aide": "Une ligne par élément, des colonnes que vous choisissez."
+    },
+    {
+      "code": "fiche",
+      "nom": "Fiche",
+      "aide": "Tout ce qu'on sait d'un seul élément, sur une page."
+    },
+    {
+      "code": "tableau-de-bord",
+      "nom": "Tableau de bord",
+      "aide": "Des compteurs et des listes courtes, pour voir l'ensemble."
+    }
+  ],
+  "couverture": {
+    "concepts": 33,
+    "regles": 99,
+    "invariants_sans_enonce_lisible": 1
+  }
+}
