@@ -1,0 +1,574 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- ⚠️ L'ADRESSE EST DANS LE FICHIER, ET C'EST CE QUI RELIE LA LISTE AUX
+     ÉCRANS. La liste des interfaces lit ces marques pour savoir quel fichier
+     porte quel écran, et croise dans les DEUX SENS : une page livrée sans
+     fichier rougit, un fichier sans page livrée rougit. Une table de
+     correspondance écrite à la main dirait le contraire du disque, un jour,
+     et ne rougirait jamais. -->
+<meta name="ecran-adresse" content="/dossiers/[id]">
+<title>Dossier — copie de votre écran (SI Bélanger)</title>
+<!-- ⛔ FICHIER DÉRIVÉ — écrit par scripts/derive-ecrans-atelier.mjs en faisant
+     tourner la vraie page. Toute retouche à la main sera écrasée, et fera
+     REFUSER la production du paquet en nommant cet écran. -->
+<style>
+/*! tailwindcss v4.3.3 | MIT License | https://tailwindcss.com */
+@layer properties;
+@layer theme, base, components, utilities;
+@layer theme {
+  :root, :host {
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+      "Noto Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+      "Segoe UI Symbol", "Noto Color Emoji";
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+      "Courier New", monospace;
+    --color-white: #fff;
+    --spacing: 0.25rem;
+    --container-7xl: 80rem;
+    --text-xs: 0.75rem;
+    --text-xs--line-height: calc(1 / 0.75);
+    --text-sm: 0.875rem;
+    --text-sm--line-height: calc(1.25 / 0.875);
+    --text-lg: 1.125rem;
+    --text-lg--line-height: calc(1.75 / 1.125);
+    --text-xl: 1.25rem;
+    --text-xl--line-height: calc(1.75 / 1.25);
+    --text-2xl: 1.5rem;
+    --text-2xl--line-height: calc(2 / 1.5);
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --tracking-wide: 0.025em;
+    --leading-tight: 1.25;
+    --default-font-family: var(--font-sans);
+    --default-mono-font-family: var(--font-mono);
+  }
+}
+@layer base {
+  *, ::after, ::before, ::backdrop, ::file-selector-button {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border: 0 solid;
+  }
+  html, :host {
+    line-height: 1.5;
+    -webkit-text-size-adjust: 100%;
+    tab-size: 4;
+    font-family: var(--default-font-family, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji");
+    font-feature-settings: var(--default-font-feature-settings, normal);
+    font-variation-settings: var(--default-font-variation-settings, normal);
+    -webkit-tap-highlight-color: transparent;
+  }
+  hr {
+    height: 0;
+    color: inherit;
+    border-top-width: 1px;
+  }
+  abbr:where([title]) {
+    -webkit-text-decoration: underline dotted;
+    text-decoration: underline dotted;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-size: inherit;
+    font-weight: inherit;
+  }
+  a {
+    color: inherit;
+    -webkit-text-decoration: inherit;
+    text-decoration: inherit;
+  }
+  b, strong {
+    font-weight: bolder;
+  }
+  code, kbd, samp, pre {
+    font-family: var(--default-mono-font-family, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace);
+    font-feature-settings: var(--default-mono-font-feature-settings, normal);
+    font-variation-settings: var(--default-mono-font-variation-settings, normal);
+    font-size: 1em;
+  }
+  small {
+    font-size: 80%;
+  }
+  sub, sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+  }
+  sub {
+    bottom: -0.25em;
+  }
+  sup {
+    top: -0.5em;
+  }
+  table {
+    text-indent: 0;
+    border-color: inherit;
+    border-collapse: collapse;
+  }
+  :-moz-focusring:where(:not(iframe)) {
+    outline: auto;
+  }
+  progress {
+    vertical-align: baseline;
+  }
+  summary {
+    display: list-item;
+  }
+  ol, ul, menu {
+    list-style: none;
+  }
+  img, svg, video, canvas, audio, iframe, embed, object {
+    display: block;
+    vertical-align: middle;
+  }
+  img, video {
+    max-width: 100%;
+    height: auto;
+  }
+  button, input, select, optgroup, textarea, ::file-selector-button {
+    font: inherit;
+    font-feature-settings: inherit;
+    font-variation-settings: inherit;
+    letter-spacing: inherit;
+    color: inherit;
+    border-radius: 0;
+    background-color: transparent;
+    opacity: 1;
+  }
+  :where(select:is([multiple], [size])) optgroup {
+    font-weight: bolder;
+  }
+  :where(select:is([multiple], [size])) optgroup option {
+    padding-inline-start: 20px;
+  }
+  ::file-selector-button {
+    margin-inline-end: 4px;
+  }
+  ::placeholder {
+    opacity: 1;
+  }
+  @supports (not (-webkit-appearance: -apple-pay-button))  or (contain-intrinsic-size: 1px) {
+    ::placeholder {
+      color: currentcolor;
+      @supports (color: color-mix(in lab, red, red)) {
+        color: color-mix(in oklab, currentcolor 50%, transparent);
+      }
+    }
+  }
+  textarea {
+    resize: vertical;
+  }
+  ::-webkit-search-decoration {
+    -webkit-appearance: none;
+  }
+  ::-webkit-date-and-time-value {
+    min-height: 1lh;
+    text-align: inherit;
+  }
+  ::-webkit-datetime-edit {
+    display: inline-flex;
+  }
+  ::-webkit-datetime-edit-fields-wrapper {
+    padding: 0;
+  }
+  ::-webkit-datetime-edit, ::-webkit-datetime-edit-year-field, ::-webkit-datetime-edit-month-field, ::-webkit-datetime-edit-day-field, ::-webkit-datetime-edit-hour-field, ::-webkit-datetime-edit-minute-field, ::-webkit-datetime-edit-second-field, ::-webkit-datetime-edit-millisecond-field, ::-webkit-datetime-edit-meridiem-field {
+    padding-block: 0;
+  }
+  ::-webkit-calendar-picker-indicator {
+    line-height: 1;
+  }
+  :-moz-ui-invalid {
+    box-shadow: none;
+  }
+  button, input:where([type="button"], [type="reset"], [type="submit"]), ::file-selector-button {
+    appearance: button;
+  }
+  ::-webkit-inner-spin-button, ::-webkit-outer-spin-button {
+    height: auto;
+  }
+  [hidden]:where(:not([hidden="until-found"])) {
+    display: none !important;
+  }
+}
+@layer utilities {
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border-width: 0;
+  }
+  .mx-auto {
+    margin-inline: auto;
+  }
+  .mt-1 {
+    margin-top: var(--spacing);
+  }
+  .mt-2 {
+    margin-top: calc(var(--spacing) * 2);
+  }
+  .mt-3 {
+    margin-top: calc(var(--spacing) * 3);
+  }
+  .ml-auto {
+    margin-left: auto;
+  }
+  .flex {
+    display: flex;
+  }
+  .grid {
+    display: grid;
+  }
+  .h-8 {
+    height: calc(var(--spacing) * 8);
+  }
+  .min-h-screen {
+    min-height: 100vh;
+  }
+  .w-auto {
+    width: auto;
+  }
+  .w-full {
+    width: 100%;
+  }
+  .max-w-7xl {
+    max-width: var(--container-7xl);
+  }
+  .flex-1 {
+    flex: 1;
+  }
+  .flex-col {
+    flex-direction: column;
+  }
+  .flex-wrap {
+    flex-wrap: wrap;
+  }
+  .items-baseline {
+    align-items: baseline;
+  }
+  .items-center {
+    align-items: center;
+  }
+  .justify-between {
+    justify-content: space-between;
+  }
+  .gap-1 {
+    gap: var(--spacing);
+  }
+  .gap-2 {
+    gap: calc(var(--spacing) * 2);
+  }
+  .gap-3 {
+    gap: calc(var(--spacing) * 3);
+  }
+  .gap-6 {
+    gap: calc(var(--spacing) * 6);
+  }
+  .gap-x-6 {
+    column-gap: calc(var(--spacing) * 6);
+  }
+  .gap-y-3 {
+    row-gap: calc(var(--spacing) * 3);
+  }
+  .rounded {
+    border-radius: 0.25rem;
+  }
+  .border {
+    border-style: var(--tw-border-style);
+    border-width: 1px;
+  }
+  .border-b {
+    border-bottom-style: var(--tw-border-style);
+    border-bottom-width: 1px;
+  }
+  .border-bordure-300 {
+    border-color: var(--sib-bordure-300);
+  }
+  .bg-marine-700 {
+    background-color: var(--sib-marine-700);
+  }
+  .bg-surface-100 {
+    background-color: var(--sib-surface-100);
+  }
+  .bg-white {
+    background-color: var(--color-white);
+  }
+  .p-5 {
+    padding: calc(var(--spacing) * 5);
+  }
+  .px-3 {
+    padding-inline: calc(var(--spacing) * 3);
+  }
+  .px-4 {
+    padding-inline: calc(var(--spacing) * 4);
+  }
+  .px-6 {
+    padding-inline: calc(var(--spacing) * 6);
+  }
+  .py-1\.5 {
+    padding-block: calc(var(--spacing) * 1.5);
+  }
+  .py-2 {
+    padding-block: calc(var(--spacing) * 2);
+  }
+  .py-3 {
+    padding-block: calc(var(--spacing) * 3);
+  }
+  .py-6 {
+    padding-block: calc(var(--spacing) * 6);
+  }
+  .pb-3 {
+    padding-bottom: calc(var(--spacing) * 3);
+  }
+  .text-right {
+    text-align: right;
+  }
+  .font-mono {
+    font-family: var(--font-mono);
+  }
+  .text-2xl {
+    font-size: var(--text-2xl);
+    line-height: var(--tw-leading, var(--text-2xl--line-height));
+  }
+  .text-lg {
+    font-size: var(--text-lg);
+    line-height: var(--tw-leading, var(--text-lg--line-height));
+  }
+  .text-sm {
+    font-size: var(--text-sm);
+    line-height: var(--tw-leading, var(--text-sm--line-height));
+  }
+  .text-xl {
+    font-size: var(--text-xl);
+    line-height: var(--tw-leading, var(--text-xl--line-height));
+  }
+  .text-xs {
+    font-size: var(--text-xs);
+    line-height: var(--tw-leading, var(--text-xs--line-height));
+  }
+  .leading-tight {
+    --tw-leading: var(--leading-tight);
+    line-height: var(--leading-tight);
+  }
+  .font-medium {
+    --tw-font-weight: var(--font-weight-medium);
+    font-weight: var(--font-weight-medium);
+  }
+  .font-semibold {
+    --tw-font-weight: var(--font-weight-semibold);
+    font-weight: var(--font-weight-semibold);
+  }
+  .tracking-wide {
+    --tw-tracking: var(--tracking-wide);
+    letter-spacing: var(--tracking-wide);
+  }
+  .text-encre-900 {
+    color: var(--sib-encre-900);
+  }
+  .text-gris-texte-700 {
+    color: var(--sib-gris-texte-700);
+  }
+  .text-marine-700 {
+    color: var(--sib-marine-700);
+  }
+  .text-white {
+    color: var(--color-white);
+  }
+  .text-white\/90 {
+    color: color-mix(in srgb, #fff 90%, transparent);
+    @supports (color: color-mix(in lab, red, red)) {
+      color: color-mix(in oklab, var(--color-white) 90%, transparent);
+    }
+  }
+  .uppercase {
+    text-transform: uppercase;
+  }
+  .underline {
+    text-decoration-line: underline;
+  }
+  .last\:border-0:last-child {
+    border-style: var(--tw-border-style);
+    border-width: 0px;
+  }
+  .last\:pb-0:last-child {
+    padding-bottom: 0px;
+  }
+  @media (hover: hover) {
+    .hover\:bg-marine-900:hover {
+      background-color: var(--sib-marine-900);
+    }
+  }
+  .focus\:not-sr-only:focus {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    clip-path: none;
+    white-space: normal;
+  }
+  .focus\:absolute:focus {
+    position: absolute;
+  }
+  .focus\:top-2:focus {
+    top: calc(var(--spacing) * 2);
+  }
+  .focus\:left-2:focus {
+    left: calc(var(--spacing) * 2);
+  }
+  .focus\:z-50:focus {
+    z-index: 50;
+  }
+  @media (width >= 40rem) {
+    .sm\:grid-cols-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+}
+:root {
+  --sib-marine-700: #03305d;
+  --sib-gris-500: #878786;
+  --sib-gris-ui-500: #8a8a8d;
+  --sib-encre-900: #1c1c1c;
+  --sib-nuit-900: #181d24;
+  --sib-noir: #000000;
+  --sib-surface-100: #f4f4f4;
+  --sib-bordure-300: #b3b3b3;
+  --sib-blanc: #ffffff;
+  --sib-marine-900: #00203d;
+  --sib-marine-500: #0a4a86;
+  --sib-marine-050: #e6ecf3;
+  --sib-gris-texte-700: #57575a;
+  --sib-succes: #0f6b3f;
+  --sib-succes-fond: #e7f4ec;
+  --sib-alerte: #8a3b00;
+  --sib-alerte-fond: #fdf2e3;
+  --sib-critique: #b3261e;
+  --sib-critique-fond: #fdecea;
+  --sib-info: #03305d;
+  --sib-info-fond: #e6ecf3;
+  --sib-police: "Inter", "Inter var", "Helvetica Neue", Arial, sans-serif;
+  --sib-police-chiffres: "Inter", "SF Mono", "Menlo", Consolas, monospace;
+  --sib-r1: 4px;
+  --sib-r2: 8px;
+  --sib-r3: 12px;
+  --sib-r4: 16px;
+  --sib-r5: 24px;
+  --sib-r6: 32px;
+  --sib-arrondi: 6px;
+  --sib-ombre: 0 1px 2px rgba(3, 48, 93, .08), 0 2px 8px rgba(3, 48, 93, .06);
+}
+body {
+  background: var(--sib-blanc);
+  color: var(--sib-encre-900);
+  font-family: var(--sib-police);
+}
+:focus-visible {
+  outline: 3px solid var(--sib-marine-500);
+  outline-offset: 2px;
+  border-radius: var(--sib-r1);
+}
+@property --tw-border-style {
+  syntax: "*";
+  inherits: false;
+  initial-value: solid;
+}
+@property --tw-leading {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-font-weight {
+  syntax: "*";
+  inherits: false;
+}
+@property --tw-tracking {
+  syntax: "*";
+  inherits: false;
+}
+@layer properties {
+  @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {
+    *, ::before, ::after, ::backdrop {
+      --tw-border-style: solid;
+      --tw-leading: initial;
+      --tw-font-weight: initial;
+      --tw-tracking: initial;
+    }
+  }
+}
+</style>
+<style>
+:root { color-scheme: light; }
+body { margin: 0; }
+.at-avis {
+  font-family: var(--sib-police, system-ui, sans-serif);
+  background: var(--sib-alerte-fond, #fdf3ec);
+  border-bottom: 2px solid var(--sib-alerte, #b3541e);
+  color: var(--sib-encre-900, #1a1a1c);
+  padding: 14px 20px; font-size: 13px; line-height: 1.55;
+}
+.at-avis h1 { margin: 0 0 6px; font-size: 15px; font-weight: 700; }
+.at-avis ul { margin: 6px 0 0; padding-left: 20px; }
+.at-avis li { margin: 2px 0; }
+.at-avis .at-quoi { font-weight: 600; }
+.at-nav {
+  font-family: var(--sib-police, system-ui, sans-serif);
+  display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
+  padding: 9px 20px; background: #fff;
+  border-bottom: 1px solid var(--sib-bordure-300, #d8d8da);
+  font-size: 13px;
+}
+.at-nav span { color: var(--sib-gris-texte-700, #57575a); margin-right: 4px; }
+.at-nav a {
+  color: var(--sib-marine-700, #03305d); text-decoration: none;
+  border: 1px solid var(--sib-bordure-300, #d8d8da);
+  border-radius: 4px; padding: 3px 9px;
+}
+.at-nav a[aria-current="page"] {
+  background: var(--sib-marine-700, #03305d); color: #fff;
+  border-color: var(--sib-marine-700, #03305d); font-weight: 600;
+}
+[data-lien-inerte] { cursor: not-allowed; }
+.at-pied {
+  font-family: var(--sib-police, system-ui, sans-serif);
+  border-top: 1px solid var(--sib-bordure-300, #d8d8da);
+  padding: 14px 20px; font-size: 12px;
+  color: var(--sib-gris-texte-700, #57575a); background: #fff;
+}
+</style>
+</head>
+<body>
+<section class="at-avis" role="note" aria-label="Ce que vous regardez">
+<h1>Ceci est une copie de votre écran « Dossier » — ce n'est pas une capture d'écran.</h1>
+<p class="at-quoi">Elle a été produite en FAISANT TOURNER l'écran réel de votre application, puis en figeant ce qu'il a affiché. La structure, les libellés et l'habillage sont donc ceux de votre application, à l'identique.</p>
+<ul>
+<li><strong>Les données affichées ne sont pas les vôtres.</strong> Ce sont des dossiers d'essai, avec des personnes qui n'existent pas.</li>
+<li><strong>Rien n'est cliquable</strong>, sauf le passage d'un écran à l'autre, juste en dessous. Les boutons sont là, ils ne font rien.</li>
+<li><strong>C'est un instantané du <span data-fige="date">2026-08-05</span>.</strong> Ce document ne peut pas savoir si votre application a changé depuis — demandez une copie à jour à l'équipe.</li>
+
+</ul>
+</section>
+<nav class="at-nav" aria-label="Les écrans livrés de votre application">
+<span>Vos écrans :</span>
+<a href="connexion.html">Connexion</a>
+<a href="dossier.html" aria-current="page">Dossier</a>
+<a href="ma-file.html">Ma file</a>
+<a href="tableau-de-bord.html">Tableau de bord</a>
+<a href="utilisateurs.html">Utilisateurs</a>
+</nav>
+<div class="flex min-h-screen flex-col bg-surface-100"><a href="#travail" class="sr-only bg-marine-700 px-4 py-2 text-white focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50">Aller à ma file</a><header class="border-b border-bordure-300 bg-marine-700 text-white"><div class="mx-auto flex w-full max-w-7xl flex-wrap items-center gap-x-6 gap-y-3 px-6 py-3"><a class="flex items-center gap-3" aria-label="Société immobilière Bélanger — Approbation des baux, retour à ma file" href="ma-file.html"><img alt="Société immobilière Bélanger" width="148" height="41" decoding="async" data-nimg="1" class="h-8 w-auto" style="color: transparent;" src="data:image/png;base64,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"><span class="text-sm font-semibold tracking-wide">Approbation des baux</span></a><nav aria-label="Navigation principale" class="flex items-center gap-1"><a class="rounded px-3 py-1.5 text-sm font-medium hover:bg-marine-900" href="ma-file.html">Ma file</a><a class="rounded px-3 py-1.5 text-sm font-medium hover:bg-marine-900" href="utilisateurs.html">Utilisateurs</a></nav><div class="ml-auto flex items-center gap-3 text-right"><div class="leading-tight"><p class="text-sm font-medium">Agent de démonstration</p><p data-test="niveau-utilisateur" class="text-xs text-white/90">Niveau élevé</p></div></div></div></header><main id="travail" class="mx-auto w-full max-w-7xl flex-1 px-6 py-6"><div class="flex flex-col gap-6"><header class="flex flex-col gap-1"><a data-test="retour-a-la-tache" class="text-sm text-marine-700 underline" href="ma-file.html">← Revenir à ma tâche</a><h1 data-test="numero-de-bail" class="text-2xl font-semibold text-encre-900">Dossier 2026-000161</h1><p class="text-sm text-gris-texte-700">Espace 2255-0203 Vallon-Nord · étape « validation-1 » · en_cours</p></header><section class="rounded border border-bordure-300 bg-white p-5"><h2 class="text-sm font-medium uppercase tracking-wide text-gris-texte-700">Le dossier</h2><dl class="mt-3 grid gap-3 text-sm sm:grid-cols-2"><div><dt class="text-gris-texte-700">Identifiant du module — clé de rapprochement</dt><dd data-test="reference-externe" class="font-mono text-encre-900">2026-000161</dd></div><div><dt class="text-gris-texte-700">Numéro du formulaire LOC4 — référence externe</dt><dd data-test="numero-loc4" class="text-encre-900">pas encore rapproché</dd></div></dl></section><section class="rounded border border-bordure-300 bg-white p-5"><h2 class="text-sm font-medium uppercase tracking-wide text-gris-texte-700">Les personnes (1 sur 4 au maximum)</h2><ul class="mt-3 flex flex-col gap-3" data-test="personnes-du-dossier"><li class="flex flex-wrap items-baseline justify-between gap-2 border-b border-bordure-300 pb-3 last:border-0 last:pb-0"><span class="text-sm text-encre-900"><span class="font-medium">Jean-Michel Lortie</span> <span class="text-gris-texte-700">· rang 1 · Locataire (signataire)</span></span><span data-test="avancement-personne" class="text-sm text-gris-texte-700">n’a franchi aucune étape</span></li></ul></section><section class="rounded border border-bordure-300 bg-white p-5" data-test="verdict-avancement"><h2 class="text-sm font-medium uppercase tracking-wide text-gris-texte-700">Le dossier peut-il franchir l’étape ?</h2><p class="mt-2 text-xl font-semibold text-encre-900">Non</p></section><section data-test="drapeau-de-surete" data-etat="non-renseigne" tabindex="0" role="note" aria-labelledby="surete-mention" class="rounded border border-bordure-300 bg-surface-100 p-5"><h2 class="text-sm font-medium uppercase tracking-wide text-gris-texte-700">Endosseur ou dépôt</h2><p id="surete-mention" data-test="surete-mention" class="mt-2 text-lg font-semibold text-encre-900">Sûreté pressentie — on ne sait pas encore</p><p data-test="surete-precision" class="mt-1 text-sm text-encre-900">Le formulaire de demande de location n’est pas encore arrivé. Ce n’est pas « aucune sûreté » : c’est une question à laquelle personne n’a encore répondu, et l’état normal d’un dossier récent.</p></section><section class="rounded border border-bordure-300 bg-white p-5" data-test="conditions-du-loc4"><h2 class="text-sm font-medium uppercase tracking-wide text-gris-texte-700">Les conditions confirmées avec le candidat</h2><p class="mt-3 text-sm text-encre-900" data-test="loc4-absent">Le formulaire de demande de location n’est pas encore arrivé. Un dossier s’ouvre à la réception du rapport d’enquête, et le formulaire est rempli après la préqualification — c’est donc l’état normal d’un dossier récent, pas une anomalie.</p></section><section class="rounded border border-bordure-300 bg-white p-5"><h2 class="text-sm font-medium uppercase tracking-wide text-gris-texte-700">Fil d’échanges</h2><p data-test="fil-vide" class="mt-3 text-sm text-gris-texte-700">Aucun échange n’est journalisé sur ce dossier.</p></section></div></main></div>
+<footer class="at-pied">
+<p>Écran « Dossier » · adresse dans l'application : <code>/dossiers/[id]</code> · copie figée le <span data-fige="date">2026-08-05</span> · atelier version <code>0.3.0</code>, révision <code><span data-fige="revision">520c437</span></code>.</p>
+<p>⚠️ Si vous devez dire à l'équipe <em>quelle</em> copie vous regardez, donnez-lui la <strong>révision</strong> — <code><span data-fige="revision">520c437</span></code>. Le numéro de version ne suffit pas : plusieurs copies différentes ont pu porter le même.</p>
+<p>Pour demander une modification de cet écran, dites-le à l'atelier en nommant son adresse — la demande partira de <code>/dossiers/[id]</code> et sera lue comme une modification, pas comme une création.</p>
+</footer>
+</body>
+</html>
