@@ -4,7 +4,7 @@
 > Toute modification à la main sera écrasée à la prochaine dérivation, et fera
 > rougir `scripts/verifier-atelier.mjs`.
 
-**Dérivé le** 2026-08-05 · **révision du dépôt** `5fa636f`
+**Dérivé le** 2026-08-05 · **révision du dépôt** `520c437`
 
 ## Pourquoi cette liste existe
 
@@ -41,14 +41,32 @@ vérifier, et prétendre le contraire serait vous induire en erreur.
 Si vous voulez être sûr d'avoir l'état courant, **demandez-le à l'équipe** : elle
 vous remettra une copie à jour.
 
-## ⚠️ Ce que cette liste ne peut pas faire
+## Vos 5 écrans livrés s'ouvrent, eux aussi
 
-**Elle ne montre pas les écrans livrés.** Ce sont des pages qui ont besoin de
-votre application ouverte et de votre session ; elles ne s'ouvrent pas toutes
-seules dans un navigateur. La liste les **nomme et les décrit** — c'est certain.
-Promettre une image qui n'existerait pas serait pire.
+Chacun a sa **copie consultable** sous `ecrans/`, dans un fichier qui s'ouvre
+seul. Ce ne sont **pas des dessins** de vos écrans : chaque copie a été produite
+en **faisant tourner la vraie page** de votre application, puis en figeant ce
+qu'elle a affiché. La structure, les libellés et l'habillage sont donc les
+vôtres, à l'identique.
 
-**Les directions explorées, elles, s'ouvrent** : ce sont des fichiers autonomes.
+| Écran | Adresse | À ouvrir |
+|---|---|---|
+| Utilisateurs | `/admin/utilisateurs` | `ecrans/utilisateurs.html` |
+| Connexion | `/connexion` | `ecrans/connexion.html` |
+| Dossier | `/dossiers/[id]` | `ecrans/dossier.html` |
+| Ma file | `/file` | `ecrans/ma-file.html` |
+| Tableau de bord | `/tableau-de-bord` | `ecrans/tableau-de-bord.html` |
+
+⚠️ **Trois choses que ces copies ne sont pas**, et chacune est écrite en tête du
+fichier — vous ne pouvez pas en regarder une sans lire ce qu'elle est :
+
+- **ce ne sont pas vos données** — les dossiers et les personnes affichés
+  viennent d'un jeu d'essai, aucune de ces personnes n'existe ;
+- **ce n'est pas interactif** — les boutons sont là et ne font rien ; seul le
+  passage d'un écran à l'autre fonctionne ;
+- **ce n'est pas une capture** — c'est le rendu figé de la page.
+
+**Les directions explorées s'ouvrent aussi** : ce sont des fichiers autonomes.
 
 ## Pourquoi les directions écartées sont montrées
 
