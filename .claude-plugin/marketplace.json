@@ -1,0 +1,12 @@
+{
+  "name": "somtech-sibelanger",
+  "owner": { "name": "Somtech" },
+  "description": "Extensions Somtech pour la Société Immobilière Bélanger — outils remis au client pour le module d'approbation des baux.",
+  "plugins": [
+    {
+      "name": "approbator-atelier",
+      "source": "./approbator-atelier",
+      "description": "Atelier de composition d'écrans du module Approbation des baux : compose ce que le client demande, valide contre les règles du module, et fait d'un dépassement une demande de changement."
+    }
+  ]
+}
