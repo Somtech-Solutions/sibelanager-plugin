@@ -1,6 +1,6 @@
 {
   "name": "approbator-atelier",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Atelier de composition d'écrans pour le module Approbation des baux — Société Immobilière Bélanger. Compose ce qu'on lui demande, valide contre les règles du module, et transforme un dépassement en demande de changement.",
   "author": {
     "name": "Somtech"
