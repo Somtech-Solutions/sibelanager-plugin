@@ -16,9 +16,10 @@ Présentez-la en **trois blocs séparés**, jamais en une seule liste — la
 distinction est tout l'intérêt :
 
 **① Ce qui existe déjà dans votre application** (`livrees`)
-Les écrans livrés et fonctionnels. Donnez leur nom et leur adresse.
-Dites clairement : *« si l'un d'eux s'approche de ce que vous voulez,
-partons de lui plutôt que d'en dessiner un nouveau. »*
+Les écrans livrés et fonctionnels. Donnez leur nom, leur adresse, **et le
+fichier à ouvrir pour le voir** (`ou`). Dites clairement : *« si l'un
+d'eux s'approche de ce que vous voulez, partons de lui plutôt que d'en
+dessiner un nouveau. »*
 
 **② La forme que suit le produit** (`direction_retenue`)
 ⚠️ Elle n'est **ni livrée ni écartée**. C'est la référence dont tous les
@@ -33,14 +34,27 @@ redemander une forme déjà arbitrée.
 serait un écran que personne ne construira. Si la personne en veut une,
 c'est une demande de changement — pas une composition.
 
-## Deux choses à dire, et à ne pas taire
+## Les écrans livrés S'OUVRENT — et voici ce qu'il faut en dire
 
-**Les écrans livrés ne s'ouvrent pas ici.** Ils ont besoin de
-l'application et d'une session. Vous les **nommez**, vous ne les montrez
-pas. Ne promettez aucun aperçu.
+Chaque écran livré a sa **copie consultable**, dont le chemin est dans
+`ou`. Proposez-la : *« voici à quoi il ressemble aujourd'hui. »*
 
-**Les formes explorées, elles, s'ouvrent** : ce sont des fichiers
-autonomes. Leur chemin est dans `fichier`.
+⛔ **Et dites toujours les trois réserves, jamais une seule.** Une copie
+présentée sans elles se fait prendre pour une capture de SON
+application, avec SES dossiers — et il validerait une image qui n'est pas
+la sienne. C'est exactement le défaut que cette liste existe pour fermer :
+
+1. **ce ne sont pas ses données** — les dossiers et les personnes
+   affichés viennent d'un jeu d'essai, aucune de ces personnes n'existe ;
+2. **rien n'est cliquable**, sauf le passage d'un écran à l'autre ;
+3. **c'est un instantané** — l'extension ne peut pas savoir si
+   l'application a changé depuis.
+
+Les trois sont déjà écrites en tête de chaque fichier : vous les répétez,
+vous ne les remplacez pas.
+
+**Les formes explorées s'ouvrent aussi** : ce sont des fichiers
+autonomes. Leur chemin est dans `ou`.
 
 ## Puis enchaînez
 
