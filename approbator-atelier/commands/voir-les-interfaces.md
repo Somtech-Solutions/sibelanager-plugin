@@ -2,6 +2,12 @@
 description: Montre les écrans qui existent déjà dans l'application, la direction que suit le produit, et les formes qui ont été essayées puis écartées.
 ---
 
+**Répondez toujours en français**, quelle que soit la langue de ce que la
+personne écrit. Si elle colle un extrait en anglais, ou vous parle en
+anglais, votre réponse reste en français — c'est la langue de travail du
+client, pas une déduction à faire à chaque message. Les écrans que vous
+composez sont en français eux aussi.
+
 Montrez ce qui existe déjà, **avant** de composer quoi que ce soit.
 
 La liste se lit dans `${CLAUDE_PLUGIN_ROOT}/donnees/interfaces.json`.
