@@ -99,9 +99,18 @@ livrés, la forme que suit le produit — ni livrée ni écartée —, et les
 formes essayées puis écartées, **avec leur raison**. Cette dernière liste
 existe pour que vous ne redemandiez pas une forme déjà arbitrée.
 
-⚠️ Les écrans livrés ne s'ouvrent pas ici : ils ont besoin de
-l'application et de votre session. Ils sont **nommés et décrits**, pas
-affichés.
+**Et vos écrans livrés s'ouvrent** : chacun a sa copie sous `ecrans/`,
+produite en **faisant tourner la vraie page** de votre application puis en
+figeant ce qu'elle a affiché. Ce ne sont donc pas des dessins : la
+structure, les libellés et l'habillage sont les vôtres, à l'identique. Ils
+se relient entre eux — vous parcourez votre application, vous ne regardez
+pas cinq images.
+
+⚠️ **Trois réserves, écrites en tête de chaque copie** — vous ne pouvez
+pas en regarder une sans les lire : **ce ne sont pas vos données** (un jeu
+d'essai, aucune de ces personnes n'existe), **rien n'est cliquable** sauf
+le passage d'un écran à l'autre, et **c'est un instantané**. Ce n'est pas
+une capture de votre application telle qu'elle tourne aujourd'hui.
 
 ## Ce qui n'y est pas encore
 
