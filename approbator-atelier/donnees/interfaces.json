@@ -1,32 +1,42 @@
 {
   "$avertissement": "FICHIER DÉRIVÉ — écrit par scripts/derive-interfaces-atelier.mjs. Toute modification à la main sera écrasée, et fera rougir scripts/verifier-atelier.mjs.",
   "derive_le": "2026-08-05",
-  "revision_depot": "5fa636f",
+  "revision_depot": "520c437",
   "livrees": [
     {
       "adresse": "/admin/utilisateurs",
       "nom": "Utilisateurs",
-      "ouvrable_par_le_client": false
+      "ouvrable_par_le_client": true,
+      "ou": "ecrans/utilisateurs.html",
+      "comment": "Ouvrez ce fichier : c'est une copie de cet écran, produite en faisant tourner la vraie page. Elle dit elle-même, en tête, ce qu'elle est et ce qu'elle n'est pas."
     },
     {
       "adresse": "/connexion",
       "nom": "Connexion",
-      "ouvrable_par_le_client": false
+      "ouvrable_par_le_client": true,
+      "ou": "ecrans/connexion.html",
+      "comment": "Ouvrez ce fichier : c'est une copie de cet écran, produite en faisant tourner la vraie page. Elle dit elle-même, en tête, ce qu'elle est et ce qu'elle n'est pas."
     },
     {
       "adresse": "/dossiers/[id]",
       "nom": "Dossier",
-      "ouvrable_par_le_client": false
+      "ouvrable_par_le_client": true,
+      "ou": "ecrans/dossier.html",
+      "comment": "Ouvrez ce fichier : c'est une copie de cet écran, produite en faisant tourner la vraie page. Elle dit elle-même, en tête, ce qu'elle est et ce qu'elle n'est pas."
     },
     {
       "adresse": "/file",
       "nom": "Ma file",
-      "ouvrable_par_le_client": false
+      "ouvrable_par_le_client": true,
+      "ou": "ecrans/ma-file.html",
+      "comment": "Ouvrez ce fichier : c'est une copie de cet écran, produite en faisant tourner la vraie page. Elle dit elle-même, en tête, ce qu'elle est et ce qu'elle n'est pas."
     },
     {
       "adresse": "/tableau-de-bord",
       "nom": "Tableau de bord",
-      "ouvrable_par_le_client": false
+      "ouvrable_par_le_client": true,
+      "ou": "ecrans/tableau-de-bord.html",
+      "comment": "Ouvrez ce fichier : c'est une copie de cet écran, produite en faisant tourner la vraie page. Elle dit elle-même, en tête, ce qu'elle est et ce qu'elle n'est pas."
     }
   ],
   "aiguillages": [
@@ -97,14 +107,14 @@
   "fraicheur": {
     "nature": "instantané",
     "fige_le": "2026-08-05",
-    "revision": "5fa636f",
+    "revision": "520c437",
     "l_outil_sait_il_s_il_est_perime": false,
     "quoi_dire_au_client": "Ce que vous voyez a été figé à la date ci-dessus. Cette extension ne peut pas savoir si une version plus récente existe — demandez-le à l'équipe, elle vous remettra une copie à jour."
   },
   "regles_d_usage": {
     "point_de_depart_autorise": "Une interface LIVRÉE, ou la direction RETENUE. Le client dit « celle-là, mais avec X » et la demande porte l'écran de départ.",
     "point_de_depart_interdit": "Une direction ÉCARTÉE ou ABSORBÉE. Composer à partir d'elle produirait un écran que personne ne construira. Elles s'affichent avec leur verdict, elles ne se proposent pas.",
-    "rendu_des_pages_livrees": "Non disponible. Ce sont des pages qui exigent un serveur et une session ; l'atelier ne peut que les nommer et les décrire. Ne pas promettre de vignette."
+    "rendu_des_pages_livrees": "DISPONIBLE — chaque écran livré a une copie HTML autonome sous « ecrans/ », produite en FAISANT TOURNER la vraie page puis en figeant ce qu'elle a affiché. Montrez-la au client, et dites-lui ce qu'elle est : pas une capture, des données d'essai, rien de cliquable sauf le passage d'un écran à l'autre. Ne promettez JAMAIS qu'elle montre ses dossiers à lui."
   },
   "couverture": {
     "livrees": 5,
