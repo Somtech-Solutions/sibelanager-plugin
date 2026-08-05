@@ -660,36 +660,80 @@ body {
   background-size: contain;
 }
 .at-entete h1 { font-size: 16px; margin: 0; font-weight: 600; letter-spacing: .01em; }
-/* Le ruban des dix étapes — le client voit SON processus, et où il est
-   dedans. C'est ce qui permet de SITUER l'écran : sans lui, une maquette
-   est jolie et inutilisable.
+/* ══════════════════════════════════════════════════════════════════════
+   ⛔ PAS DE RUBAN D'ÉTAPES ICI — et c'est une correction, pas un oubli.
+   ══════════════════════════════════════════════════════════════════════
 
-   ⚠️ IL SE REPLIE, IL NE DEFILE PAS. Mesuré : sur une seule ligne le ruban
-   réclame 1588 px, donc un portable de 13 pouces n'en montre que 7 sur 10,
-   derrière une barre de défilement d'un pixel invisible au repos sur macOS.
-   Le client compte alors sept etapes et conclut que le catalogue est cassé
-   — alors que les données sont justes. Un repli n'a pas ce défaut : les dix
-   sont toujours là, quelle que soit la largeur. */
-.at-ruban {
-  background: #fff;
-  border-bottom: 1px solid var(--sib-bordure, #d8d8da);
+   Ce gabarit portait un ruban de dix onglets en tête, un par étape du
+   processus. Il partait d'une bonne intention — SITUER l'écran — et il
+   produisait l'effet inverse de celui qu'on cherche.
+
+   Ce qui a été mesuré le 2026-08-05, après que Maxime a installé
+   l'extension et dit « ce n'est pas l'écran qu'on a présenté au client » :
+
+     · l'application livrée ne porte AUCUN ruban d'étapes dans sa file ;
+     · la maquette retenue n'en porte aucun non plus ;
+     · le gabarit en portait un. Sur ce point, il divergeait des DEUX.
+
+   Le ruban n'était donc pas une variante d'habillage : c'était une
+   invention du gabarit seul, et elle changeait la NATURE de l'écran. Une
+   carte du processus avec dix onglets se lit comme une navigation ; on
+   cherche où l'on est. Une boîte de réception se lit comme du travail à
+   faire ; on traite la ligne du haut. Le client validait la première en
+   croyant valider la seconde.
+
+   ⚠️ LA FONCTION DU RUBAN RESTE, ELLE CHANGE DE PLACE. Situer l'écran est
+   un vrai besoin — sans quoi une maquette est jolie et inutilisable.
+   L'étape est donc nommée dans l'en-tête de la file, où elle qualifie le
+   travail au lieu d'inviter à naviguer.
+   ══════════════════════════════════════════════════════════════════════ */
+/* L'en-tête de la file : ce qu'on traite, dans quel ordre, et combien
+   presse. Il porte la fonction que le ruban assurait — situer — sans se
+   lire comme une navigation. */
+.at-file-titre {
+  padding: 14px 16px 12px; border-bottom: 1px solid var(--sib-bordure, #d8d8da);
 }
-.at-ruban li { list-style: none; }
-.at-ruban ol {
-  display: flex; flex-wrap: wrap; margin: 0; padding: 0; list-style: none;
+.at-file-titre h2 {
+  margin: 0; font-size: 15px; font-weight: 600; color: var(--sib-encre, #1a1a1c);
 }
-.at-etape-jeton {
-  display: block; padding: 9px 14px; font-size: 12.5px; white-space: nowrap;
+.at-file-tri, .at-file-gestes {
+  margin: 3px 0 0; font-size: 12px; color: var(--sib-gris-texte-700, #57575a);
+}
+.at-file-gestes { font-weight: 600; color: var(--sib-marine, #03305d); }
+.at-file-horsv1 {
+  margin: 5px 0 0; font-size: 11.5px; font-weight: 600;
+  color: var(--sib-alerte, #b3541e);
+}
+.at-file-horsv1::before { content: "▲ "; }
+
+/* Le contexte porté par chaque ligne — le bail, le logement, le loyer.
+   C'est ce qui permet de trancher sans ouvrir la tâche. */
+.at-vise { display: block; margin-top: 4px; font-size: 12.5px; }
+.at-contexte {
+  display: block; margin-top: 2px; font-size: 11.5px;
   color: var(--sib-gris-texte-700, #57575a);
-  border-right: 1px solid var(--sib-bordure, #d8d8da);
-  border-bottom: 1px solid var(--sib-bordure, #d8d8da);
 }
-.at-etape-jeton[aria-current="step"] {
-  background: var(--sib-marine, #03305d); color: #fff; font-weight: 600;
+
+/* L'urgence, en signalétique non chromatique : le triangle porte
+   l'information autant que la couleur — un daltonien lit la même chose. */
+.at-jeton--urgent {
+  border-color: var(--sib-alerte, #b3541e);
+  color: var(--sib-alerte, #b3541e); font-weight: 600;
 }
-.at-etape-jeton[data-hors-v1="true"]::after {
-  content: " · hors V1"; font-size: 10.5px; opacity: .8;
+.at-jeton--urgent::before { content: "▲ "; }
+
+/* L'avertissement Loi 25 — visible sans être criard, et il ne se replie
+   jamais : c'est la première chose à lire sur un écran qui montre des
+   personnes et des montants. */
+.at-bandeau-factice {
+  display: flex; gap: 9px; align-items: baseline;
+  padding: 9px 20px; font-size: 12.5px;
+  background: var(--sib-alerte-fond, #fdf3ec);
+  border-bottom: 1px solid var(--sib-alerte, #b3541e);
+  color: var(--sib-encre, #1a1a1c);
 }
+@media print { .at-bandeau-factice { display: flex !important; } }
+
 .at-app { display: grid; grid-template-columns: minmax(300px, 400px) 1fr; min-height: calc(100vh - 116px); }
 .at-file { border-right: 1px solid var(--sib-bordure, #d8d8da); background: #fff; overflow-y: auto; }
 .at-file-entete {
@@ -800,9 +844,28 @@ body.at-est-horscadre::after {
   <h1>__TITRE__</h1>
 </header>
 
-<nav class="at-ruban" aria-label="Les étapes du processus">
-  <ol id="at-ruban"></ol>
-</nav>
+<!-- ⚠️ L'AVERTISSEMENT LOI 25 — il manquait, et le client testait sans lui.
+     Un écran qui montre des noms, des adresses et des montants SANS dire
+     qu'ils sont inventés laisse croire qu'ils sont réels. Sur un module qui
+     porte des renseignements personnels, ce malentendu-là se paie cher.
+
+     Il vit DANS le document, comme la marque hors cadre : le fichier étant
+     autonome, l'avertissement voyage avec lui — à l'enregistrement, à
+     l'impression, à l'envoi par courriel. Un bandeau ajouté par un script
+     après coup ne survivrait à aucun des trois.
+
+     ⚠️ LE TEXTE N'EST PAS CELUI DES MAQUETTES, ET C'EST DÉLIBÉRÉ. Le leur
+     nomme un code d'exigence : c'est notre vocabulaire, et le contrôle de
+     l'atelier l'interdit à l'écran du client — à raison. Le client lit un
+     avertissement, pas notre référence. Le fond est le même, la référence
+     reste chez nous.
+     (Aucun accent grave ici : ce bloc vit dans un gabarit JS.) -->
+<div class="at-bandeau-factice" role="note">
+  <span aria-hidden="true">⚠</span>
+  <span><strong>Données factices</strong> — les personnes, les dossiers et les
+  montants affichés sont inventés. Aucun renseignement personnel réel.</span>
+</div>
+
 
 <!-- ⚠️ LA MARQUE HORS CADRE. Écrite dans le document lui-même, pas
      ajoutée après coup : le fichier étant autonome, elle survit à
@@ -815,6 +878,14 @@ body.at-est-horscadre::after {
 
 <div class="at-app">
   <aside class="at-file" aria-label="File de tâches">
+    <!-- Ce qui situe l'écran, là où le ruban le faisait avant : le nom de
+         l'étape qualifie le travail au lieu d'inviter à naviguer. -->
+    <div class="at-file-titre">
+      <h2 id="at-file-titre"></h2>
+      <p class="at-file-tri" id="at-file-tri"></p>
+      <p class="at-file-horsv1" id="at-file-horsv1" hidden></p>
+      <p class="at-file-gestes" id="at-file-gestes"></p>
+    </div>
     <div class="at-file-entete" id="at-compte"></div>
     <ol id="at-liste"></ol>
   </aside>
@@ -849,29 +920,98 @@ body.at-est-horscadre::after {
       .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
 
+  /* Jours d'ici l'emménagement — rend une valeur nulle quand la date manque.
+
+     ⚠️ LA DATE DU JOUR EST CELLE DE LA COMPOSITION, FIGÉE À L'ÉCRITURE.
+     Le fichier est autonome et voyage : s'il calculait « J-n » à chaque
+     ouverture, un écran composé aujourd'hui dirait autre chose dans un
+     mois — et le client croirait que ses données ont bougé. La référence
+     est donc posée une fois, au moment où l'écran est fait. */
+  function joursAvant(dateISO) {
+    if (!dateISO) return null;
+    var cible = Date.parse(dateISO + 'T00:00:00Z');
+    if (isNaN(cible)) return null;
+    var base = Date.parse(ECR.compose_le + 'T00:00:00Z');
+    if (isNaN(base)) return null;
+    return Math.round((cible - base) / 86400000);
+  }
+
+  /* Un séparateur de milliers en espace insécable — la convention d'ici.
+     Un formatage par la locale dépendrait de la langue du poste : le même écran
+     dirait « 1,450 » chez l'un et « 1 450 » chez l'autre. */
+  function formaterLoyer(n) {
+    return String(n).replace(/B(?=(d{3})+(?!d))/g, ' ');
+  }
+
   var etape = parCode(CAT.etapes, ECR.etape);
   var niveau = parCode(CAT.niveaux, ECR.niveau);
 
-  /* Le ruban des étapes — TOUTES, dans l'ordre du client, avec ses
-     libellés. Il vient du catalogue : aucun libellé n'est écrit ici. */
-  var ruban = document.getElementById('at-ruban');
-  CAT.etapes.forEach(function (e) {
-    var li = document.createElement('li');
-    var s = document.createElement('span');
-    s.className = 'at-etape-jeton';
-    s.textContent = e.libelle;
-    s.setAttribute('data-etape', e.code);
-    s.setAttribute('data-hors-v1', String(Boolean(e.hors_v1)));
-    if (e.code === ECR.etape) s.setAttribute('aria-current', 'step');
-    li.appendChild(s);
-    ruban.appendChild(li);
-  });
+  /* ── L'EN-TÊTE DE LA FILE : ce qu'on traite, et dans quel ordre ──────
+     Elle remplace le ruban et porte sa fonction — situer — sans inviter
+     à naviguer. Le libellé de l'étape vient du CATALOGUE : aucun libellé
+     n'est écrit ici, sinon il dirait huit étapes le jour où le module en
+     dira dix, sans jamais rougir. */
+  var titreFile = document.getElementById('at-file-titre');
+  titreFile.textContent = etape ? ('Ma file — ' + etape.libelle) : 'Ma file de tâches';
+  if (etape) titreFile.setAttribute('data-etape', etape.code);
+
+  /* ⚠️ « HORS V1 » ARRIVE ICI, ET C'EST MIEUX QU'AVANT. Le ruban le
+     signalait sur dix onglets à la fois — donc sur neuf étapes que le
+     client ne composait pas. Porté par le titre, l'avertissement ne
+     paraît que lorsqu'il le concerne : il compose POUR cette étape-là, et
+     il apprend qu'elle n'est pas dans la première version. */
+  var horsV1 = document.getElementById('at-file-horsv1');
+  if (etape && etape.hors_v1) {
+    horsV1.textContent = 'Cette étape ne fait pas partie de la première version.';
+    horsV1.hidden = false;
+    titreFile.setAttribute('data-hors-v1', 'true');
+  } else {
+    horsV1.hidden = true;
+    if (etape) titreFile.setAttribute('data-hors-v1', 'false');
+  }
+
+  /* ⚠️ LE TRI EST ANNONCÉ, PAS SEULEMENT APPLIQUÉ. Une liste triée dont
+     l'ordre n'est pas dit se lit comme une liste quelconque : on la
+     parcourt en entier au lieu de traiter le haut. C'est la différence
+     entre une boîte de réception et une liste. */
+  document.getElementById('at-file-tri').textContent =
+    'triée par urgence d’emménagement';
 
   document.getElementById('at-compte').textContent =
     ECR.taches.length + ' tâche(s) à traiter · ' + (niveau ? niveau.libelle : '');
 
+  /* ── LE TRI PAR URGENCE ──────────────────────────────────────────────
+     Ce qui presse en haut. C'est ce qui fait qu'une boîte de réception se
+     traite du haut vers le bas au lieu de se parcourir en entier.
+
+     ⚠️ ON TRIE UNE COPIE, ET L'ORDRE D'ORIGINE DÉPARTAGE LES ÉGALITÉS.
+     Le tri mute le tableau ; muter ECR.taches ferait diverger les indices
+     déjà distribués, et l'écran ouvrirait la mauvaise tâche. Les dates
+     égales gardent leur ordre d'arrivée : sans ce départage, deux
+     compositions du même écran pourraient ne pas rendre le même ordre. */
+  var ordonnees = ECR.taches.map(function (t, i) { return { t: t, i: i }; });
+  ordonnees.sort(function (a, b) {
+    var da = (ECR.dossiers[a.t.dossier] || {}).emmenagement || '9999-12-31';
+    var db = (ECR.dossiers[b.t.dossier] || {}).emmenagement || '9999-12-31';
+    if (da !== db) return da < db ? -1 : 1;
+    return a.i - b.i;
+  });
+
+  /* Le compteur de gestes — combien de travail attend, et combien presse.
+     Un nombre en tête de file dit en un coup d'oeil s'il faut s'y mettre. */
+  var pressants = ordonnees.filter(function (o) {
+    return joursAvant((ECR.dossiers[o.t.dossier] || {}).emmenagement) <= 21;
+  }).length;
+  var compteurs = document.getElementById('at-file-gestes');
+  if (compteurs) {
+    compteurs.textContent = pressants > 0
+      ? (pressants + ' pressante(s) sur ' + ordonnees.length)
+      : (ordonnees.length + ' à traiter, aucune urgence');
+  }
+
   var liste = document.getElementById('at-liste');
-  ECR.taches.forEach(function (t, i) {
+  ordonnees.forEach(function (o) {
+    var t = o.t; var i = o.i;
     var def = parType(t.type) || {};
     var arch = parCode(CAT.archetypes, def.archetype) || { glyphe: '·', libelle: '' };
     var grain = parCode(CAT.grains, def.grain) || { libelle: '' };
@@ -889,7 +1029,35 @@ body.at-est-horscadre::after {
     b.setAttribute('data-archetype', def.archetype || '');
     b.setAttribute('data-grain', def.grain || '');
     b.setAttribute('data-type', t.type);
+    b.setAttribute('data-rang-origine', String(i));
     b.setAttribute('data-ef', (def.ef || []).join(' '));
+    /* ── LA DENSITÉ — ce qui sépare une boîte de réception d'une liste.
+       Une ligne qui ne porte qu'un titre oblige à ouvrir chaque tâche pour
+       savoir de quoi elle parle : on parcourt au lieu de traiter. La ligne
+       porte donc son CONTEXTE — le bail, le logement, le loyer — et son
+       URGENCE, lisibles sans un clic. */
+    var d = ECR.dossiers[t.dossier] || {};
+    var jours = joursAvant(d.emmenagement);
+
+    /* ⚠️ LE NUMÉRO DE DOSSIER N'APPARAÎT QUE SUR LES TÂCHES DE GRAIN
+       DOSSIER — et c'est une correction, attrapée par le contrôle avant
+       livraison. Une première version le mettait sur TOUTES les lignes
+       « pour la densité » : une tâche qui vise une personne se mettait
+       alors à nommer un dossier, et les deux grains se confondaient à
+       l'oeil. C'est exactement ce que le module interdit : la file montre
+       les deux sans jamais les mélanger.
+
+       Le logement et le loyer, eux, restent partout : ils situent le
+       travail sans le rattacher au mauvais grain. */
+    /* ⚠️ LE DOSSIER N'EST PAS RÉPÉTÉ. Sur une tâche de grain dossier, le
+       numéro est DÉJÀ la ligne « visée » juste au-dessus : le remettre
+       dans le contexte l'affichait deux fois de suite. Vu à l'écran. */
+    var contexte = [
+      d.logement,
+      d.loyer ? (formaterLoyer(d.loyer) + ' $/mois') : null,
+      d.unite
+    ].filter(Boolean).join(' · ');
+
     b.innerHTML =
       '<span class="at-ligne1">' +
         '<span class="at-glyphe" aria-hidden="true">' + esc(arch.glyphe) + '</span>' +
@@ -899,17 +1067,31 @@ body.at-est-horscadre::after {
         '<span class="at-jeton">' + esc(arch.libelle) + '</span>' +
         '<span class="at-jeton">' + esc(grain.libelle) + '</span>' +
         (def.bloquant ? '<span class="at-jeton at-jeton--bloquant">bloquant</span>' : '') +
-        '<br>' + esc(vise || '') +
-      '</span>';
+        (jours !== null && jours <= 21
+          ? '<span class="at-jeton at-jeton--urgent">Emménagement imminent J-' + jours + '</span>'
+          : '') +
+      '</span>' +
+      '<span class="at-vise">' + esc(vise || '') + '</span>' +
+      '<span class="at-contexte">' + esc(contexte) + '</span>';
     b.addEventListener('click', function () { ouvrir(i); });
     li.appendChild(b);
     liste.appendChild(li);
   });
 
+  /* ⚠️ L'ARGUMENT EST L'INDEX D'ORIGINE, PAS LA POSITION À L'ÉCRAN — et la
+     distinction est née avec le tri par urgence. Tant que la file
+     s'affichait dans l'ordre du tableau, les deux coïncidaient et on
+     pouvait comparer la position DOM. Depuis qu'elle est triée, ils
+     divergent : la ligne surlignée était la première AFFICHÉE et le
+     panneau montrait la première du TABLEAU — deux tâches différentes,
+     deux personnes différentes. Vu à l'écran avant livraison.
+     Chaque bouton porte donc son index d'origine, et c'est lui qu'on
+     compare. */
   function ouvrir(i) {
     var boutons = liste.querySelectorAll('.at-tache');
     for (var k = 0; k < boutons.length; k++)
-      boutons[k].setAttribute('aria-current', k === i ? 'true' : 'false');
+      boutons[k].setAttribute('aria-current',
+        Number(boutons[k].getAttribute('data-rang-origine')) === i ? 'true' : 'false');
 
     var t = ECR.taches[i];
     var def = parType(t.type) || {};
@@ -1069,7 +1251,15 @@ body.at-est-horscadre::after {
      gens veulent voir des tâches, pas une fiche ». */
   if (ECR.forme && ECR.forme !== 'file') {
     rendreAutreForme(ECR.forme);
-  } else if (ECR.taches.length > 0) ouvrir(0);
+  } else if (ordonnees.length > 0) {
+    /* La première de l'ordre TRIÉ — c'est-à-dire ce qui presse le plus, et
+       c'est aussi la ligne que l'oeil voit surlignée. Ouvrir l'indice zéro
+       prenait la première du tableau, qui n'est plus celle du haut depuis
+       le tri : la ligne surlignée et le panneau montraient deux personnes
+       différentes. Vu à l'écran avant livraison.
+       (Aucun accent grave ici : ce bloc vit dans un gabarit JS.) */
+    ouvrir(ordonnees[0].i);
+  }
   else document.getElementById('at-detail').innerHTML =
     '<p class="at-vide">Aucune tâche dans cette file.</p>';
 })();
