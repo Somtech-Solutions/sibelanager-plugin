@@ -1,0 +1,946 @@
+{
+  "$avertissement": "FICHIER DÉRIVÉ — écrit par scripts/derive-brd-atelier.mjs depuis business-requirements/approbation-baux/BRD.md. Toute modification à la main sera écrasée, et fera rougir scripts/verifier-brd-atelier.mjs.",
+  "derive_le": "2026-08-03",
+  "revision_depot": "b2bf8e9",
+  "source": {
+    "chemin": "/business-requirements/approbation-baux/BRD.md",
+    "document_id": "85c52610-6b5d-4440-b705-59943f031a9b",
+    "workspace_id": "c39e480a-9d88-4957-b310-ea4c2b55c008",
+    "copie_dans_le_depot": "business-requirements/approbation-baux/BRD.md",
+    "empreinte": "d0fb2a31f15ad4aafae1ca084a7346213710b967afc1f389b186c3c8fb461d0d",
+    "version": {
+      "faisant_foi": "v1.4.0",
+      "lue_ou": "§8 Changelog",
+      "frontmatter": "v1.0.0",
+      "divergence_declaree": "Le front-matter porte « v1.0.0 », le §8 Changelog porte « v1.4.0 ». Le BRD tranche lui-même : c'est le §8 qui fait foi. Divergence relevée, jamais masquée."
+    }
+  },
+  "ordre_des_etapes": [
+    {
+      "rang": 1,
+      "libelle": "Validation initiale Trustii"
+    },
+    {
+      "rang": 2,
+      "libelle": "Envoi des documents"
+    },
+    {
+      "rang": 3,
+      "libelle": "En attente de signature"
+    },
+    {
+      "rang": 4,
+      "libelle": "Validation 1"
+    },
+    {
+      "rang": 5,
+      "libelle": "Validation 2"
+    },
+    {
+      "rang": 6,
+      "libelle": "Endosseur ou Dépôt"
+    },
+    {
+      "rang": 7,
+      "libelle": "Validation du DPA"
+    },
+    {
+      "rang": 8,
+      "libelle": "Paiement du 1er mois"
+    },
+    {
+      "rang": 9,
+      "libelle": "Approbation Finale"
+    },
+    {
+      "rang": 10,
+      "libelle": "Refus du dossier"
+    }
+  ],
+  "regles_opposables": [
+    {
+      "id": "OPP-01",
+      "titre": "cet ordre est une INTENTION du client. On ne le « corrige » pas.",
+      "clause": "Aucune story, aucune maquette, aucun catalogue d'étapes ne déplace la signature après Validation 1 ou Validation 2.",
+      "raison_client": "Le candidat, lui, a signé dès l'étape ②. C'est un choix assumé : signer tôt engage le candidat (il a aussi payé son enquête), au prix d'un peu d'insatisfaction quand SIB refuse ensuite.",
+      "protege": {
+        "mot": "signature",
+        "etape": "En attente de signature",
+        "rang": 3
+      },
+      "ancres": [
+        {
+          "libelle": "Validation 1",
+          "rang": 4,
+          "etape": "Validation 1"
+        },
+        {
+          "libelle": "Validation 2",
+          "rang": 5,
+          "etape": "Validation 2"
+        }
+      ],
+      "vocabulaire_du_heurt": {
+        "protege": [
+          "signature",
+          "signe",
+          "signer"
+        ],
+        "suffixes_flexion": [
+          "",
+          "s",
+          "e",
+          "es",
+          "er",
+          "ee",
+          "ees",
+          "ent",
+          "ant",
+          "ature"
+        ],
+        "ancres": [
+          {
+            "libelle": "Validation 1",
+            "etape": "Validation 1",
+            "rang": 4,
+            "formes": [
+              "validation 1",
+              "premiere validation",
+              "validation premiere",
+              "1re validation",
+              "validation 1re",
+              "1ere validation",
+              "validation 1ere",
+              "un validation",
+              "validation un"
+            ]
+          },
+          {
+            "libelle": "Validation 2",
+            "etape": "Validation 2",
+            "rang": 5,
+            "formes": [
+              "validation 2",
+              "deuxieme validation",
+              "validation deuxieme",
+              "seconde validation",
+              "validation seconde",
+              "2e validation",
+              "validation 2e",
+              "2eme validation",
+              "validation 2eme",
+              "deux validation",
+              "validation deux"
+            ]
+          }
+        ],
+        "verbe_racine": "deplac",
+        "verbes_declares": [
+          "deplac",
+          "repouss",
+          "decal",
+          "invers",
+          "report",
+          "bascul",
+          "changer l'ordre",
+          "changer l ordre",
+          "inverser"
+        ],
+        "marqueurs_ordre": {
+          "B_AVANT_A": [
+            "apres",
+            "une fois",
+            "a la suite de",
+            "suite a",
+            "des que",
+            "lorsque",
+            "quand"
+          ],
+          "A_AVANT_B": [
+            "avant",
+            "puis",
+            "ensuite",
+            "suivi de",
+            "suivie de",
+            "d'abord",
+            "d abord"
+          ]
+        },
+        "verbes_observation": [
+          "voir",
+          "montrer",
+          "afficher",
+          "suivre",
+          "consulter",
+          "savoir",
+          "visualiser",
+          "lister",
+          "connaitre",
+          "verifier",
+          "controler",
+          "valider"
+        ]
+      }
+    }
+  ],
+  "regles_affaires": [
+    {
+      "id": "RA-30",
+      "titre": "Ratio d'effort",
+      "enonce": "loyer ÷ salaire **brut** mensuel × 100 (conversions horaire/hebdo/annuel)."
+    },
+    {
+      "id": "RA-17",
+      "titre": "Relances",
+      "enonce": "2 cycles (jour 1, jour 2), remontée superviseur après 48 h, pause possible."
+    },
+    {
+      "id": "RA-28",
+      "titre": "Références locatives",
+      "enonce": "grille à 9 points."
+    },
+    {
+      "id": "RA-05",
+      "titre": "Grain personne",
+      "enonce": "le dossier n'avance que lorsque **toutes** les personnes ont franchi"
+    },
+    {
+      "id": "RA-07",
+      "titre": "Réservation",
+      "enonce": "unité réservée = pas en marché ; libération auto à la fermeture."
+    },
+    {
+      "id": "RA-31",
+      "titre": "Rattachement d'un message entrant",
+      "enonce": "*(nouvelle — EF-15)* : un message entrant est rattaché"
+    }
+  ],
+  "exigences": [
+    {
+      "id": "EF-01",
+      "portees": [
+        "V1"
+      ],
+      "hors_v1": false,
+      "section": "A · Réception & fiche locataire",
+      "enonce": "À la réception d'un **rapport Trustii**, l'app **monte automatiquement la/les",
+      "vocabulaire": [
+        "À la réception d'un rapport Trustii"
+      ]
+    },
+    {
+      "id": "EF-02",
+      "portees": [
+        "V1"
+      ],
+      "hors_v1": false,
+      "section": "A · Réception & fiche locataire",
+      "enonce": "Un dossier regroupe **1 à 4 personnes** reliées par le **n° de bail** ; avancement",
+      "vocabulaire": [
+        "Un dossier regroupe 1 à 4 personnes reliées par le n° de bail"
+      ]
+    },
+    {
+      "id": "EF-03",
+      "portees": [
+        "V1"
+      ],
+      "hors_v1": false,
+      "section": "B · Moteur de tâches & file de travail",
+      "enonce": "**File de tâches par niveau**, triée par urgence (emménagement imminent d'abord).",
+      "vocabulaire": [
+        "File de tâches par niveau"
+      ]
+    },
+    {
+      "id": "EF-04",
+      "portees": [
+        "V1"
+      ],
+      "hors_v1": false,
+      "section": "B · Moteur de tâches & file de travail",
+      "enonce": "Chaque tâche affiche **la donnée qui la justifie** ; confirmation en **1 clic**.",
+      "vocabulaire": [
+        "Chaque tâche affiche la donnée qui la justifie"
+      ]
+    },
+    {
+      "id": "EF-05",
+      "portees": [
+        "V1"
+      ],
+      "hors_v1": false,
+      "section": "B · Moteur de tâches & file de travail",
+      "enonce": "Compléter une tâche **avance le dossier** (transitions contrôlées) ; niveau élevé =",
+      "vocabulaire": [
+        "Compléter une tâche avance le dossier"
+      ]
+    },
+    {
+      "id": "EF-06",
+      "portees": [
+        "V1"
+      ],
+      "hors_v1": false,
+      "section": "C · Analyse & préqualification",
+      "enonce": "Les **6 vérifications de conformité** (logement · stationnement · rangement — réservé",
+      "vocabulaire": [
+        "Les 6 vérifications de conformité"
+      ]
+    },
+    {
+      "id": "EF-07",
+      "portees": [
+        "V1"
+      ],
+      "hors_v1": false,
+      "section": "C · Analyse & préqualification",
+      "enonce": "**Ratio d'effort** calculé et affiché (RA-30) ; **décision de préqualification**",
+      "vocabulaire": [
+        "Ratio d'effort calculé et affiché"
+      ]
+    },
+    {
+      "id": "EF-08",
+      "portees": [
+        "V1.1"
+      ],
+      "hors_v1": true,
+      "section": "C · Analyse & préqualification",
+      "enonce": "🧠 L'IA **pré-score la préqualification** (crédit + ratio + judiciaire + références)",
+      "vocabulaire": [
+        "L'IA pré-score la préqualification"
+      ]
+    },
+    {
+      "id": "EF-09",
+      "portees": [
+        "V2"
+      ],
+      "hors_v1": true,
+      "section": "C · Analyse & préqualification",
+      "enonce": "🤖 **Seuils d'auto-approbation** : dossier net → auto, zone grise → humain. Jamais",
+      "vocabulaire": [
+        "Seuils d'auto-approbation"
+      ]
+    },
+    {
+      "id": "EF-10",
+      "portees": [
+        "V1"
+      ],
+      "hors_v1": false,
+      "section": "D · Vérifications",
+      "enonce": "Le **rapport Trustii** (crédit, judiciaire) est **rattaché et présenté** au dossier.",
+      "vocabulaire": [
+        "Le rapport Trustii"
+      ]
+    },
+    {
+      "id": "EF-11",
+      "portees": [
+        "V1.1"
+      ],
+      "hors_v1": true,
+      "section": "D · Vérifications",
+      "enonce": "🧠 L'IA **résume le rapport de crédit** (18 pages → verdict 3 lignes : score,",
+      "vocabulaire": [
+        "L'IA résume le rapport de crédit"
+      ]
+    },
+    {
+      "id": "EF-12",
+      "portees": [
+        "V2"
+      ],
+      "hors_v1": true,
+      "section": "D · Vérifications",
+      "enonce": "🧠 Rapprochement judiciaire IA. ⚠ **Largement couvert par Trustii** :",
+      "vocabulaire": [
+        "Rapprochement judiciaire IA"
+      ]
+    },
+    {
+      "id": "EF-13",
+      "portees": [
+        "V1"
+      ],
+      "hors_v1": false,
+      "section": "D · Vérifications",
+      "enonce": "**Références locatives** (grille 9 points, RA-28) : **tâche humaine outillée** (appel +",
+      "vocabulaire": [
+        "Références locatives"
+      ]
+    },
+    {
+      "id": "EF-14",
+      "portees": [
+        "V1.1"
+      ],
+      "hors_v1": true,
+      "section": "D · Vérifications",
+      "enonce": "🤖 L'IA **automatise la recherche interne (EF-44 `[V1.1]`)** : détection de doublon",
+      "vocabulaire": [
+        "L'IA automatise la recherche interne"
+      ]
+    },
+    {
+      "id": "EF-15",
+      "portees": [
+        "V1"
+      ],
+      "hors_v1": false,
+      "section": "E · Communications intégrées",
+      "enonce": "**Texto + courriel** depuis l'app (Twilio + Gmail), **journalisés**, vue **CRM**.",
+      "vocabulaire": [
+        "Texto + courriel depuis l'app"
+      ]
+    },
+    {
+      "id": "EF-16",
+      "portees": [
+        "V1",
+        "V2"
+      ],
+      "hors_v1": false,
+      "section": "E · Communications intégrées",
+      "enonce": "**Appels depuis l'app**, journalisés.",
+      "vocabulaire": [
+        "Appels depuis l'app"
+      ]
+    },
+    {
+      "id": "EF-17",
+      "portees": [
+        "V1"
+      ],
+      "hors_v1": false,
+      "section": "E · Communications intégrées",
+      "enonce": "**Relances** (2 cycles, RA-17) **proposées et suivies** par l'app ; exécution manuelle.",
+      "vocabulaire": [
+        "Relances"
+      ]
+    },
+    {
+      "id": "EF-18",
+      "portees": [
+        "V2"
+      ],
+      "hors_v1": true,
+      "section": "E · Communications intégrées",
+      "enonce": "**Relances automatisées**.",
+      "vocabulaire": [
+        "Relances automatisées"
+      ]
+    },
+    {
+      "id": "EF-19",
+      "portees": [
+        "V1.1"
+      ],
+      "hors_v1": true,
+      "section": "E · Communications intégrées",
+      "enonce": "🧠 L'IA **assiste la rédaction** (notes, textos, courriels, scripts d'appel).",
+      "vocabulaire": [
+        "L'IA assiste la rédaction"
+      ]
+    },
+    {
+      "id": "EF-20",
+      "portees": [
+        "V1"
+      ],
+      "hors_v1": false,
+      "section": "F · Documents, types de demande & signature",
+      "enonce": "**Génération de la liasse** selon le type de demande ; champs issus du **Lock 4** (lu",
+      "vocabulaire": [
+        "Génération de la liasse selon le type de demande"
+      ]
+    },
+    {
+      "id": "EF-21",
+      "portees": [
+        "V1"
+      ],
+      "hors_v1": false,
+      "section": "F · Documents, types de demande & signature",
+      "enonce": "Le **bail recopie automatiquement le Lock 4** — **fin de la double saisie** (gain n°1).",
+      "vocabulaire": [
+        "Le bail recopie automatiquement le Lock 4"
+      ]
+    },
+    {
+      "id": "EF-22",
+      "portees": [
+        "V1"
+      ],
+      "hors_v1": false,
+      "section": "F · Documents, types de demande & signature",
+      "enonce": "**Signature électronique** (bail + règlement + DPA + annexe + contrat de service),",
+      "vocabulaire": [
+        "Signature électronique"
+      ]
+    },
+    {
+      "id": "EF-23",
+      "portees": [
+        "V1.1"
+      ],
+      "hors_v1": true,
+      "section": "F · Documents, types de demande & signature",
+      "enonce": "**Intégration complète du Lock 4** dans l'app. **En V1 le LOC4 reste un formulaire",
+      "vocabulaire": [
+        "Intégration complète du Lock 4 dans l'app"
+      ]
+    },
+    {
+      "id": "EF-24",
+      "portees": [
+        "V1"
+      ],
+      "hors_v1": false,
+      "section": "G · Encaissement & sûretés",
+      "enonce": "**Validation du mandat DPA** (formulaire + spécimen de chèque).",
+      "vocabulaire": [
+        "Validation du mandat DPA"
+      ]
+    },
+    {
+      "id": "EF-25",
+      "portees": [
+        "V2"
+      ],
+      "hors_v1": true,
+      "section": "G · Encaissement & sûretés",
+      "enonce": "**Sûretés** — les 3 options (RC-33) : **endosseur** (parcours Trustii complet),",
+      "vocabulaire": [
+        "Sûretés"
+      ]
+    },
+    {
+      "id": "EF-26",
+      "portees": [
+        "V2"
+      ],
+      "hors_v1": true,
+      "section": "G · Encaissement & sûretés",
+      "enonce": "**Dépôt de loyer** (calcul 2× coût mensuel RC-34, encaissement).",
+      "vocabulaire": [
+        "Dépôt de loyer"
+      ]
+    },
+    {
+      "id": "EF-27",
+      "portees": [
+        "V2"
+      ],
+      "hors_v1": true,
+      "section": "G · Encaissement & sûretés",
+      "enonce": "**Paiement du 1er mois + prorata** ; incl. les calculs financiers V2 (proportions de",
+      "vocabulaire": [
+        "Paiement du 1er mois + prorata"
+      ]
+    },
+    {
+      "id": "EF-28",
+      "portees": [
+        "V1"
+      ],
+      "hors_v1": false,
+      "section": "H · Approbation finale & propagation",
+      "enonce": "**Révision finale + contreseing SIB + signature** clôturent le dossier.",
+      "vocabulaire": [
+        "Révision finale + contreseing SIB + signature clôturent le dossier"
+      ]
+    },
+    {
+      "id": "EF-29",
+      "portees": [
+        "V1"
+      ],
+      "hors_v1": false,
+      "section": "H · Approbation finale & propagation",
+      "enonce": "**Propagation avale** (unité → LOUÉ, arrivées-départs, maintenance, collecte)",
+      "vocabulaire": [
+        "Propagation avale"
+      ]
+    },
+    {
+      "id": "EF-30",
+      "portees": [
+        "V2"
+      ],
+      "hors_v1": true,
+      "section": "H · Approbation finale & propagation",
+      "enonce": "**Propagation avale automatisée**.",
+      "vocabulaire": [
+        "Propagation avale automatisée"
+      ]
+    },
+    {
+      "id": "EF-31",
+      "portees": [
+        "V1"
+      ],
+      "hors_v1": false,
+      "section": "I · Refus",
+      "enonce": "**Refus / désistement** (manuel) : **motif** (les 4 types, RC-57) + double validation,",
+      "vocabulaire": [
+        "Refus / désistement"
+      ]
+    },
+    {
+      "id": "EF-32",
+      "portees": [
+        "V2"
+      ],
+      "hors_v1": true,
+      "section": "I · Refus",
+      "enonce": "**Refus outillé par l'IA** (recommandation) — **jamais auto-prononcé**.",
+      "vocabulaire": [
+        "Refus outillé par l'IA"
+      ]
+    },
+    {
+      "id": "EF-33",
+      "portees": [
+        "V1"
+      ],
+      "hors_v1": false,
+      "section": "J · Inventaire & parc",
+      "enonce": "**Réservation d'unité** (« le jaune ») = **acte du système** ; approbation → LOUÉ,",
+      "vocabulaire": [
+        "Réservation d'unité"
+      ]
+    },
+    {
+      "id": "EF-34",
+      "portees": [
+        "V2"
+      ],
+      "hors_v1": true,
+      "section": "K · Autres parcours (V2)",
+      "enonce": "**Cession de bail** (locataire en place / SIB — échéance 10 j, RC-16).",
+      "vocabulaire": [
+        "Cession de bail"
+      ]
+    },
+    {
+      "id": "EF-35",
+      "portees": [
+        "V2"
+      ],
+      "hors_v1": true,
+      "section": "K · Autres parcours (V2)",
+      "enonce": "**Modification de bail**.",
+      "vocabulaire": [
+        "Modification de bail"
+      ]
+    },
+    {
+      "id": "EF-36",
+      "portees": [
+        "V2"
+      ],
+      "hors_v1": true,
+      "section": "K · Autres parcours (V2)",
+      "enonce": "**Interface de gestion du Lock Trustii** (le formulaire d'intrant amont).",
+      "vocabulaire": [
+        "Interface de gestion du Lock Trustii"
+      ]
+    },
+    {
+      "id": "EF-37",
+      "portees": [
+        "V1"
+      ],
+      "hors_v1": false,
+      "section": "L · Socle, migration & conformité",
+      "enonce": "**Authentification Google Workspace (SSO)** (config admin Google client).",
+      "vocabulaire": [
+        "Authentification Google Workspace"
+      ]
+    },
+    {
+      "id": "EF-38",
+      "portees": [
+        "V1"
+      ],
+      "hors_v1": false,
+      "section": "L · Socle, migration & conformité",
+      "enonce": "**Loi 25 by design** : données sensibles isolées, **journal d'accès**, **purge",
+      "vocabulaire": [
+        "Loi 25 by design"
+      ]
+    },
+    {
+      "id": "EF-39",
+      "portees": [
+        "V1"
+      ],
+      "hors_v1": false,
+      "section": "L · Socle, migration & conformité",
+      "enonce": "**Journal d'audit** : chaque confirmation, décision, envoi, appel **et recommandation",
+      "vocabulaire": [
+        "Journal d'audit"
+      ]
+    },
+    {
+      "id": "EF-40",
+      "portees": [
+        "V1"
+      ],
+      "hors_v1": false,
+      "section": "A · Réception & fiche locataire",
+      "enonce": "**Dossier candidat** (contacts d'urgence, infos véhicule/stationnement). ✅ **Confirmé",
+      "vocabulaire": [
+        "Dossier candidat"
+      ]
+    },
+    {
+      "id": "EF-41",
+      "portees": [
+        "V1"
+      ],
+      "hors_v1": false,
+      "section": "D · Vérifications",
+      "enonce": "L'app **consomme la couverture Trustii** — **inclus au forfait SIB** : identité (pièce",
+      "vocabulaire": [
+        "L'app consomme la couverture Trustii"
+      ]
+    },
+    {
+      "id": "EF-42",
+      "portees": [
+        "V1"
+      ],
+      "hors_v1": false,
+      "section": "L · Socle, migration & conformité",
+      "enonce": "**Rétention & minimisation Loi 25** : **3 régimes de conservation** (dossier refusé =",
+      "vocabulaire": [
+        "Rétention & minimisation Loi 25"
+      ]
+    },
+    {
+      "id": "EF-43",
+      "portees": [
+        "V1",
+        "V2"
+      ],
+      "hors_v1": false,
+      "section": "F · Documents, types de demande & signature",
+      "enonce": "Le **type de demande pilote la liasse** de documents (c'est **le premier champ du",
+      "vocabulaire": [
+        "Le type de demande pilote la liasse de documents"
+      ]
+    },
+    {
+      "id": "EF-44",
+      "portees": [
+        "V1",
+        "V1.1"
+      ],
+      "hors_v1": false,
+      "section": "D · Vérifications",
+      "enonce": "**Recherche interne.** ⚠️ **Portée révisée** : la recherche *outillée* n'est",
+      "vocabulaire": [
+        "Recherche interne"
+      ]
+    },
+    {
+      "id": "EF-45",
+      "portees": [
+        "V1"
+      ],
+      "hors_v1": false,
+      "section": "H · Approbation finale & propagation",
+      "enonce": "État **« approbation en attente »** (dossier approuvé, formalités pendantes ; unité",
+      "vocabulaire": [
+        "État « approbation en attente »"
+      ]
+    },
+    {
+      "id": "EF-46",
+      "portees": [
+        "V1"
+      ],
+      "hors_v1": false,
+      "section": "C · Analyse & préqualification",
+      "enonce": "**Escalade d'erreur de conformité** : mineure = correction + avis à l'agent et au",
+      "vocabulaire": [
+        "Escalade d'erreur de conformité"
+      ]
+    },
+    {
+      "id": "EF-47",
+      "portees": [
+        "V1"
+      ],
+      "hors_v1": false,
+      "section": "B · Moteur de tâches & file de travail",
+      "enonce": "Chaque tâche porte un attribut **bloquant / non bloquant** ; un dossier peut porter un",
+      "vocabulaire": [
+        "Chaque tâche porte un attribut bloquant / non bloquant"
+      ]
+    },
+    {
+      "id": "EF-48",
+      "portees": [
+        "V1"
+      ],
+      "hors_v1": false,
+      "section": "D · Vérifications",
+      "enonce": "**Cas particuliers de Validation 1** : warning de fraude → vérifier/appeler le numéro",
+      "vocabulaire": [
+        "Cas particuliers de Validation 1"
+      ]
+    },
+    {
+      "id": "EF-49",
+      "portees": [
+        "V1"
+      ],
+      "hors_v1": false,
+      "section": "L · Socle, migration & conformité",
+      "enonce": "**Source unique** : l'app remplace le **double suivi** actuel (Google Sheet +",
+      "vocabulaire": [
+        "Source unique"
+      ]
+    },
+    {
+      "id": "EF-50",
+      "portees": [
+        "V2"
+      ],
+      "hors_v1": true,
+      "section": "K · Autres parcours (V2)",
+      "enonce": "**Reprise du backlog** : tri explicite des 1 041 dossiers bloqués à l'étape 1 (vivants",
+      "vocabulaire": [
+        "Reprise du backlog"
+      ]
+    },
+    {
+      "id": "EF-51",
+      "portees": [
+        "V1"
+      ],
+      "hors_v1": false,
+      "section": "J · Inventaire & parc",
+      "enonce": "**Référentiel du parc** : immeubles, **unités** (avec le **numéro unique d'unité**,",
+      "vocabulaire": [
+        "Référentiel du parc"
+      ]
+    },
+    {
+      "id": "EF-52",
+      "portees": [
+        "V1"
+      ],
+      "hors_v1": false,
+      "section": "L · Socle, migration & conformité",
+      "enonce": "**Gestion des utilisateurs et de leur niveau.** L'application gère la **liste de ses",
+      "vocabulaire": [
+        "Gestion des utilisateurs et de leur niveau"
+      ]
+    },
+    {
+      "id": "EF-53",
+      "portees": [
+        "V1"
+      ],
+      "hors_v1": false,
+      "section": "F · Documents, types de demande & signature",
+      "enonce": "**Versionnement et re-soumission du LOC4.** Le LOC4 est **versionné** : une",
+      "vocabulaire": [
+        "Versionnement et re-soumission du LOC4"
+      ]
+    },
+    {
+      "id": "EF-54",
+      "portees": [
+        "V1"
+      ],
+      "hors_v1": false,
+      "section": "L · Socle, migration & conformité",
+      "enonce": "**Banc d'essai des intrants.** Le module dispose d'un banc d'essai comprenant : un",
+      "vocabulaire": [
+        "Banc d'essai des intrants"
+      ]
+    },
+    {
+      "id": "EF-55",
+      "portees": [
+        "V1"
+      ],
+      "hors_v1": false,
+      "section": "B · Moteur de tâches & file de travail",
+      "enonce": "**Identité visuelle.** L'application porte l'identité visuelle publique de la",
+      "vocabulaire": [
+        "Identité visuelle"
+      ]
+    },
+    {
+      "id": "EF-56",
+      "portees": [
+        "V1"
+      ],
+      "hors_v1": false,
+      "section": "F · Documents, types de demande & signature",
+      "enonce": "**Demande de signature — objet et cycle de vie.** Une **demande de signature** est un",
+      "vocabulaire": [
+        "Demande de signature"
+      ]
+    },
+    {
+      "id": "EF-57",
+      "portees": [
+        "V1"
+      ],
+      "hors_v1": false,
+      "section": "L · Socle, migration & conformité",
+      "enonce": "**Droit d'accès et d'effacement de la personne concernée.** L'application permet de",
+      "vocabulaire": [
+        "Droit d'accès et d'effacement de la personne concernée"
+      ]
+    },
+    {
+      "id": "EF-58",
+      "portees": [
+        "V1"
+      ],
+      "hors_v1": false,
+      "section": "L · Socle, migration & conformité",
+      "enonce": "**Idempotence et journal des intrants.** Toute entrée dans le module (rapport",
+      "vocabulaire": [
+        "Idempotence et journal des intrants"
+      ]
+    }
+  ],
+  "couverture": {
+    "exigences": 58,
+    "en_v1": 41,
+    "hors_v1": 17,
+    "regles_affaires": 6,
+    "regles_opposables": 1,
+    "etapes": 10,
+    "exigences_sans_vocabulaire": [],
+    "oppose_reellement": {
+      "regle_opposable": {
+        "par_la_prose_du_client": "VIF",
+        "voies_de_la_prose": [
+          "relation-d-ordre",
+          "marqueur-en-tete",
+          "verbe-de-deplacement"
+        ],
+        "par_ordre_des_etapes_structure": "DORMANT — la voie est éprouvée et juste, mais AUCUN APPELANT ne construit ce champ dans le greffon, ni sur main ni dans la PR #43. La prose est la seule ligne vive aujourd'hui."
+      },
+      "portee": {
+        "par_la_prose_du_client": "VIF — les 17 exigences hors V1 sont reconnues par un vocabulaire dérivé de leur propre énoncé."
+      }
+    },
+    "non_couvert": [
+      "Les 8 exigences de la V1 qui n'ont aucune règle dans l'ontologie (EF-10 EF-24 EF-29 EF-37 EF-46 EF-48 EF-49 EF-55) : ce lot leur donne leur PORTÉE, pas de règle. Combler cela relève de l'ontologie, pas du BRD.",
+      "Les demandes exprimées autrement qu'en français courant : le vocabulaire est lexical, pas sémantique."
+    ]
+  }
+}
