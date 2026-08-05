@@ -1,7 +1,7 @@
 {
   "$avertissement": "FICHIER DÉRIVÉ — écrit par scripts/derive-catalogue-atelier.mjs. Toute modification à la main sera écrasée, et fera rougir scripts/verifier-atelier.mjs.",
-  "derive_le": "2026-08-04",
-  "revision_depot": "06b8df7",
+  "derive_le": "2026-08-05",
+  "revision_depot": "33b2a7a",
   "etapes": [
     {
       "code": "reception",
